@@ -14,7 +14,7 @@ export default class Bmob {
   Object() {
     return {
       _classMap: {},
-      _getSubclass: function () {
+      _getSubclass: function() {
         // if (!_.isString(className)) {
         if (!typeof className === 'string') {
           throw "Bmob.Object._getSubclass requires a string argument.";
@@ -26,26 +26,25 @@ export default class Bmob {
         }
         return ObjectClass;
       },
-      inherits: function (parent, protoProps, staticProps) {
+      inherits: function(parent, protoProps, staticProps) {
+
         var child;
 
         if (protoProps && protoProps.hasOwnProperty('constructor')) {
           child = protoProps.constructor;
         } else {
           /** @ignore */
-          child = function () {
+          console.log(parent,'----')
+          child = function() {
             parent.apply(this, arguments);
           };
         }
 
-
         Object.assign(child, parent);
-
-
 
         return child;
       },
-      _extend: function (protoProps, classProps) {
+      _extend: function(protoProps, classProps) {
         var child = this.inherits(this, protoProps, classProps);
         child.extend = this.extend;
         return child;
@@ -94,7 +93,7 @@ export default class Bmob {
           NewClassObject = this._extend(protoProps, classProps);
         }
         // Extending a subclass should reuse the classname automatically.
-        NewClassObject.extend = function (arg0) {
+        NewClassObject.extend = function(arg0) {
           if (_.isString(arg0) || (arg0 && _.has(arg0, "className"))) {
             return this.Object.extend.apply(NewClassObject, arguments);
           }
@@ -105,49 +104,44 @@ export default class Bmob {
         return NewClassObject;
       }
 
-
     }
 
   };
 
-
-  _request({ method = 'post', url, data, success, error }) {
-    console.log(method, url, data, success, error)
-    // 请求网络
-    return new Promise(
-      /* executor */
-      function (resolve, reject) {
-        axios({
-          method: method,
-          url: url,
-          data: { "where": { "objectId": "Fg2elllC" }, "limit": 1, "_Method": "GET", "_ApplicationId": "39ee83f92ff3a195130596a4eaec5ddf", "_RestKey": "a1223fca87f5d229953817f5c2493446", "_ClientVersion": "js0.0.1", "_InstallationId": "5c404f21-cbbf-9a0e-9a5c-433e6e27d554" }
-        }).then(function (response) {
-          console.log(response);
-          resolve(response.data);
-        })
-          .catch(function (error) {
-            console.log(error);
-            reject(error);
-          });
-
-      }
-    );
+  _request({method = 'post', url, data, success, error}) {
+    return new Promise((resolve, reject) => {
+      axios({
+        method: method,
+        url: url,
+        data: {
+          "where": {
+            "objectId": "Fg2elllC"
+          },
+          "limit": 1,
+          "_Method": "GET",
+          "_ApplicationId": "39ee83f92ff3a195130596a4eaec5ddf",
+          "_RestKey": "a1223fca87f5d229953817f5c2493446",
+          "_ClientVersion": "js0.0.1",
+          "_InstallationId": "5c404f21-cbbf-9a0e-9a5c-433e6e27d554"
+        }
+      }).then(response => {
+        console.log(response);
+        resolve(response.data);
+      }).catch(error => {
+        console.log(error);
+        reject(error);
+      });
+    });
   };
-
 
   //查询对象
   Query(objectClass) {
-
-
     console.log("query...", objectClass.prototype.className)
 
     // 查询对象
-
     if (typeof objectClass === 'string') {
       objectClass = Bmob.Object._getSubclass(objectClass);
     }
-
-
     this.objectClass = objectClass;
 
     this.className = objectClass.prototype.className;
@@ -159,16 +153,16 @@ export default class Bmob {
     this._extraOptions = {};
     console.log(objectClass)
     return {
-      get: (id) => {
+      get: (id, {success, error}) => {
         console.log("get", id)
-        var url = this.url + '/1/classes/test999';
-        return this._request({ url: url })
+        this._request({url: `${this.url}/1/classes/test999`}).then(response => {
+          success(response);
+        }).catch(error => {
+          error(response);
+        })
       }
     };
 
   };
 
 }
-
-
-
