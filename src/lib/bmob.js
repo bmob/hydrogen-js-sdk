@@ -8,4 +8,4 @@ Bmob.initialize = (applicationId, applicationKey, masterKey)=>{
   Bmob._config.applicationKey=applicationKey
 }
 
-export default Bmob;
+export default Bmob

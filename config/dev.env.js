@@ -7,11 +7,12 @@ const packageInfo = require('../package.json');
 
 module.exports = {
   context: config.rootPath,
-  entry:'./src/main.js',
+  entry: './src/main.js',
   output: {
     path: config.staticPath,
-    filename: 'Bmob-'+ packageInfo.version +'.min.js',
+    filename: 'Bmob-' + packageInfo.version + '.min.js',
     library: 'Bmob',
+    libraryExport: "default",
     libraryTarget: "umd"
   },
   plugins: [
