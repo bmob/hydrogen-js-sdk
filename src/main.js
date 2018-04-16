@@ -16,4 +16,5 @@ Bmob.initialize("39ee83f92ff3a195130596a4eaec5ddf","a1223fca87f5d229953817f5c249
 //         console.log(error);
 //     });
 
+Bmob.generateCode()
 console.log(Bmob)
