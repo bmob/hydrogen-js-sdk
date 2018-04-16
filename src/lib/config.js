@@ -1,8 +1,9 @@
+const ROOT = require('../../package.json')
 const HOST = 'https://apitest.bmob.cn'
 
 const APPLICATION_ID = ''
 const APPLICATION_KEY = ''
-const VERSION = 'v1.0.0'
+const VERSION = `v${ROOT.version}`
 
 const PARAMETERS = {
   GET_ONE: '111'
