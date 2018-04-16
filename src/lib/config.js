@@ -8,7 +8,7 @@ const PARAMETERS = {
   GET_ONE: '111'
 }
 
-module.exports = {
+export default {
   host: HOST,
   applicationId: APPLICATION_ID,
   applicationKey: APPLICATION_KEY,

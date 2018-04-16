@@ -1,7 +1,8 @@
 console.log('kk')
 
-import Bmob from './lib/app'
+import Bmob from './lib/bmob'
 
+// import Bmob from './js/Bmob-1.0.0.min.js'
 
 Bmob.initialize("39ee83f92ff3a195130596a4eaec5ddf","a1223fca87f5d229953817f5c2493446")
 
