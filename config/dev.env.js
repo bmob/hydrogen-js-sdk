@@ -11,7 +11,7 @@ module.exports = {
   output: {
     path: config.staticPath,
     filename: 'Bmob-'+ packageInfo.version +'.min.js',
-    library: 'SDK',
+    library: 'Bmob',
     libraryTarget: "umd"
   },
   plugins: [
