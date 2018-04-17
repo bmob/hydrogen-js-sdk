@@ -24,10 +24,10 @@ Bmob.initialize("39ee83f92ff3a195130596a4eaec5ddf","a1223fca87f5d229953817f5c249
 //     console.log(error);
 // });
 
-Bmob.testGetData().then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-    
+const query = Bmob.Query('test999');
+
+query.get('Fg2elllC').then(res => {
+  console.log(res)
+}).catch(err => {
+  console.log(err)
+})

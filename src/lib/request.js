@@ -1,6 +1,4 @@
-
-import utils from './utils'
-
+const utils = require('./utils')
 
 // Bmob._config = utils.getConfig()
 
@@ -17,5 +15,4 @@ if (type == 'h5') {
   //快应用功能
 }
 
-export { request }
-// module.exports = {request}
+module.exports = request

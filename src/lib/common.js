@@ -1,4 +1,4 @@
-const request = require('./request').request.request
+const request = require('./request')
 const Bmob = require('./bmob')
 /**
  * 生成小程序二维码

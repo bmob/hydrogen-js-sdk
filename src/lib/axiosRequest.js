@@ -1,4 +1,5 @@
-import axios from "axios";
+// import axios from "axios";
+const axios = require('../../node_modules/axios/index')
 const Bmob = require('./bmob')
 const utils = require('./utils')
 
@@ -11,25 +12,20 @@ const setHeader = (config) => {
   return header
 }
 
-const request = (route, className, objectId, method, dataObject) => {
-
-  let url = Bmob._config.host+route
-  return new Promise(
-
-    /* executor */
-    function (resolve, reject) {
+const request = (route, method = "get") => {
+  return new Promise((resolve, reject) => {
       const header = setHeader(Bmob._config)
       axios({
         method: method,
-        url: url,
+        url: `${Bmob._config.host}/1/classes/${route}`,
         headers: header,
         data: {
           firstName: 'Fred',
           lastName: 'Flintstone'
         }
-      }).then(function (response) {
+      }).then(response => {
         resolve(response.data);
-      }).catch(function (error) {
+      }).catch(error => {
         console.log(error);
         reject(error);
       });
@@ -39,5 +35,4 @@ const request = (route, className, objectId, method, dataObject) => {
 
 }
 
-// module.exports = {request}
-export { request }
+module.exports = request
