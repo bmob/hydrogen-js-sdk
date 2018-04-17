@@ -3,7 +3,7 @@ import Bmob from './lib/app'
 
 // import Bmob from './js/Bmob-1.0.0.min.js'
 console.log(Bmob)
-Bmob.initialize("39ee83f92ff3a195130596a4eaec5ddf","a1223fca87f5d229953817f5c2493446")
+Bmob.initialize("71acb3659ea66abed6b7739f9bd2e914","45ef983f011036c5868e9e9a38c193ec")
 
 
 // var GameScore = Bmob.Object.extend("GameScore");
@@ -24,9 +24,22 @@ Bmob.initialize("39ee83f92ff3a195130596a4eaec5ddf","a1223fca87f5d229953817f5c249
 //     console.log(error);
 // });
 
-const query = Bmob.Query('test999');
+const query = Bmob.Query('project');
 
-query.get('Fg2elllC').then(res => {
+query.get('iET1NDDN').then(res => {
+  console.log(res)
+}).catch(err => {
+  console.log(err)
+})
+
+query.get('ZiQs2112').then(res => {
+  console.log(res)
+}).catch(err => {
+  console.log(err)
+})
+
+const test = Bmob.Query('test3');
+test.get('nh3RGGGc').then(res => {
   console.log(res)
 }).catch(err => {
   console.log(err)
