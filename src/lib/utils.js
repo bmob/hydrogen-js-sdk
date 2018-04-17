@@ -5,8 +5,6 @@ try {
   config = require('./config.dev')
 }
 
-console.log(config)
-
 /**
  * 获取 SDK 配置信息
  * @return {Object}

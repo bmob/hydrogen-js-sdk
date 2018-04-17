@@ -1,7 +1,7 @@
 const utils = require('./utils')
 const {generateCode, sendMessage,testGetData} = require('./common')
 
-console.log(utils)
+console.log(global.Bmob==true)
 const Bmob = global.Bmob || {}
 Bmob._config = utils.getConfig()
 
@@ -19,4 +19,5 @@ Bmob.sendMessage = sendMessage
 //测试请求函数
 Bmob.testGetData = testGetData
 
-export default Bmob;
+// export default Bmob;
+module.exports = Bmob

@@ -19,6 +19,7 @@ const sendMessage = (data, options) => {
 
 // 这是一个测试获取一条记录
 const testGetData =()=>{
+  console.log(request)
   // 这个url定义到config里面去
   const url ='http://api.bmobcloud.com/1/classes/test999/Fg2elllC';
   return request.request.request(url,null,null,'get')

@@ -1,6 +1,5 @@
-console.log('kk')
-
 import Bmob from './lib/bmob'
+// var Bmob = require('./lib/bmob')
 
 // import Bmob from './js/Bmob-1.0.0.min.js'
 
@@ -19,4 +18,10 @@ Bmob.initialize("39ee83f92ff3a195130596a4eaec5ddf","a1223fca87f5d229953817f5c249
 // Bmob.generateCode()
 
 console.log(Bmob)
-Bmob.testGetData()
+Bmob.testGetData().then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    
