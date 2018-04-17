@@ -7,6 +7,7 @@ const packageInfo = require('../package.json');
 
 module.exports = {
   context: config.rootPath,
+  devtool: 'eval-source-map',
   entry: './src/main.js',
   output: {
     path: config.staticPath,
