@@ -20,6 +20,7 @@
   "homepage": "https://github.com/bmob/bmob-js-sdk-es6#readme",
   "dependencies": {
     "axios": "^0.18.0",
+    "node.extend": "^2.0.0",
     "webpack": "^3.10.0"
   },
   "devDependencies": {

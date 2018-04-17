@@ -1,3 +1,4 @@
+const Bmob = require('./bmob')
 let config
 try {
   config = require('./config')
@@ -15,7 +16,6 @@ const getConfig = () => {
 
 // 获取SDK类型
 const getAppType = () => {
-  const Bmob = global.Bmob || {}
   Bmob._config = getConfig()
   let type;
   // h5

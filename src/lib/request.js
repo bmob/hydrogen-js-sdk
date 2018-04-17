@@ -1,11 +1,11 @@
 
 import utils from './utils'
 
-const Bmob = global.Bmob || {}
-Bmob._config = utils.getConfig()
+
+// Bmob._config = utils.getConfig()
 
 let request
-//获取当前应用类型
+// //获取当前应用类型
 const type = utils.getAppType()
 // h5
 if (type == 'h5') {
@@ -16,5 +16,6 @@ if (type == 'h5') {
 } else if (Bmob._config.type == 'hap') {
   //快应用功能
 }
+
 export { request }
 // module.exports = {request}

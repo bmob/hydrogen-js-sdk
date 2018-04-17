@@ -1,8 +1,8 @@
-import Bmob from './lib/bmob'
+import Bmob from './lib/app'
 // var Bmob = require('./lib/bmob')
 
 // import Bmob from './js/Bmob-1.0.0.min.js'
-
+console.log(Bmob)
 Bmob.initialize("39ee83f92ff3a195130596a4eaec5ddf","a1223fca87f5d229953817f5c2493446")
 
 
@@ -15,9 +15,15 @@ Bmob.initialize("39ee83f92ff3a195130596a4eaec5ddf","a1223fca87f5d229953817f5c249
 //         console.log(error);
 //     });
 
-// Bmob.generateCode()
 
-console.log(Bmob)
+// 生成二维码
+// Bmob.generateCode().then(function (response) {
+//     console.log(response);
+// })
+// .catch(function (error) {
+//     console.log(error);
+// });
+
 Bmob.testGetData().then(function (response) {
             console.log(response);
         })
