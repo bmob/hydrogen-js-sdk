@@ -5,8 +5,10 @@ import Bmob from './lib/app'
 console.log(Bmob)
 
 
+// Bmob.initialize("71acb3659ea66abed6b7739f9bd2e914","45ef983f011036c5868e9e9a38c193ec")
 Bmob.initialize("83c627d276f41bc0f62adbd5ce875e8a","b939b7e1b0c8b221dd4a1320dbc4cd4d")
 //
+// 
 // 生成二维码
 let qrData = { path: 'path', width: 430, type: 1 }
 Bmob.generateCode(qrData).then(function (response) {
@@ -16,6 +18,7 @@ Bmob.generateCode(qrData).then(function (response) {
     console.log(error);
 });
 
+
 // 获取access_token
 Bmob.getAccessToken().then(function (response) {
     console.log(response);
@@ -23,10 +26,11 @@ Bmob.getAccessToken().then(function (response) {
 .catch(function (error) {
     console.log(error);
 });
+
 // 小程序模板消息
 let modelData = {
     "touser": "open_Id",
-    "template_id": "omTTRD3pAMiAGKmyKo15Ifc2U_wLr6oWRZOifnTngvQ",
+    "template_id": "template_id",
     "page": "index",
     "form_id":"form_Id",
     "data": {
@@ -56,14 +60,26 @@ Bmob.sendWeAppMessage(modelData).then(function (response) {
 //   console.log(err)
 // })
 
+
+// //
+// const query = Bmob.Query('project');
+//
+// query.get('iET1NDDN').then(res => {
+
+//   console.log(res)
+// }).catch(err => {
+//   console.log(err)
+// })
+
+
 // query.find().then(res => {
 //   console.log(res)
 // }).catch(err => {
 //   console.log(err)
 // })
+
 //
 // const test = Bmob.Query('test3');
 // test.set('aaa','111');
 // test.set('aaa','333');
 // test.save().then(res => {
-
