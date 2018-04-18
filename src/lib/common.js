@@ -14,13 +14,4 @@ const sendMessage = (data, options) => {
   return 1
 }
 
-// 这是一个测试获取一条记录
-const testGetData =()=>{
-
-  // 这个url定义到config里面去
-  const route ='/1/classes/test999/Fg2elllC';
-  return request(route,null,null,'get')
-}
-
-
-module.exports = {generateCode,sendMessage,testGetData};
+module.exports = {generateCode,sendMessage};
