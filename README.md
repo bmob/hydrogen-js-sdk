@@ -105,6 +105,15 @@ curl -X GET \
 
 
 
+### 开发规范
+
+1. 请求链接路由放到config文件PARAMETERS变量
+2. 变量函数命令统一用英文，尽量优先参考Bmob目前`jssdk` 相关名称。
+3. 开发一个函数功能，记得补上文档 `Doc.md` 
+4. 操作数据库的函数语法在群里与队友商量确定
+
+
+
 ### 相关知识点
 
 1. 【链接】多对多关系BmobRelation学习笔记（js，微信小程https://www.zybuluo.com/z77/note/1114404
