@@ -68,4 +68,56 @@ curl -X GET \
        https://api.bmob.cn/1/classes/GameScore/e1kXT22L
    ```
 
-   ​
+
+
+### 功能列表
+
+#### 公共方法
+
+- [x] 获取一行数据
+- [ ] 修改一行数据
+- [ ] 删除一行数据
+- [ ] 查询数据列表
+- [ ] 注册
+- [ ] 登录
+- [ ] 修改密码
+- [ ] 手机号、QQ、等第三方登录
+- [ ] 短信验证码
+- [ ] 文件（图片）上传
+- [ ] APP推送
+- [ ] 云函数调用
+- [ ] ACL 和角色
+- [ ] 数据关联Pointer、Relation
+- [ ] 批量数据操作
+- [ ] 主人推送消息
+
+
+
+#### 小程序方法
+
+- [x] 生成小程序二维码
+- [ ] 获取access_token
+- [ ] 一键登录接口
+- [ ] 小程序支付
+- [ ] 小程序模板消息
+
+
+
+
+
+### 相关知识点
+
+1. 【链接】多对多关系BmobRelation学习笔记（js，微信小程https://www.zybuluo.com/z77/note/1114404
+2. API 接口文档 http://doc.bmob.cn/data/restful/index.html
+
+
+
+### 感谢
+
+1. yanghuanrong   https://github.com/yanghuanrong
+2. youngjuning  https://github.com/youngjuning
+
+
+
+
+
