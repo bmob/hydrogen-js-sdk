@@ -17,13 +17,11 @@ const request = (route, method = "get",parma = {}) => {
       const header = setHeader(Bmob._config)
       axios({
         method: method,
-        url: `${Bmob._config.host}/1/classes/${route}`,
+        url: `${Bmob._config.host}${route}`,
         headers: header,
         data: parma
-      }).then(({status,data}) => {
-        if(status == 200){
+      }).then(({data}) => {
           resolve(data);
-        }
       }).catch(error => {
         console.log(error);
         reject(error);
