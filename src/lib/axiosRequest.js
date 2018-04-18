@@ -12,17 +12,18 @@ const setHeader = (config) => {
   return header
 }
 
-const request = (route, method = "get",data = null) => {
+const request = (route, method = "get",parma = {}) => {
   return new Promise((resolve, reject) => {
       const header = setHeader(Bmob._config)
-      console.log(data)
       axios({
         method: method,
         url: `${Bmob._config.host}/1/classes/${route}`,
         headers: header,
-        data: data
-      }).then(response => {
-        resolve(response.data);
+        data: parma
+      }).then(({status,data}) => {
+        if(status == 200){
+          resolve(data);
+        }
       }).catch(error => {
         console.log(error);
         reject(error);
