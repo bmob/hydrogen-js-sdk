@@ -6,7 +6,15 @@ const Bmob = require('./bmob')
  */
 const generateCode = (data, options) => {
   let route = Bmob._config.parameters.GENERATECODE
-  return request(route,null,null,'post')
+  return request(route,null,null,'get')
+}
+/**
+ * 获取access_token
+ * @return {Object}
+ */
+const getAccessToken = (data, options) => {
+  let route = Bmob._config.parameters.GETACCESSTOKEN
+  return request(route,null,null,'get')
 }
 
 const sendMessage = (data, options) => {
@@ -14,4 +22,4 @@ const sendMessage = (data, options) => {
   return 1
 }
 
-module.exports = {generateCode,sendMessage};
+module.exports = {generateCode,sendMessage,getAccessToken};

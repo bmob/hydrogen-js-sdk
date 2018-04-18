@@ -8,7 +8,8 @@ const VERSION = `v${ROOT.version}`
 const TYPE = 1
 
 const PARAMETERS = {
-  GENERATECODE:'/wechatApp/qr/generatecode',//生成二维码
+  GENERATECODE:'/wechatApp/qr/generatecode',// 生成二维码
+  GETACCESSTOKEN: '/wechatApp/getAccessToken',
   GET_ONE: '111'
 }
 
