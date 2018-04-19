@@ -1,24 +1,29 @@
 const request = require('./request')
 const {isObject, isString} = require('./dataType')
+const error = require('./error')
 const query = class query {
   constructor(parma) {
     this.tableName = `/1/classes/${parma}`
     this.setData = {}
   }
   get(parma) {
+    if (!isString(parma)) {
+      throw new error(415)
+    }
     return new Promise((resolve, reject) => {
       request(`${this.tableName}/${parma}`).then(results => {
         let oneData = {}
         Object.defineProperty(results, "set", {
           value: (key, val) => {
-            if (isString(key)) {
-              oneData[key] = val
+            if (!isString(key) || !isString(val)) {
+              throw new error(415)
             }
+            oneData[key] = val
           },
           enumerable: false
         })
         Object.defineProperty(results, "save", {
-          value: (key, val) => {
+          value: () => {
             request(`${this.tableName}/${parma}`, 'put', oneData)
           },
           enumerable: false
@@ -30,14 +35,16 @@ const query = class query {
     })
   }
   set(key, val = "") {
-    if (isString(key)) {
-      this.setData[key] = val;
+    if (!isString(key) || !isString(val)) {
+      throw new error(415)
     }
+    this.setData[key] = val;
   }
   save(parma) {
-    if (isObject(parma)) {
-      this.setData = Object.assign(parma, this.setData)
+    if (!isObject(parma)) {
+      throw new error(415)
     }
+    this.setData = Object.assign(parma, this.setData)
     return request(`${this.tableName}`, 'post', this.setData)
   }
   find() {
