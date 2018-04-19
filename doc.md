@@ -4,6 +4,90 @@
 
 ## 用户操作
 
+### 登陆
+
+ **简介：**
+
+通过用户名密码登陆
+
+ **参数说明：**
+
+| 参数     | 类型   | 必填 | 说明   |
+| -------- | ------ | ---- | ------ |
+| username | string | 是   | 用户名 |
+| password | string | 是   | 密码   |
+
+**请求示例：**
+
+```
+ Bmob.User.login('username','password').then(res => {
+   console.log(res)
+ }).catch(err => {
+  console.log(err)
+});
+```
+
+**返回示例:**
+
+```
+成功：
+{
+    "createdAt":"2018-04-19 17:26:45",
+    "objectId":"X43SIIIH",
+    "sessionToken":"cc4fbcfd40583af980f4e6e52085adbf",
+    "updatedAt":"2018-04-19 17:26:48",
+    "username":"aaaaaa"
+}
+失败：
+{"code":101,"error":"username or password incorrect."}
+```
+
+
+
+### 注册
+
+ **简介：**
+
+通过用户名密码注册
+
+ **参数说明：**
+
+| 参数     | 类型   | 必填 | 说明   |
+| -------- | ------ | ---- | ------ |
+| username | string | 是   | 用户名 |
+| password | string | 是   | 密码   |
+| email    | string | 是   | 邮箱   |
+| phone    | string | 否   | 手机   |
+
+**请求示例：**
+
+```
+let params = {
+	username: 'bmob2018',
+	password: 'bmob2018',
+	email: 'bmob2018@bmob.cn',
+	phone: '13711166567',
+}
+Bmob.User.register(params).then(res => {
+  console.log(res)
+}).catch(err => {
+ console.log(err)
+});
+```
+
+**返回示例:**
+
+```
+成功：
+{
+    "createdAt":"2018-04-19 17:42:59",
+    "objectId":"73d4587140",
+    "sessionToken":"14683f9a40b2509d80320bf0d4ec7d6e"
+}
+失败：
+{"code":107,"error":"content is empty."}
+```
+
 
 
 
@@ -131,25 +215,25 @@ Bmob.generateCode 参数列表
 **请求示例：**
 
     let modelData = {
-	    "touser": "open_Id",
-	    "template_id": "template_id",
-	    "page": "index",
-	    "form_id":"form_Id",
-	    "data": {
-		    "keyword1": {
-			    "value": "SDK测试内容",
-			    "color": "#173177"
+        "touser": "open_Id",
+        "template_id": "template_id",
+        "page": "index",
+        "form_id":"form_Id",
+        "data": {
+    	    "keyword1": {
+    		    "value": "SDK测试内容",
+    		    "color": "#173177"
     		},
-		    "keyword2": {
-		    	"value": "2018年04月18日 16:30"
-		    },
-		    "keyword3": {
-		    	"value": "Bmob科技"
-		    }
+    	    "keyword2": {
+    	    	"value": "2018年04月18日 16:30"
+    	    },
+    	    "keyword3": {
+    	    	"value": "Bmob科技"
+    	    }
     	}
     	,"emphasis_keyword": ""
     }
-
+    
     Bmob.sendWeAppMessage(modelData).then(function (response) {
     	console.log(response);
     })
@@ -219,5 +303,5 @@ Bmob.generateCode 参数列表
 	
 
     {
-	    "msg":"ok"
+        "msg":"ok"
     }

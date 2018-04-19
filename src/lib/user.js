@@ -1,7 +1,8 @@
 const request = require('./request')
 const query = require('./query')
 const Bmob = require('./bmob')
-const {isObject, isString} = require('./dataType')
+const error = require('./error')
+const { isObject, isString } = require('./dataType')
 
 const user = class user extends query {
   constructor() {
@@ -15,28 +16,29 @@ const user = class user extends query {
       this.setData[key] = val;
     }
   }
-  save(parma) {
-    if (isObject(parma)) {
-      this.setData = Object.assign({parma}, this.setData)
+  register(parma) {
+    if (!isObject(parma)) {
+      //异常
+      throw new error(415)
     }
-    return request(`${this.tableName}`, 'post', this.setData)
+    this.setData = Object.assign(this.setData, parma)
+    console.log(this.setData)
+    let route = Bmob._config.parameters.REGISTER
+    return request(route, 'post', this.setData)
   }
 
-  login(username,password){
+  login(username, password) {
     if (!isString(username) || !isString(password)) {
-        //异常
-        console.log('error')
-        return
+      //异常
+      throw new error(415)
     }
-    this.setData = Object.assign({}, {username,password})
+    this.setData = Object.assign({}, { username, password })
     let route = Bmob._config.parameters.LOGIN
-    // return request(route, 'get',this.setData)
     return new Promise((resolve, reject) => {
-      request(route, 'get',this.setData).then(results => {
-        let oneData = {}
-        console.log(results)
-        resolve(results)
+      request(route, 'get', this.setData).then(res => {
+        resolve(res)
       }).catch(err => {
+        console.log('登陆失败')
         reject(err)
       })
     })

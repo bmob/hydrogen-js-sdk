@@ -64,7 +64,7 @@ const request = (route, method = "get", parma = {}) => {
       server({
         url: route,
         method: method,
-        parma,
+        data:parma,
 
       }).then(({ data }) => {
         resolve(data);

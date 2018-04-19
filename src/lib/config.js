@@ -12,6 +12,7 @@ const PARAMETERS = {
   GETACCESSTOKEN: '/1/wechatApp/getAccessToken',// 获取access_token
   SENDWEAPPMESSAGE: '/1/wechatApp/SendWeAppMessage',// 小程序模版消息
   LOGIN:'/1/login',//登陆
+  REGISTER:'/1/users',//注册
 }
 
 module.exports = {
