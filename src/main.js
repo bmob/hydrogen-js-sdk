@@ -54,7 +54,6 @@ console.log(Bmob)
 // });
 
 Bmob.initialize("71acb3659ea66abed6b7739f9bd2e914","45ef983f011036c5868e9e9a38c193ec")
-
 const query = Bmob.Query('project');
 query.get('iET1NDDN').then(res => {
   console.log(res)
@@ -67,6 +66,19 @@ query.get('iET1NDDN').then(res => {
 }).catch(err => {
   console.log(err)
 })
+
+// const query = Bmob.Query('project');
+// query.set("name","fff")
+// query.set("cover","1111")
+// query.save().then(res => {
+//   console.log(res)
+
+// }).catch(err => {
+//   console.log(err)
+// })
+
+
+// const user = new Bmob.User();
 
 
 // //
