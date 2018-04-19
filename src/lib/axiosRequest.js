@@ -18,41 +18,20 @@ const request = (route, method = "get", parma = {}) => {
   return new Promise((resolve, reject) => {
     const header = setHeader(Bmob._config)
 
-    // axios({
-    //   method: method,
-    //   url: `${Bmob._config.host}${route}`,
-    //   params: parma,
-    //   headers: header,
-    //   data: parma,
-    //   // `transformResponse` 在传递给 then/catch 前，允许修改响应数据
-    //   transformResponse: [function (data) {
-    //     // 对 data 进行任意转换处理
-    //     const obj = JSON.parse(data)
-    //     if (obj.code) {
-    //       reject(data);
-    //     }
-    //     return data;
-    //   }],
-
-    // }).then(({ data }) => {
-    //   resolve(data);
-    // }).catch(error => {
-    //   console.log(error);
-    //   reject(error);
-    // });
-
 
 
     const server = axios.create({
       baseURL: Bmob._config.host,
       // baseURL: 'http://192.168.0.66:8088',
       // timeout: 20000,
-      headers: header
+      headers: header,
+      validateStatus: function (status) {
+        return status < 500; // 状态码在大于或等于500时才会 reject
+      },
     })
 
     // 添加响应拦截器
     server.interceptors.response.use(response => {
-      console.log('sss', response.data.code)
       switch (response.data.code) {
         case 0:
           return response.data;
@@ -60,21 +39,25 @@ const request = (route, method = "get", parma = {}) => {
         case 100:
           break;
       }
-      return response.data
+      return response
     }, error => {
-      console.log("请求内容错误")
-      return Promise.reject(error,999);
+      console.log("请求内容错误",error.message.config)
+      return Promise.reject(error);
     });
 
     if (method == 'get') {
       server({
+        
         url: route,
         method: method,
         params: parma,
       }).then(({ data }) => {
+        if(data.code){
+          reject(data);
+        }
         resolve(data);
       }).catch(error => {
-        console.log(error,999);
+        console.log(error, 999);
         reject(error);
       });
     } else {

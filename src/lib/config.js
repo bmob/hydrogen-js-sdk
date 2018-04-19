@@ -1,5 +1,5 @@
 const ROOT = require('../../package.json')
-const HOST = 'https://apitest.bmob.cn'
+const HOST = 'https://api.bmob.cn'
 const APPLICATION_ID = ''
 const APPLICATION_KEY = ''
 const VERSION = `v${ROOT.version}`
@@ -11,8 +11,6 @@ const PARAMETERS = {
   GENERATECODE:'/1/wechatApp/qr/generatecode',// 生成二维码
   GETACCESSTOKEN: '/1/wechatApp/getAccessToken',// 获取access_token
   SENDWEAPPMESSAGE: '/1/wechatApp/SendWeAppMessage',// 小程序模版消息
-  REQUESTSMSCODE: '/1/requestSmsCode',// 请求短信验证码
-  VERIFYSMSCODE: '/1/verifySmsCode', // 验证短信验证码
   LOGIN:'/1/login',//登陆
 }
 
