@@ -40,7 +40,7 @@ const query = class query {
     }
     this.setData[key] = val;
   }
-  save(parma) {
+  save(parma = {}) {
     if (!isObject(parma)) {
       throw new error(415)
     }
