@@ -102,15 +102,15 @@ query.get('iET1NDDN').then(res => {
   console.log(err)
 })
 
-// const query = Bmob.Query('project');
-// query.set("name","fff")
-// query.set("cover","1111")
-// query.save().then(res => {
-//   console.log(res)
+const query = Bmob.Query('project');
+query.set("name","fff")
+query.set("cover","1111")
+query.save().then(res => {
+  console.log(res)
 
-// }).catch(err => {
-//   console.log(err)
-// })
+}).catch(err => {
+  console.log(err)
+})
 
 //  Bmob.User.login('aaaaaa','111111f').then(res => {
 //    console.log(res)
@@ -118,13 +118,8 @@ query.get('iET1NDDN').then(res => {
 //   console.log(err)
 // });
 
-let params = {
-	username: 'bmob2018',
-	password: 'bmob2018',
-	email: 'bmob2018@bmob.cn',
-	phone: '13711166567',
-}
-Bmob.User.register(params).then(res => {
+
+Bmob.User.requestEmailVerify('bmob2018@bmob.cn').then(res => {
   console.log(res)
 }).catch(err => {
  console.log(err)

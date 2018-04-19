@@ -16,6 +16,17 @@ const user = class user extends query {
       this.setData[key] = val;
     }
   }
+  requestEmailVerify(email){
+    if (!isString(email)) {
+      //异常
+      throw new error(415)
+    }
+    
+    this.setData = Object.assign({}, { email })
+    console.log(this.setData)
+    let route = Bmob._config.parameters.REQUEST_EMAIL_VERIFY
+    return request(route, 'post', this.setData)
+  }
   register(parma) {
     if (!isObject(parma)) {
       //异常
