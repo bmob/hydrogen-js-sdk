@@ -90,6 +90,51 @@ Bmob.User.register(params).then(res => {
 
 
 
+### 验证 Email
+
+**简介：**
+
+设置邮件验证是一个可选的应用设置, 这样可以对已经确认过邮件的用户提供一部分保留的体验，邮件验证功能会在用户(User)对象中加入emailVerified字段, 当一个用户的邮件被新添加或者修改过的话，emailVerified会默认被设为false，如果应用设置中开启了邮箱认证功能，[Bmob](http://www.bmob.cn/)会对用户填写的邮箱发送一个链接, 这个链接可以把emailVerified设置为 true.
+
+emailVerified 字段有 3 种状态可以考虑：
+
+**true** : 用户可以点击邮件中的链接通过[Bmob](http://www.bmob.cn/)来验证地址，一个用户永远不会在新创建这个值的时候出现emailVerified为true。
+
+**false** : 用户(User)对象最后一次被刷新的时候, 用户并没有确认过他的邮箱地址, 如果你看到emailVerified为false的话，你可以考虑刷新 用户(User)对象。
+
+**missing** : 用户(User)对象已经被创建，但应用设置并没有开启邮件验证功能； 或者用户(User)对象没有email邮箱。
+
+发送到用户邮箱验证的邮件会在一周内失效
+
+ **参数说明：**
+
+| 参数  | 类型   | 必填 | 说明 |
+| ----- | ------ | ---- | ---- |
+| email | string | 是   | 邮箱 |
+
+**请求示例：**
+
+```
+Bmob.User.requestEmailVerify('bmob2018@bmob.cn').then(res => {
+  console.log(res)
+}).catch(err => {
+ console.log(err)
+});
+```
+
+**返回示例:**
+
+```
+成功：
+{
+  "msg": "ok"
+}
+失败：
+{code: 120, error: "Email verify should be opened in your app setup page of bmob."}
+```
+
+
+
 
 
 ## 数据表操作
@@ -134,6 +179,81 @@ query.get('objectId').then(res => {
             "updatedAt":"2018-04-18 15:25:54"
         }
     ]
+}
+```
+
+### 新增一行记录
+
+ **简介：**
+
+通过主键获取一行记录
+
+ **参数说明：**
+
+| 参数      | 类型   | 必填 | 说明     |
+| --------- | ------ | ---- | -------- |
+| tableName | string | 是   | 数据表名 |
+
+
+**请求示例：**
+
+```
+const query = Bmob.Query('tableName');
+query.set("name","fff")
+query.set("cover","1111")
+query.save().then(res => {
+  console.log(res)
+
+}).catch(err => {
+  console.log(err)
+})
+```
+
+
+
+**返回示例:**
+
+```
+{
+	createdAt: "2018-04-19 18:15:47", 
+	objectId: "objectId"
+}
+```
+
+### 修改一行记录
+
+ **简介：**
+
+通过主键获取一行记录
+
+ **参数说明：**
+
+| 参数      | 类型   | 必填 | 说明     |
+| --------- | ------ | ---- | -------- |
+| tableName | string | 是   | 数据表名 |
+| objectId  | string | 是   | 记录 ID  |
+
+
+**请求示例：**
+
+```
+const query = Bmob.Query('tableName');
+query.get('objectId').then(res => {
+  console.log(res)
+  res.set('cover','3333')
+  res.save()
+}).catch(err => {
+  console.log(err)
+})
+```
+
+
+
+**返回示例:**
+
+```
+{
+	updatedAt: "2018-04-19 18:15:47"
 }
 ```
 
@@ -245,6 +365,42 @@ Bmob.generateCode 参数列表
 ### 小程序模板消息返回示例待补充 ###
 
 
+### 退款 ###
+**简介：**
+
+退款操作
+
+**参数说明：**
+
+| 参数      | 类型   | 必填 | 说明     |
+| --------- | ------ | ---- | -------- |
+| order_no | string | 是   | 订单编号 |
+| refund_fee  | number | 是   | 退款金额  |
+| desc  | string | 是   | 描述  |
+
+**请求示例：**
+
+    let data = {
+    	order_no: "order_no",
+    	refund_fee: fee,
+    	desc:"退款"
+    }
+    Bmob.refund(data).then(function (response) {
+    	console.log(response);
+    })
+    .catch(function (error) {
+    	console.log(error);
+    });
+
+**返回示例:**
+	
+
+    {
+    	code: 107, 
+    	error: "content is empty."
+    }
+    
+
 ## 短信服务操作 ##
 
 ### 请求短信验证码 ###
@@ -275,7 +431,7 @@ Bmob.generateCode 参数列表
 	
 
     {
-    	"msg":"ok"
+    	smsId: smsId
     }
 
 ### 验证短信验证码 ###
@@ -303,5 +459,6 @@ Bmob.generateCode 参数列表
 	
 
     {
-        "msg":"ok"
+    	code: 301,
+    	error: "手机号码必须是11位的数字"
     }
