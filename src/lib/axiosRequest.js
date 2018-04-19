@@ -19,6 +19,7 @@ const request = (route, method = "get",parma = {}) => {
       axios({
         method: method,
         url: `${Bmob._config.host}${route}`,
+        params: parma,
         headers: header,
         data: parma
       }).then(({data}) => {

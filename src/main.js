@@ -54,6 +54,7 @@ console.log(Bmob)
 // });
 
 Bmob.initialize("71acb3659ea66abed6b7739f9bd2e914","45ef983f011036c5868e9e9a38c193ec")
+console.log({})
 const query = Bmob.Query('project');
 query.get('iET1NDDN').then(res => {
   console.log(res)
