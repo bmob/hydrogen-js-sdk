@@ -29,8 +29,8 @@ npm run dev
 |   |-- config.js	配置文件
 |   |-- request.js	请求入口
 |   |-- sms.js
-|   `-- utils.js	公用函数
-`-- main.js			入口
+|   -- utils.js	公用函数
+|-- main.js			入口
 ```
 
 
@@ -76,9 +76,9 @@ npm run dev
 #### 公共方法
 
 - [x] 获取一行数据
-- [ ] 修改一行数据
+- [x] 修改一行数据
 - [ ] 删除一行数据
-- [ ] 增加一行数据
+- [x] 增加一行数据
 - [ ] 查询数据列表
 - [ ] 注册
 - [x] 登录
@@ -115,7 +115,7 @@ npm run dev
 
 1. 请求链接路由放到config文件PARAMETERS变量
 2. 变量函数命令统一用英文，尽量优先参考Bmob目前`jssdk` 相关名称。
-3. 开发一个函数功能，记得补上文档 `Doc.md` 
+3. 开发一个函数功能，记得补上文档 `Doc.md`
 4. 操作数据库的函数语法在群里与队友商量确定
 
 
@@ -135,10 +135,3 @@ npm run dev
 
 1. yanghuanrong   https://github.com/yanghuanrong
 2. youngjuning  https://github.com/youngjuning
-
-
-
-
-
-
-
