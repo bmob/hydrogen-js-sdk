@@ -52,7 +52,7 @@ const request = (route, method = "get", parma = {}) => {
 
     // 添加响应拦截器
     server.interceptors.response.use(response => {
-      console.log('jjj', response.data.code)
+      console.log('sss', response.data.code)
       switch (response.data.code) {
         case 0:
           return response.data;
