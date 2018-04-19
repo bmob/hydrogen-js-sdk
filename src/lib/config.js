@@ -13,6 +13,7 @@ const PARAMETERS = {
   SENDWEAPPMESSAGE: '/1/wechatApp/SendWeAppMessage',// 小程序模版消息
   LOGIN:'/1/login',//登陆
   REGISTER:'/1/users',//注册
+  REQUEST_EMAIL_VERIFY:'/1/requestEmailVerify',//注册
 }
 
 module.exports = {

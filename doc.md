@@ -90,6 +90,51 @@ Bmob.User.register(params).then(res => {
 
 
 
+### 验证 Email
+
+**简介：**
+
+设置邮件验证是一个可选的应用设置, 这样可以对已经确认过邮件的用户提供一部分保留的体验，邮件验证功能会在用户(User)对象中加入emailVerified字段, 当一个用户的邮件被新添加或者修改过的话，emailVerified会默认被设为false，如果应用设置中开启了邮箱认证功能，[Bmob](http://www.bmob.cn/)会对用户填写的邮箱发送一个链接, 这个链接可以把emailVerified设置为 true.
+
+emailVerified 字段有 3 种状态可以考虑：
+
+**true** : 用户可以点击邮件中的链接通过[Bmob](http://www.bmob.cn/)来验证地址，一个用户永远不会在新创建这个值的时候出现emailVerified为true。
+
+**false** : 用户(User)对象最后一次被刷新的时候, 用户并没有确认过他的邮箱地址, 如果你看到emailVerified为false的话，你可以考虑刷新 用户(User)对象。
+
+**missing** : 用户(User)对象已经被创建，但应用设置并没有开启邮件验证功能； 或者用户(User)对象没有email邮箱。
+
+发送到用户邮箱验证的邮件会在一周内失效
+
+ **参数说明：**
+
+| 参数  | 类型   | 必填 | 说明 |
+| ----- | ------ | ---- | ---- |
+| email | string | 是   | 邮箱 |
+
+**请求示例：**
+
+```
+Bmob.User.requestEmailVerify('bmob2018@bmob.cn').then(res => {
+  console.log(res)
+}).catch(err => {
+ console.log(err)
+});
+```
+
+**返回示例:**
+
+```
+成功：
+{
+  "msg": "ok"
+}
+失败：
+{code: 120, error: "Email verify should be opened in your app setup page of bmob."}
+```
+
+
+
 
 
 ## 数据表操作

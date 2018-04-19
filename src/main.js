@@ -106,13 +106,8 @@ console.log({})
 //   console.log(err)
 // });
 
-let params = {
-	username: 'bmob2018',
-	password: 'bmob2018',
-	email: 'bmob2018@bmob.cn',
-	phone: '13711166567',
-}
-Bmob.User.register(params).then(res => {
+
+Bmob.User.requestEmailVerify('bmob2018@bmob.cn').then(res => {
   console.log(res)
 }).catch(err => {
  console.log(err)
