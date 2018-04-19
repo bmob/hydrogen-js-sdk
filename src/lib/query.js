@@ -6,19 +6,23 @@ const query = class query {
     this.setData = {}
   }
   get(parma) {
-    let oneData = {}
-    const set = (key, val) => {
-      if (isString(key)) {
-        oneData[key] = val
-      }
-    }
-    const save = () => {
-      request(`${this.tableName}/${parma}`, 'put', oneData)
-    }
     return new Promise((resolve, reject) => {
       request(`${this.tableName}/${parma}`).then(results => {
-        results.__proto__.set = set
-        results.__proto__.save = save
+        let oneData = {}
+        Object.defineProperty(results, "set", {
+          value: (key, val) => {
+            if (isString(key)) {
+              oneData[key] = val
+            }
+          },
+          enumerable: false
+        })
+        Object.defineProperty(results, "save", {
+          value: (key, val) => {
+            request(`${this.tableName}/${parma}`, 'put', oneData)
+          },
+          enumerable: false
+        })
         resolve(results)
       }).catch(err => {
         reject(err)
