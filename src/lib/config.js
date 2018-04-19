@@ -1,5 +1,5 @@
 const ROOT = require('../../package.json')
-const HOST = 'https://apitest.bmob.cn'
+const HOST = 'https://api.bmob.cn'
 const APPLICATION_ID = ''
 const APPLICATION_KEY = ''
 const VERSION = `v${ROOT.version}`
@@ -15,6 +15,7 @@ const PARAMETERS = {
   VERIFYSMSCODE: '/1/verifySmsCode', // 验证短信验证码
   REFUND: '/1/pay/refund', // 退款
   LOGIN:'/1/login',//登陆
+  REGISTER:'/1/users',//注册
 }
 
 module.exports = {
