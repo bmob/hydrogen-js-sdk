@@ -11,7 +11,7 @@ const PARAMETERS = {
   GENERATECODE:'/1/wechatApp/qr/generatecode',// 生成二维码
   GETACCESSTOKEN: '/1/wechatApp/getAccessToken',// 获取access_token
   SENDWEAPPMESSAGE: '/1/wechatApp/SendWeAppMessage',// 小程序模版消息
-  GET_ONE: '111'
+  LOGIN:'/1/login',//登陆
 }
 
 module.exports = {

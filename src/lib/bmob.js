@@ -11,6 +11,6 @@ Bmob.initialize = (applicationId, applicationKey, masterKey) => {
 }
 
 Bmob.Query = parma => new query(parma)
-Bmob.User = parma => new user()
+Bmob.User =  new user()
 
 module.exports = Bmob

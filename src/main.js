@@ -54,18 +54,18 @@ console.log(Bmob)
 // });
 
 Bmob.initialize("71acb3659ea66abed6b7739f9bd2e914","45ef983f011036c5868e9e9a38c193ec")
-const query = Bmob.Query('project');
-query.get('iET1NDDN').then(res => {
-  console.log(res)
-  for(let item in res){
-    console.log(item)
-  }
-  res.set("name","修改的成功")
-  res.set("cover","2222")
-  res.save()
-}).catch(err => {
-  console.log(err)
-})
+// const query = Bmob.Query('project');
+// query.get('iET1NDDN').then(res => {
+//   console.log(res)
+//   for(let item in res){
+//     console.log(item)
+//   }
+//   res.set("name","修改的成功")
+//   res.set("cover","2222")
+//   res.save()
+// }).catch(err => {
+//   console.log(err)
+// })
 
 // const query = Bmob.Query('project');
 // query.set("name","fff")
@@ -78,7 +78,11 @@ query.get('iET1NDDN').then(res => {
 // })
 
 
-// const user = new Bmob.User();
+ Bmob.User.login('ddd','ff').then(res => {
+   console.log(res)
+ }).catch(err => {
+  console.log(err)
+});
 
 
 // //

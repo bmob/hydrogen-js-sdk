@@ -13,21 +13,22 @@ const setHeader = (config) => {
   return header
 }
 
-const request = (route, method = "get",parma = {}) => {
-    return new Promise((resolve, reject) => {
-      const header = setHeader(Bmob._config)
-      axios({
-        method: method,
-        url: `${Bmob._config.host}${route}`,
-        headers: header,
-        data: parma
-      }).then(({data}) => {
-          resolve(data);
-      }).catch(error => {
-        console.log(error);
-        reject(error);
-      });
-    }
+const request = (route, method = "get", parma = {}) => {
+  return new Promise((resolve, reject) => {
+    const header = setHeader(Bmob._config)
+    axios({
+      method: method,
+      url: `${Bmob._config.host}${route}`,
+      headers: header,
+      params: parma,
+      data: parma
+    }).then(({ data }) => {
+      resolve(data);
+    }).catch(error => {
+      // console.log(error);
+      reject(error);
+    });
+  }
   );
 
 
