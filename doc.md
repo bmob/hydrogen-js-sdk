@@ -137,6 +137,81 @@ query.get('objectId').then(res => {
 }
 ```
 
+### 新增一行记录
+
+ **简介：**
+
+通过主键获取一行记录
+
+ **参数说明：**
+
+| 参数      | 类型   | 必填 | 说明     |
+| --------- | ------ | ---- | -------- |
+| tableName | string | 是   | 数据表名 |
+
+
+**请求示例：**
+
+```
+const query = Bmob.Query('tableName');
+query.set("name","fff")
+query.set("cover","1111")
+query.save().then(res => {
+  console.log(res)
+
+}).catch(err => {
+  console.log(err)
+})
+```
+
+
+
+**返回示例:**
+
+```
+{
+	createdAt: "2018-04-19 18:15:47", 
+	objectId: "objectId"
+}
+```
+
+### 修改一行记录
+
+ **简介：**
+
+通过主键获取一行记录
+
+ **参数说明：**
+
+| 参数      | 类型   | 必填 | 说明     |
+| --------- | ------ | ---- | -------- |
+| tableName | string | 是   | 数据表名 |
+| objectId  | string | 是   | 记录 ID  |
+
+
+**请求示例：**
+
+```
+const query = Bmob.Query('tableName');
+query.get('objectId').then(res => {
+  console.log(res)
+  res.set('cover','3333')
+  res.save()
+}).catch(err => {
+  console.log(err)
+})
+```
+
+
+
+**返回示例:**
+
+```
+{
+	updatedAt: "2018-04-19 18:15:47"
+}
+```
+
 ## 小程序操作 ##
 ### 生成二维码 ###
 **简介：**
