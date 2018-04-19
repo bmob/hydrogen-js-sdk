@@ -1,5 +1,5 @@
 const request = require('./request')
-const {isObject, isString} = require('./dataType')
+const {isObject, isString, isNumber} = require('./dataType')
 const error = require('./error')
 const query = class query {
   constructor(parma) {
@@ -10,22 +10,44 @@ const query = class query {
     if (!isString(parma)) {
       throw new error(415)
     }
+
+    let oneData = {}
+    const incrementData = {}
+
+    const increment = (key, val = 1) => {
+      if (!isString(key) || !isNumber(val)) {
+        throw new error(415)
+      }
+      incrementData[key] = {
+        "__op": "Increment",
+        "amount": val
+      }
+    }
+    const set = (key, val) => {
+      if (!isString(key) || !isString(val)) {
+        throw new error(415)
+      }
+      oneData[key] = val
+    }
+    const save = () => {
+      if (Object.keys(incrementData).length) {
+        oneData = Object.assign(incrementData, oneData)
+      }
+      return request(`${this.tableName}/${parma}`, 'put', oneData)
+    }
+
     return new Promise((resolve, reject) => {
       request(`${this.tableName}/${parma}`).then(results => {
-        let oneData = {}
         Object.defineProperty(results, "set", {
-          value: (key, val) => {
-            if (!isString(key) || !isString(val)) {
-              throw new error(415)
-            }
-            oneData[key] = val
-          },
+          value: set,
           enumerable: false
         })
         Object.defineProperty(results, "save", {
-          value: () => {
-            return request(`${this.tableName}/${parma}`, 'put', oneData)
-          },
+          value: save,
+          enumerable: false
+        })
+        Object.defineProperty(results, "increment", {
+          value: increment,
           enumerable: false
         })
         resolve(results)
@@ -47,6 +69,7 @@ const query = class query {
     this.setData = Object.assign(parma, this.setData)
     return request(`${this.tableName}`, 'post', this.setData)
   }
+
   find() {
     return new Promise((resolve, reject) => {
       request(`${this.tableName}`).then(({results}) => {

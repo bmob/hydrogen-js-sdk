@@ -87,30 +87,15 @@ console.log(Bmob)
 // });
 
 Bmob.initialize("71acb3659ea66abed6b7739f9bd2e914","45ef983f011036c5868e9e9a38c193ec")
-
-console.log({})
-const query = Bmob.Query('project');
-query.get('iET1NDDN').then(res => {
-  console.log(res)
-  for(let item in res){
-    console.log(item)
-  }
-  res.set("name","修改的成功")
-  res.set("cover","2222")
-  res.save()
-}).catch(err => {
-  console.log(err)
-})
-
-const query = Bmob.Query('project');
-query.set("name","fff")
-query.set("cover","333")
-query.save().then(res => {
-  console.log(res)
-
-}).catch(err => {
-  console.log(err)
-})
+//
+// const query = Bmob.Query('project');
+// query.set("name","fff")
+// query.set("cover","333")
+// query.save().then(res => {
+//   console.log(res)
+// }).catch(err => {
+//   console.log(err)
+// })
 
 //  Bmob.User.login('aaaaaa','111111f').then(res => {
 //    console.log(res)
@@ -126,17 +111,15 @@ Bmob.User.requestEmailVerify('bmob2018@bmob.cn').then(res => {
 });
 
 
-// // //
-// const query = Bmob.Query('project');
-// query.get('iET1NDDN').then(res => {
-//   console.log(res)
-//   res.set('cover','444')
-//   res.save().then(res => {
-//     console.log(res)
-//   })
-// }).catch(err => {
-//   console.log(err)
-// })
+const query = Bmob.Query('test3');
+query.get('af5f66ac57').then(res => {
+  console.log(res)
+  res.increment('bb')
+  res.set('aaa',"566666")
+  res.save()
+}).catch(err => {
+  console.log(err)
+})
 
 
 // query.find().then(res => {
