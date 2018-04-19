@@ -53,7 +53,7 @@ query.get('objectId').then(res => {
 }
 ```
 
-
+## 小程序操作 ##
 ### 生成二维码 ###
 **简介：**
 
@@ -158,4 +158,66 @@ Bmob.generateCode 参数列表
     });
 **返回示例:**
 	
-## 小程序模板消息返回实例待补充 ##
+### 小程序模板消息返回示例待补充 ###
+
+
+## 短信服务操作 ##
+
+### 请求短信验证码 ###
+**简介：**
+
+使用特定的模板请求验证码，如果没有在管理后台创建好模板，可使用默认的模板，Bmob 默认的模板是: 您的验证码是%smscode%，有效期为%ttl%分钟。您正在使用%appname%的验证码
+
+**参数说明：**
+
+| 参数      | 类型   | 必填 | 说明     |
+| --------- | ------ | ---- | -------- |
+| mobilePhoneNumber | string | 是   | 手机号 |
+| template  | string | 否   | 模板信息  |
+
+**请求示例：**
+
+    let params = {
+    	mobilePhoneNumber: 'mobilePhoneNumber' //string
+    }
+    Bmob.requestSmsCode(params).then(function (response) {
+    	console.log(response);
+    })
+    .catch(function (error) {
+    	console.log(error);
+    });
+
+**返回示例:**
+	
+
+    {
+    	"msg":"ok"
+    }
+
+### 验证短信验证码 ###
+**简介：**
+
+通过以下接口，你可以验证用户输入的验证码是否是有效。
+
+**参数说明：**
+
+| 参数      | 类型   | 必填 | 说明     |
+| --------- | ------ | ---- | -------- |
+| smsCode | string | 是   | 手机短信验证码 |
+
+**请求示例：**
+
+    let smsCode = 'smsCode'
+    Bmob.verifySmsCode(smsCode).then(function (response) {
+    	console.log(response);
+    })
+    .catch(function (error) {
+    	console.log(error);
+    });
+
+**返回示例:**
+	
+
+    {
+	    "msg":"ok"
+    }

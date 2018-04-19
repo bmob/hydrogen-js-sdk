@@ -7,7 +7,7 @@ console.log(Bmob)
 
 // Bmob.initialize("83c627d276f41bc0f62adbd5ce875e8a","b939b7e1b0c8b221dd4a1320dbc4cd4d")
 //
-//
+//  微信小程序模块
 // // 生成二维码
 // let qrData = { path: 'path', width: 430, type: 1 }
 // Bmob.generateCode(qrData).then(function (response) {
@@ -53,7 +53,29 @@ console.log(Bmob)
 //     console.log(error);
 // });
 
+// restful短信服务模块
+// 请求短信验证码
+// let params = {
+//     mobilePhoneNumber: '15692023892' //string
+// }
+// Bmob.requestSmsCode(params).then(function (response) {
+//     console.log(response);
+// })
+// .catch(function (error) {
+//     console.log(error);
+// });
+
+// 验证短信验证码
+// let smsCode = '167899'
+// Bmob.verifySmsCode(smsCode).then(function (response) {
+//     console.log(response);
+// })
+// .catch(function (error) {
+//     console.log(error);
+// });
+
 Bmob.initialize("71acb3659ea66abed6b7739f9bd2e914","45ef983f011036c5868e9e9a38c193ec")
+
 console.log({})
 const query = Bmob.Query('project');
 query.get('iET1NDDN').then(res => {
