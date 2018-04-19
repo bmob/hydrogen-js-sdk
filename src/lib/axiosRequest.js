@@ -6,6 +6,7 @@ const utils = require('./utils')
 
 const setHeader = (config) => {
   let header = {
+    'content-type': 'application/json',
     'X-Bmob-Application-Id': config.applicationId,
     'X-Bmob-REST-API-Key': config.applicationKey,
   }
@@ -13,7 +14,7 @@ const setHeader = (config) => {
 }
 
 const request = (route, method = "get",parma = {}) => {
-  return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       const header = setHeader(Bmob._config)
       axios({
         method: method,
