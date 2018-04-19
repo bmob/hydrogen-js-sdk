@@ -13,6 +13,7 @@ const PARAMETERS = {
   SENDWEAPPMESSAGE: '/1/wechatApp/SendWeAppMessage',// 小程序模版消息
   REQUESTSMSCODE: '/1/requestSmsCode',// 请求短信验证码
   VERIFYSMSCODE: '/1/verifySmsCode', // 验证短信验证码
+  REFUND: '/1/pay/refund', // 退款
   LOGIN:'/1/login',//登陆
 }
 

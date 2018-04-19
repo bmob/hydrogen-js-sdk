@@ -31,4 +31,28 @@ const sendMessage = (data, options) => {
   return 1
 }
 
-module.exports = {generateCode,sendMessage,getAccessToken,sendWeAppMessage};
+/**
+ * 小程序图片上传
+ * @return {Object}
+ */
+
+ /**
+ * 退款
+ * @return {Object}
+ */
+const refund = (data, options) => {
+  let route = Bmob._config.parameters.REFUND
+  console.log(route)
+  return request(route,'post',data)
+}
+module.exports = {generateCode,sendMessage,getAccessToken,sendWeAppMessage,refund};
+
+// curl -X POST \
+//   -H "X-Bmob-Application-Id: 2b649fbd9928d8ceab191b37112d86bd"          \
+//   -H "X-Bmob-REST-API-Key: e7b62774b531365c15fc809dfbed67dc"        \
+//   -H "Content-Type: application/json" \
+//   -d '{
+//         "order_no": "1cc2592e9903d9994be7f9a8c2cjsapi",
+//         "refund_fee": 0.01,
+//         "desc":"退款"
+//       }' 

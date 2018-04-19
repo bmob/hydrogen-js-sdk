@@ -1,7 +1,8 @@
 
 const Bmob = require('./bmob')
-const {generateCode, sendMessage,getAccessToken,sendWeAppMessage} = require('./common')
+const {generateCode, sendMessage,getAccessToken,sendWeAppMessage,refund} = require('./common')
 const {requestSmsCode,verifySmsCode} = require('./sms')
+
 // 生成二维码
 Bmob.generateCode = generateCode
 // 发送模板消息
@@ -16,6 +17,8 @@ Bmob.requestSmsCode = requestSmsCode
 
 // 验证短信验证码
 Bmob.verifySmsCode = verifySmsCode
+
+Bmob.refund = refund
 
 if(typeof global.Bmob==undefined){
    global.Bmob = Bmob

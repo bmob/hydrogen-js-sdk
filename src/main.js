@@ -52,6 +52,18 @@ console.log(Bmob)
 // .catch(function (error) {
 //     console.log(error);
 // });
+// // 退款
+// let data = {
+//     order_no: "1cc2592e9903d9994be7f9a8c2cjsapi",
+//     refund_fee: 0.01,
+//     desc:"退款"
+// }
+// Bmob.refund(data).then(function (response) {
+//     console.log(response);
+// })
+// .catch(function (error) {
+//     console.log(error);
+// });
 
 // restful短信服务模块
 // 请求短信验证码
@@ -77,18 +89,18 @@ console.log(Bmob)
 Bmob.initialize("71acb3659ea66abed6b7739f9bd2e914","45ef983f011036c5868e9e9a38c193ec")
 
 console.log({})
-// const query = Bmob.Query('project');
-// query.get('iET1NDDN').then(res => {
-//   console.log(res)
-//   for(let item in res){
-//     console.log(item)
-//   }
-//   res.set("name","修改的成功")
-//   res.set("cover","2222")
-//   res.save()
-// }).catch(err => {
-//   console.log(err)
-// })
+const query = Bmob.Query('project');
+query.get('iET1NDDN').then(res => {
+  console.log(res)
+  for(let item in res){
+    console.log(item)
+  }
+  res.set("name","修改的成功")
+  res.set("cover","2222")
+  res.save()
+}).catch(err => {
+  console.log(err)
+})
 
 // const query = Bmob.Query('project');
 // query.set("name","fff")

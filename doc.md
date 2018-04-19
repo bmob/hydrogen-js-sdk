@@ -161,6 +161,42 @@ Bmob.generateCode 参数列表
 ### 小程序模板消息返回示例待补充 ###
 
 
+### 退款 ###
+**简介：**
+
+退款操作
+
+**参数说明：**
+
+| 参数      | 类型   | 必填 | 说明     |
+| --------- | ------ | ---- | -------- |
+| order_no | string | 是   | 订单编号 |
+| refund_fee  | number | 是   | 退款金额  |
+| desc  | string | 是   | 描述  |
+
+**请求示例：**
+
+    let data = {
+    	order_no: "order_no",
+    	refund_fee: fee,
+    	desc:"退款"
+    }
+    Bmob.refund(data).then(function (response) {
+    	console.log(response);
+    })
+    .catch(function (error) {
+    	console.log(error);
+    });
+
+**返回示例:**
+	
+
+    {
+    	code: 107, 
+    	error: "content is empty."
+    }
+    
+
 ## 短信服务操作 ##
 
 ### 请求短信验证码 ###
@@ -191,7 +227,7 @@ Bmob.generateCode 参数列表
 	
 
     {
-    	"msg":"ok"
+    	smsId: smsId
     }
 
 ### 验证短信验证码 ###
@@ -219,5 +255,6 @@ Bmob.generateCode 参数列表
 	
 
     {
-	    "msg":"ok"
+    	code: 301,
+    	error: "手机号码必须是11位的数字"
     }
