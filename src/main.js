@@ -90,15 +90,15 @@ console.log({})
 //   console.log(err)
 // })
 
-// const query = Bmob.Query('project');
-// query.set("name","fff")
-// query.set("cover","1111")
-// query.save().then(res => {
-//   console.log(res)
+const query = Bmob.Query('project');
+query.set("name","fff")
+query.set("cover","1111")
+query.save().then(res => {
+  console.log(res)
 
-// }).catch(err => {
-//   console.log(err)
-// })
+}).catch(err => {
+  console.log(err)
+})
 
 //  Bmob.User.login('aaaaaa','111111f').then(res => {
 //    console.log(res)
