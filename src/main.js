@@ -92,7 +92,7 @@ console.log({})
 
 const query = Bmob.Query('project');
 query.set("name","fff")
-query.set("cover","1111")
+query.set("cover","333")
 query.save().then(res => {
   console.log(res)
 
@@ -119,12 +119,14 @@ Bmob.User.register(params).then(res => {
 });
 
 
-// //
+// // //
 // const query = Bmob.Query('project');
-//
 // query.get('iET1NDDN').then(res => {
-
 //   console.log(res)
+//   res.set('cover','444')
+//   res.save().then(res => {
+//     console.log(res)
+//   })
 // }).catch(err => {
 //   console.log(err)
 // })

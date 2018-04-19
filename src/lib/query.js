@@ -24,7 +24,7 @@ const query = class query {
         })
         Object.defineProperty(results, "save", {
           value: () => {
-            request(`${this.tableName}/${parma}`, 'put', oneData)
+            return request(`${this.tableName}/${parma}`, 'put', oneData)
           },
           enumerable: false
         })
