@@ -75,7 +75,26 @@ npm run dev
        https://api.bmob.cn/1/classes/GameScore/e1kXT22L
    ```
 
+   ​
 
+   ​
+
+4. 文件上传，内部接口
+
+   ```
+   curl -X POST \
+       -H "X-Bmob-Application-Id: Your Application ID" \
+       -H "X-Bmob-REST-API-Key: Your REST API Key" \
+       https://api.bmobcloud.com/2/files/test.png
+   ```
+
+
+   ```
+   返回
+   {"cdn":"upyun","filename":"test.png","url":"http://bmob-cdn-12948.b0.upaiyun.com/2018/04/20/cbd266a4409ce4cd80d4ec8a081b7d7f.png"}
+   ```
+
+   ​
 
 ### 功能列表
 
@@ -154,7 +173,7 @@ npm run dev
 
 1. 请求链接路由放到config文件PARAMETERS变量
 2. 变量函数命令统一用英文，尽量优先参考Bmob目前`jssdk` 相关名称。
-3. 开发一个函数功能，记得补上文档 `Doc.md`
+3. 开发一个函数功能，记得补上文档，具体请看文档模板 `Doc.md`
 4. 操作数据库的函数语法在群里与队友商量确定
 
 
