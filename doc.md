@@ -399,7 +399,6 @@ Bmob.generateCode 参数列表
     	code: 107, 
     	error: "content is empty."
     }
-    
 
 ## 短信服务操作 ##
 
@@ -458,6 +457,11 @@ Bmob.generateCode 参数列表
 **返回示例:**
 	
 
+    成功
+    {
+        "msg":"ok"
+    }
+    失败
     {
     	code: 301,
     	error: "手机号码必须是11位的数字"
