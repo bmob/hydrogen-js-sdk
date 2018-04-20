@@ -170,12 +170,20 @@ Bmob.initialize("83c627d276f41bc0f62adbd5ce875e8a","b939b7e1b0c8b221dd4a1320dbc4
 //   newPassword: 'game20114'
 // }
 // Bmob.updateUserPassword(objId,data).then(res => {
-//     console.log('sessionToken', res.sessionToken)
+//     console.log(res)
 //   }).catch(err => {
 //     console.log(err)
 //   })
 
+// 查询用户
+// Bmob.User.users().then(res => {
+//   console.log(res)
+// }).catch(err => {
+//   console.log(err)
+// })
+
 Bmob.initialize("71acb3659ea66abed6b7739f9bd2e914","45ef983f011036c5868e9e9a38c193ec")
+
 
 //
 // const query = Bmob.Query('project');

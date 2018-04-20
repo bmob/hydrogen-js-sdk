@@ -156,5 +156,5 @@ module.exports = {
   functions,timestamp,
   requestPasswordReset,
   resetPasswordBySmsCode,
-  pdateUserPassword
+  updateUserPassword
 };

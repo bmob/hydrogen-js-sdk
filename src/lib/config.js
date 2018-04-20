@@ -23,6 +23,7 @@ const PARAMETERS = {
   LOGIN:'/1/login',//登陆
   REGISTER:'/1/users',//注册
   REQUEST_EMAIL_VERIFY:'/1/requestEmailVerify',//注册
+  USERS: '/1/users'// 查询用户
 }
 
 module.exports = {
