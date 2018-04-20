@@ -88,7 +88,40 @@ Bmob.User.register(params).then(res => {
 {"code":107,"error":"content is empty."}
 ```
 
+### 查询用户
 
+ **简介：**
+
+你可以一次获取多个用户，只要向用户的根URL发送一个GET请求，没有任何URL参数的话，可以简单地列出所有用户。
+
+所有的对普通对象的查询选项都适用于对用户对象的查询，所以可以查看 查询 部分来获取详细信息。
+
+User表是一个特殊的表，专门用于存储用户对象。在浏览器端，你会看到一个User表旁边有一个小人的图标。
+
+ **参数说明：**
+
+无需参数
+
+**请求示例：**
+
+```
+Bmob.User.users().then(res => {
+  console.log(res)
+}).catch(err => {
+  console.log(err)
+})
+```
+
+**返回示例:**
+
+```
+{
+	results: [
+		{createdAt: "2018-04-19 17:26:45", objectId: "X43SIIIH", updatedAt: "2018-04-19 17:26:48",…}
+		{createdAt: "2018-04-19 17:42:59", email: "bmob2018@bmob.cn", objectId: "73d4587140",…}
+	]
+}
+```
 
 ### 验证 Email
 
@@ -133,8 +166,154 @@ Bmob.User.requestEmailVerify('bmob2018@bmob.cn').then(res => {
 {code: 120, error: "Email verify should be opened in your app setup page of bmob."}
 ```
 
+### 密码重置
+
+ **简介：**
+
+共提供了3种方法，分别是email重置、短信验证码重置、旧密码重置。
 
 
+Eamil密码重置
+
+ **请求描述：**
+你可以使用这项功能，前提是用户将email与他们的账户关联起来，如果要重设密码，发送一个POST请求到 /1/requestPasswordReset, 同时在request的body部分带上email字段。
+
+密码重置流程如下：
+
+1.用户输入他们的电子邮件，请求重置自己的密码。
+
+2.Bmob向他们的邮箱发送一封包含特殊的密码重置连接的电子邮件，此邮件的模板可在Bmob后台中修改。
+
+3.用户根据向导点击重置密码连接，打开一个特殊的Bmob页面，输入一个新的密码。
+
+4.用户的密码已被重置为新输入的密码。
+
+ **参数说明：**
+
+| 参数      | 类型   | 必填 | 说明     |
+| ---------| ------ | ---- | -------- |
+| email    | string | 是   | 邮箱地址 |
+
+
+**请求示例：**
+
+```
+let data = {
+  email: '329685131@qq.com'
+}
+Bmob.requestPasswordReset(data).then(res => {
+  console.log(res)
+}).catch(err => {
+  console.log(err)
+})
+```
+
+**返回示例:**
+
+```
+{
+  "msg": "ok"
+}
+```
+
+短信密码重置
+
+ **请求描述：**
+如果用户有绑定了手机号码，就可以通过手机验证码短信来实现使用手机号码找回密码的功能，先调用 请求短信验证码API会将验证码发送到用户手机上，用户收到验证码并输入后，调用PUT /1/resetPasswordBySmsCode/smsCode 来为用户设置新的密码。
+
+**参数说明：**
+
+| 参数      | 类型   | 必填 | 说明     |
+| ---------| ------ | ---- | -------- |
+| password    | string | 是   | 新密码 |
+
+**请求示例：**
+```
+let smsCode= 'smsCode'
+let data = {
+  password: 'password'
+}
+Bmob.resetPasswordBySmsCode(smsCode,data).then(res => {
+  console.log(res)
+}).catch(err => {
+  console.log(err)
+})
+```
+**返回示例:**
+
+
+    {
+      "msg": "ok"
+    }
+
+
+提供旧密码方式安全修改用户密码
+
+ **请求描述：**
+很多开发者希望让用户输入一次旧密码做一次校验，旧密码正确才可以修改为新密码，因此我们提供了一个单独的 API PUT /1/updatePassword 来安全地修改用户密码。
+
+注意：仍然需要传入 X-Bmob-Session-Token，也就是登录用户才可以修改自己的密码。
+**参数说明：**
+
+| 参数      | 类型   | 必填 | 说明     |
+| ---------| ------ | ---- | -------- |
+| oldPassword    | string | 是   | 旧密码 |
+| newPassword    | string | 是   | 新密码 |
+
+**请求示例：**
+```
+let objectId ='objectId'
+let data = {
+  oldPassword: 'oldPassword',
+  newPassword: 'newPassword'
+}
+Bmob.updateUserPassword(objectId,data).then(res => {
+    console.log(res)
+  }).catch(err => {
+    console.log(err)
+  })
+```
+
+**返回示例:**
+
+
+    {
+      "msg": "ok"
+    }
+
+
+
+### APP推送
+
+ **简介：**
+
+使用推送接口可将消息推送至对应设备。
+
+ **参数说明：**
+
+| 参数     | 类型   | 必填 | 说明   |
+| -------- | ------ | ---- | ------ |
+| data | object | 是   | 根据不同的需求进行定制 |
+
+**请求示例：**
+
+
+    let data = {
+      data: {
+    alert: "Hello From Bmob."
+      }
+    }
+    
+    Bmob.push(data).then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
+
+
+**返回示例:**
+
+待补充返回示例
 
 
 ## 数据表操作
@@ -197,17 +376,17 @@ query.get('objectId').then(res => {
 
 **请求示例：**
 
-```
-const query = Bmob.Query('tableName');
-query.set("name","fff")
-query.set("cover","1111")
-query.save().then(res => {
-  console.log(res)
+    
+    const query = Bmob.Query('tableName');
+    query.set("name","fff")
+    query.set("cover","1111")
+    query.save().then(res => {
+      console.log(res)
+    
+    }).catch(err => {
+      console.log(err)
+    })
 
-}).catch(err => {
-  console.log(err)
-})
-```
 
 
 
@@ -215,7 +394,7 @@ query.save().then(res => {
 
 ```
 {
-	createdAt: "2018-04-19 18:15:47", 
+	createdAt: "YYYY-mm-dd HH:ii:ss",
 	objectId: "objectId"
 }
 ```
@@ -253,7 +432,92 @@ query.get('objectId').then(res => {
 
 ```
 {
-	updatedAt: "2018-04-19 18:15:47"
+  "updatedAt": "YYYY-mm-dd HH:ii:ss"
+}
+```
+
+
+### 删除字段的值
+
+ **简介：**
+
+通过主键获取一行记录
+
+ **参数说明：**
+
+| 参数      | 类型   | 必填 | 说明     |
+| --------- | ------ | ---- | -------- |
+| tableName | string | 是   | 数据表名 |
+| objectId  | string | 是   | 记录 ID  |
+
+
+**请求示例：**
+
+```
+const query = Bmob.Query('tableName');
+query.get('objectId').then(res => {
+  console.log(res)
+  res.unset('cover')
+  res.save()
+}).catch(err => {
+  console.log(err)
+})
+```
+
+**返回示例:**
+
+```
+{
+	updatedAt: "YYYY-mm-dd HH:ii:ss"
+}
+```
+
+
+### 删除一行记录
+
+ **简介：**
+
+通过主键获取一行记录
+
+ **参数说明：**
+
+| 参数      | 类型   | 必填 | 说明     |
+| --------- | ------ | ---- | -------- |
+| tableName | string | 是   | 数据表名 |
+| objectId  | string | 是   | 记录 ID  |
+
+
+**请求示例：**
+
+
+    const query = Bmob.Query('tableName');
+    query.destroy('objectId').then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
+
+or
+
+
+    const query = Bmob.Query('tableName');
+    query.get('objectId').then(res => {
+      res.destroy().then(res => {
+    console.log(res)
+      }).ctach(err => {
+    console.log(err)
+      })
+    }).catch(err => {
+      console.log(err)
+    })
+
+
+
+**返回示例:**
+
+```
+{
+  msg: "ok"
 }
 ```
 
@@ -288,7 +552,7 @@ Bmob.generateCode 参数列表
     });
 
 **返回示例:**
-	
+
 
 ```
 {
@@ -317,7 +581,7 @@ Bmob.generateCode 参数列表
     });
 
 **返回示例:**
-	
+
 
     {
     	access_token: 'access_token'
@@ -353,7 +617,7 @@ Bmob.generateCode 参数列表
     	}
     	,"emphasis_keyword": ""
     }
-    
+
     Bmob.sendWeAppMessage(modelData).then(function (response) {
     	console.log(response);
     })
@@ -361,7 +625,7 @@ Bmob.generateCode 参数列表
     	console.log(error);
     });
 **返回示例:**
-	
+
 ### 小程序模板消息返回示例待补充 ###
 
 
@@ -393,11 +657,101 @@ Bmob.generateCode 参数列表
     });
 
 **返回示例:**
-	
+
 
     {
-    	code: 107, 
+    	code: 107,
     	error: "content is empty."
+    }
+
+### 微信主人通知 ###
+**简介：**
+
+微信主动推送通知，业务场景：比如你有APP，有人下单了，或者有人留言了。你可以收到微信推送通知。
+
+**参数说明：**
+
+模版信息
+
+**请求示例：**
+    
+    let temp = {
+      touser: "openid",
+      template_id:"template_id",
+      url: "http://www.bmob.cn/",
+      data: {
+			first: {
+				value: "您好，Restful 失效，请登录控制台查看。",
+				color: "#c00"
+			},
+			keyword1: {
+				value: "Restful 失效"
+			},
+			keyword2: {
+				value: "2017-07-03 16:13:01"
+			},
+			keyword3: {
+				value: "高"
+			},
+			remark: {
+				value: "如果您十分钟内再次收到此信息，请及时处理。"
+			}
+      	}
+	}
+    
+    Bmob.notifyMsg(temp).then(function (response) {
+    console.log(response);
+    })
+    .catch(function (error) {
+    console.log(error);
+    });
+
+**返回示例:**
+
+    {
+    	msg: "ok"
+    }
+
+### 云函数 ###
+**简介：**
+
+云函数调用
+
+**参数说明：**
+
+| 参数      | 类型   | 必填 | 说明     |
+| --------- | ------ | ---- | -------- |
+| funcName | string | 是   | 手机号 |
+| requestData  | string | 否   | 模板信息  |
+
+**请求示例：**
+
+    let params =　{
+      funcName: 'hello',
+      data: {
+    	name : 'bmob'
+      }
+    }
+    Bmob.functions(params.funcName,params.data).then(function (response) {
+    	console.log(response);
+    })
+    .catch(function (error) {
+    	console.log(error);
+    });
+
+**云函数示例:**
+    function onRequest(request, response, modules) {
+      //获取SDK客户端上传的name参数
+      var name = request.body.name;
+	  if(name == 'bmob')
+	    response.end('欢迎使用Bmob');
+	  else
+	    response.end('输入错误，请重新输入');
+    }  
+**返回示例:**
+	
+    {
+    	result: "欢迎使用Bmob"
     }
 
 ## 短信服务操作 ##
@@ -427,7 +781,7 @@ Bmob.generateCode 参数列表
     });
 
 **返回示例:**
-	
+
 
     {
     	smsId: smsId
@@ -455,7 +809,7 @@ Bmob.generateCode 参数列表
     });
 
 **返回示例:**
-	
+
 
     成功
     {
