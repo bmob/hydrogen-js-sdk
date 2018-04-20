@@ -88,7 +88,40 @@ Bmob.User.register(params).then(res => {
 {"code":107,"error":"content is empty."}
 ```
 
+### 查询用户
 
+ **简介：**
+
+你可以一次获取多个用户，只要向用户的根URL发送一个GET请求，没有任何URL参数的话，可以简单地列出所有用户。
+
+所有的对普通对象的查询选项都适用于对用户对象的查询，所以可以查看 查询 部分来获取详细信息。
+
+User表是一个特殊的表，专门用于存储用户对象。在浏览器端，你会看到一个User表旁边有一个小人的图标。
+
+ **参数说明：**
+
+无需参数
+
+**请求示例：**
+
+```
+Bmob.User.users().then(res => {
+  console.log(res)
+}).catch(err => {
+  console.log(err)
+})
+```
+
+**返回示例:**
+
+```
+{
+	results: [
+		{createdAt: "2018-04-19 17:26:45", objectId: "X43SIIIH", updatedAt: "2018-04-19 17:26:48",…}
+		{createdAt: "2018-04-19 17:42:59", email: "bmob2018@bmob.cn", objectId: "73d4587140",…}
+	]
+}
+```
 
 ### 验证 Email
 
@@ -208,11 +241,11 @@ Bmob.resetPasswordBySmsCode(smsCode,data).then(res => {
 ```
 **返回示例:**
 
-```
-{
-  "msg": "ok"
-}
-```
+
+    {
+      "msg": "ok"
+    }
+
 
 提供旧密码方式安全修改用户密码
 
@@ -243,11 +276,46 @@ Bmob.updateUserPassword(objectId,data).then(res => {
 
 **返回示例:**
 
-```
-{
-  "msg": "ok"
-}
-```
+
+    {
+      "msg": "ok"
+    }
+
+
+
+### APP推送
+
+ **简介：**
+
+使用推送接口可将消息推送至对应设备。
+
+ **参数说明：**
+
+| 参数     | 类型   | 必填 | 说明   |
+| -------- | ------ | ---- | ------ |
+| data | object | 是   | 根据不同的需求进行定制 |
+
+**请求示例：**
+
+
+    let data = {
+      data: {
+    alert: "Hello From Bmob."
+      }
+    }
+    
+    Bmob.push(data).then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
+
+
+**返回示例:**
+
+待补充返回示例
+
+
 ## 数据表操作
 
 ### 获取一行记录
@@ -308,17 +376,17 @@ query.get('objectId').then(res => {
 
 **请求示例：**
 
-```
-const query = Bmob.Query('tableName');
-query.set("name","fff")
-query.set("cover","1111")
-query.save().then(res => {
-  console.log(res)
+    
+    const query = Bmob.Query('tableName');
+    query.set("name","fff")
+    query.set("cover","1111")
+    query.save().then(res => {
+      console.log(res)
+    
+    }).catch(err => {
+      console.log(err)
+    })
 
-}).catch(err => {
-  console.log(err)
-})
-```
 
 
 
@@ -421,30 +489,29 @@ query.get('objectId').then(res => {
 
 **请求示例：**
 
-```
-const query = Bmob.Query('tableName');
-query.destroy('objectId').then(res => {
-  console.log(res)
-}).catch(err => {
-  console.log(err)
-})
 
-```
+    const query = Bmob.Query('tableName');
+    query.destroy('objectId').then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
+
 or
 
-```
-const query = Bmob.Query('tableName');
-query.get('objectId').then(res => {
-  res.destroy().then(res => {
-    console.log(res)
-  }).ctach(err => {
-    console.log(err)
-  })
-}).catch(err => {
-  console.log(err)
-})
 
-```
+    const query = Bmob.Query('tableName');
+    query.get('objectId').then(res => {
+      res.destroy().then(res => {
+    console.log(res)
+      }).ctach(err => {
+    console.log(err)
+      })
+    }).catch(err => {
+      console.log(err)
+    })
+
+
 
 **返回示例:**
 

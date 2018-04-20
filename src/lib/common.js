@@ -127,6 +127,18 @@ const updateUserPassword = (objectId,data) => {
    return request(route,'get')
  }
 
+ /**
+ * 推送消息
+ * @return {Object}
+ */
+const push = (data) => {
+  if (!isObject(data)) {
+    //参数异常
+    throw new error(415)
+  }
+  let route = Bmob._config.parameters.PUSH
+  return request(route,'post',data)
+}
 
 
 // ---------------云函数------------------------
@@ -152,9 +164,12 @@ module.exports = {
   sendMessage,
   getAccessToken,
   sendWeAppMessage,
-  refund,notifyMsg,
-  functions,timestamp,
+  refund,
+  notifyMsg,
+  functions,
+  timestamp,
   requestPasswordReset,
   resetPasswordBySmsCode,
-  updateUserPassword
+  updateUserPassword,
+  push
 };
