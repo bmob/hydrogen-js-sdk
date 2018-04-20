@@ -13,6 +13,7 @@ const query = class query {
 
     let oneData = {}
     const incrementData = {}
+    const unsetData = {}
 
     const increment = (key, val = 1) => {
       if (!isString(key) || !isNumber(val)) {
@@ -21,6 +22,14 @@ const query = class query {
       incrementData[key] = {
         "__op": "Increment",
         "amount": val
+      }
+    }
+    const unset = (key) => {
+      if (!isString(ObjectId)) {
+        throw new error(415)
+      }
+      unsetData[key] = {
+        "__op": "Delete"
       }
     }
     const set = (key, val) => {
@@ -33,16 +42,20 @@ const query = class query {
       if (Object.keys(incrementData).length) {
         oneData = Object.assign(incrementData, oneData)
       }
+      if (Object.keys(unsetData).length) {
+        oneData = Object.assign(unsetData, oneData)
+      }
       return request(`${this.tableName}/${ObjectId}`, 'put', oneData)
     }
 
     return new Promise((resolve, reject) => {
       request(`${this.tableName}/${ObjectId}`).then(results => {
         Object.defineProperty(results, "set", {value: set})
+        Object.defineProperty(results, "unset", {value: unset})
         Object.defineProperty(results, "save", {value: save})
         Object.defineProperty(results, "increment", {value: increment})
         Object.defineProperty(results, "destroy", {
-          value: () => this.destroy(results.objectId)
+          value: () => this.destroy(ObjectId)
         })
         resolve(results)
       }).catch(err => {
@@ -69,7 +82,6 @@ const query = class query {
     this.setData = Object.assign(parma, this.setData)
     return request(`${this.tableName}`, 'post', this.setData)
   }
-
   find() {
     return new Promise((resolve, reject) => {
       request(`${this.tableName}`).then(({results}) => {
