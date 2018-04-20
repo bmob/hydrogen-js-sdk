@@ -215,7 +215,7 @@ query.save().then(res => {
 
 ```
 {
-	createdAt: "2018-04-19 18:15:47", 
+	createdAt: "YYYY-mm-dd HH:ii:ss",
 	objectId: "objectId"
 }
 ```
@@ -253,7 +253,93 @@ query.get('objectId').then(res => {
 
 ```
 {
-	updatedAt: "2018-04-19 18:15:47"
+  "updatedAt": "YYYY-mm-dd HH:ii:ss"
+}
+```
+
+
+### 删除字段的值
+
+ **简介：**
+
+通过主键获取一行记录
+
+ **参数说明：**
+
+| 参数      | 类型   | 必填 | 说明     |
+| --------- | ------ | ---- | -------- |
+| tableName | string | 是   | 数据表名 |
+| objectId  | string | 是   | 记录 ID  |
+
+
+**请求示例：**
+
+```
+const query = Bmob.Query('tableName');
+query.get('objectId').then(res => {
+  console.log(res)
+  res.unset('cover')
+  res.save()
+}).catch(err => {
+  console.log(err)
+})
+```
+
+**返回示例:**
+
+```
+{
+	updatedAt: "YYYY-mm-dd HH:ii:ss"
+}
+```
+
+
+### 删除一行记录
+
+ **简介：**
+
+通过主键获取一行记录
+
+ **参数说明：**
+
+| 参数      | 类型   | 必填 | 说明     |
+| --------- | ------ | ---- | -------- |
+| tableName | string | 是   | 数据表名 |
+| objectId  | string | 是   | 记录 ID  |
+
+
+**请求示例：**
+
+```
+const query = Bmob.Query('tableName');
+query.destroy('objectId').then(res => {
+  console.log(res)
+}).catch(err => {
+  console.log(err)
+})
+
+```
+or
+
+```
+const query = Bmob.Query('tableName');
+query.get('objectId').then(res => {
+  res.destroy().then(res => {
+    console.log(res)
+  }).ctach(err => {
+    console.log(err)
+  })
+}).catch(err => {
+  console.log(err)
+})
+
+```
+
+**返回示例:**
+
+```
+{
+  msg: "ok"
 }
 ```
 
@@ -288,7 +374,7 @@ Bmob.generateCode 参数列表
     });
 
 **返回示例:**
-	
+
 
 ```
 {
@@ -317,7 +403,7 @@ Bmob.generateCode 参数列表
     });
 
 **返回示例:**
-	
+
 
     {
     	access_token: 'access_token'
@@ -353,7 +439,7 @@ Bmob.generateCode 参数列表
     	}
     	,"emphasis_keyword": ""
     }
-    
+
     Bmob.sendWeAppMessage(modelData).then(function (response) {
     	console.log(response);
     })
@@ -361,7 +447,7 @@ Bmob.generateCode 参数列表
     	console.log(error);
     });
 **返回示例:**
-	
+
 ### 小程序模板消息返回示例待补充 ###
 
 
@@ -393,10 +479,10 @@ Bmob.generateCode 参数列表
     });
 
 **返回示例:**
-	
+
 
     {
-    	code: 107, 
+    	code: 107,
     	error: "content is empty."
     }
 
@@ -427,7 +513,7 @@ Bmob.generateCode 参数列表
     });
 
 **返回示例:**
-	
+
 
     {
     	smsId: smsId
@@ -455,7 +541,7 @@ Bmob.generateCode 参数列表
     });
 
 **返回示例:**
-	
+
 
     成功
     {
