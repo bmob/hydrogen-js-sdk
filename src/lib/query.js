@@ -5,6 +5,8 @@ const query = class query {
   constructor(parma) {
     this.tableName = `/1/classes/${parma}`
     this.setData = {}
+    this.equalToData = {}
+    this.notEqualToData = {}
   }
   get(ObjectId) {
     if (!isString(ObjectId)) {
@@ -47,7 +49,6 @@ const query = class query {
       }
       return request(`${this.tableName}/${ObjectId}`, 'put', oneData)
     }
-
     return new Promise((resolve, reject) => {
       request(`${this.tableName}/${ObjectId}`).then(results => {
         Object.defineProperty(results, "set", {value: set})
@@ -82,9 +83,39 @@ const query = class query {
     this.setData = Object.assign(parma, this.setData)
     return request(`${this.tableName}`, 'post', this.setData)
   }
+  equalTo(key, val) {
+    if (!isString(key)) {
+      throw new error(415)
+    }
+    this.equalToData[key] = val
+  }
+  notEqualTo(key, val) {
+    if (!isString(key)) {
+      throw new error(415)
+    }
+    this.notEqualToData[key] = {
+      "$ne": val
+    }
+  }
   find() {
+    let whereData = {};
+    const eqLen = Object.keys(this.equalToData).length
+    const notEqlen = Object.keys(this.notEqualToData).length
+    if (eqLen && !notEqlen) {
+      whereData.where = this.equalToData
+    }
+    if (!eqLen && notEqlen) {
+      whereData.where = this.notEqualToData
+    }
+    if (eqLen && notEqlen) {
+      whereData.where = {
+        "$and": [this.equalToData, this.notEqualToData]
+      }
+    }
     return new Promise((resolve, reject) => {
-      request(`${this.tableName}`).then(({results}) => {
+      request(`${this.tableName}`, 'get', whereData).then(({results}) => {
+        this.equalToData = {}
+        this.notEqualToData = {}
         resolve(results)
       }).catch(err => {
         reject(err)
