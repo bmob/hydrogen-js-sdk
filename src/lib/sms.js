@@ -1,5 +1,8 @@
+
 const request = require('./request')
 const Bmob = require('./bmob')
+const error = require('./error')
+const { isObject, isString } = require('./dataType')
 
 //   /**
 // * 请求短信验证码
@@ -9,6 +12,10 @@ const Bmob = require('./bmob')
 // */
 
     const requestSmsCode = (data, options) => {
+        if (!isObject(data)) {
+            //参数异常
+            throw new error(415)
+        }
         let route = Bmob._config.parameters.REQUESTSMSCODE
         return request(route,'post',data)
     }
@@ -19,6 +26,10 @@ const Bmob = require('./bmob')
 // * @return {Bmob.Promise}
 // */
     const verifySmsCode = (data, options) => {
+        if (!isString(data)) {
+            //参数异常
+            throw new error(415)
+        }
         let route = `${Bmob._config.parameters.VERIFYSMSCODE}/${data}`
         return request(route,'post')
     }

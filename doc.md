@@ -400,6 +400,96 @@ Bmob.generateCode 参数列表
     	error: "content is empty."
     }
 
+### 微信主人通知 ###
+**简介：**
+
+微信主动推送通知，业务场景：比如你有APP，有人下单了，或者有人留言了。你可以收到微信推送通知。
+
+**参数说明：**
+
+模版信息
+
+**请求示例：**
+    
+    let temp = {
+      touser: "openid",
+      template_id:"template_id",
+      url: "http://www.bmob.cn/",
+      data: {
+			first: {
+				value: "您好，Restful 失效，请登录控制台查看。",
+				color: "#c00"
+			},
+			keyword1: {
+				value: "Restful 失效"
+			},
+			keyword2: {
+				value: "2017-07-03 16:13:01"
+			},
+			keyword3: {
+				value: "高"
+			},
+			remark: {
+				value: "如果您十分钟内再次收到此信息，请及时处理。"
+			}
+      	}
+	}
+    
+    Bmob.notifyMsg(temp).then(function (response) {
+    console.log(response);
+    })
+    .catch(function (error) {
+    console.log(error);
+    });
+
+**返回示例:**
+
+    {
+    	msg: "ok"
+    }
+
+### 云函数 ###
+**简介：**
+
+云函数调用
+
+**参数说明：**
+
+| 参数      | 类型   | 必填 | 说明     |
+| --------- | ------ | ---- | -------- |
+| funcName | string | 是   | 手机号 |
+| requestData  | string | 否   | 模板信息  |
+
+**请求示例：**
+
+    let params =　{
+      funcName: 'hello',
+      data: {
+    	name : 'bmob'
+      }
+    }
+    Bmob.functions(params.funcName,params.data).then(function (response) {
+    	console.log(response);
+    })
+    .catch(function (error) {
+    	console.log(error);
+    });
+
+**云函数示例:**
+    function onRequest(request, response, modules) {
+      //获取SDK客户端上传的name参数
+      var name = request.body.name;
+	  if(name == 'bmob')
+	    response.end('欢迎使用Bmob');
+	  else
+	    response.end('输入错误，请重新输入');
+    }  
+**返回示例:**
+	
+    {
+    	result: "欢迎使用Bmob"
+    }
+
 ## 短信服务操作 ##
 
 ### 请求短信验证码 ###

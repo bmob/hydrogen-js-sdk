@@ -8,7 +8,7 @@ console.log(Bmob)
 // Bmob.initialize("83c627d276f41bc0f62adbd5ce875e8a","b939b7e1b0c8b221dd4a1320dbc4cd4d")
 //
 //  微信小程序模块
-// // 生成二维码
+// // 生成二维码 @object
 // let qrData = { path: 'path', width: 430, type: 1 }
 // Bmob.generateCode(qrData).then(function (response) {
 //     console.log(response);
@@ -26,7 +26,7 @@ console.log(Bmob)
 //     console.log(error);
 // });
 //
-// // 小程序模板消息
+// // 小程序模板消息 @object
 // let modelData = {
 //     "touser": "open_Id",
 //     "template_id": "template_id",
@@ -86,7 +86,54 @@ console.log(Bmob)
 //     console.log(error);
 // });
 
+// 微信主人通知
+// let data = {
+//   touser: "Bmob公众号回复，openid 得到",
+//   template_id:"-ERkPwp0ntimqH39bggQc_Pj55a18CYLpj-Ert8-c8Y",
+//   url: "http://www.bmob.cn/",
+//   data: {
+//       first: {
+//           value: "您好，Restful 失效，请登录控制台查看。",
+//           color: "#c00"
+//       },
+//       keyword1: {
+//           value: "Restful 失效"
+//       },
+//       keyword2: {
+//           value: "2017-07-03 16:13:01"
+//       },
+//       keyword3: {
+//           value: "高"
+//       },
+//       remark: {
+//           value: "如果您十分钟内再次收到此信息，请及时处理。"
+//       }
+//   }}
+// 
+// Bmob.notifyMsg(data).then(function (response) {
+//     console.log(response);
+// })
+// .catch(function (error) {
+//     console.log(error);
+// });
+
+// 云函数
+// let params =　{
+//   funcName: 'hello',
+//   data: {
+//     name : 'bmob'
+//   }
+// }
+// Bmob.functions(params.funcName,params.data).then(function (response) {
+//     console.log(response);
+// })
+// .catch(function (error) {
+//     console.log(error);
+// });
+
 Bmob.initialize("71acb3659ea66abed6b7739f9bd2e914","45ef983f011036c5868e9e9a38c193ec")
+
+
 //
 // const query = Bmob.Query('project');
 // query.set("name","fff")

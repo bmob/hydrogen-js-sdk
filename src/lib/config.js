@@ -14,6 +14,9 @@ const PARAMETERS = {
   REQUESTSMSCODE: '/1/requestSmsCode',// 请求短信验证码
   VERIFYSMSCODE: '/1/verifySmsCode', // 验证短信验证码
   REFUND: '/1/pay/refund', // 退款
+  NOTIFYMSG: '/1/wechatApp/notifyMsg', // 微信主人通知
+  FUNCTIONS: '/1/functions', // 云函数
+  BATCH: '/1/batch', // 批量数据操作
   LOGIN:'/1/login',//登陆
   REGISTER:'/1/users',//注册
   REQUEST_EMAIL_VERIFY:'/1/requestEmailVerify',//注册

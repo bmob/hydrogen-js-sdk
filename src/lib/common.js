@@ -1,13 +1,21 @@
 const request = require('./request')
 const Bmob = require('./bmob')
+const error = require('./error')
+const { isObject, isString } = require('./dataType')
+
 /**
  * 生成小程序二维码
  * @return {Object}
  */
 const generateCode = (data, options) => {
+  if (!isObject(data)) {
+    //参数异常
+    throw new error(415)
+  }
   let route = Bmob._config.parameters.GENERATECODE
   return request(route,'post',data)
 }
+
 /**
  * 获取access_token
  * @return {Object}
@@ -22,6 +30,10 @@ const getAccessToken = (data, options) => {
  * @return {Object}
  */
 const sendWeAppMessage = (data, options) => {
+    if (!isObject(data)) {
+      //参数异常
+      throw new error(415)
+    }
     let route = Bmob._config.parameters.SENDWEAPPMESSAGE
     return request(route,'post',data)
 }
@@ -41,18 +53,43 @@ const sendMessage = (data, options) => {
  * @return {Object}
  */
 const refund = (data, options) => {
+  if (!isObject(data)) {
+    //参数异常
+    throw new error(415)
+  }
   let route = Bmob._config.parameters.REFUND
-  console.log(route)
   return request(route,'post',data)
 }
-module.exports = {generateCode,sendMessage,getAccessToken,sendWeAppMessage,refund};
 
-// curl -X POST \
-//   -H "X-Bmob-Application-Id: 2b649fbd9928d8ceab191b37112d86bd"          \
-//   -H "X-Bmob-REST-API-Key: e7b62774b531365c15fc809dfbed67dc"        \
-//   -H "Content-Type: application/json" \
-//   -d '{
-//         "order_no": "1cc2592e9903d9994be7f9a8c2cjsapi",
-//         "refund_fee": 0.01,
-//         "desc":"退款"
-//       }' 
+ /**
+ * 微信主人通知
+ * @return {Object}
+ */
+const notifyMsg = (data, options) => {
+  if (!isObject(data)) {
+    //参数异常
+    throw new error(415)
+  }
+  let route = Bmob._config.parameters.NOTIFYMSG 
+  return request(route,'post',data)
+}
+
+
+/**
+ * 云函数
+ * @return {Object}
+ */
+const functions = (funName, data, options) => {
+  // 如果运行的云函数不需要传入参数，注意，"{}"是不能缺的
+  if (!data) {
+    data = {}
+  }
+  if (!isString(funName)) {
+    //参数异常
+    throw new error(415)
+  }
+  let route = `${Bmob._config.parameters.FUNCTIONS}/${funName}`
+  return request(route,'post',data)
+}
+
+module.exports = {generateCode,sendMessage,getAccessToken,sendWeAppMessage,refund,notifyMsg,functions};
