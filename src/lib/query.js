@@ -6,8 +6,8 @@ const query = class query {
     this.tableName = `/1/classes/${parma}`
     this.setData = {}
   }
-  get(parma) {
-    if (!isString(parma)) {
+  get(ObjectId) {
+    if (!isString(ObjectId)) {
       throw new error(415)
     }
 
@@ -33,28 +33,28 @@ const query = class query {
       if (Object.keys(incrementData).length) {
         oneData = Object.assign(incrementData, oneData)
       }
-      return request(`${this.tableName}/${parma}`, 'put', oneData)
+      return request(`${this.tableName}/${ObjectId}`, 'put', oneData)
     }
 
     return new Promise((resolve, reject) => {
-      request(`${this.tableName}/${parma}`).then(results => {
-        Object.defineProperty(results, "set", {
-          value: set,
-          enumerable: false
-        })
-        Object.defineProperty(results, "save", {
-          value: save,
-          enumerable: false
-        })
-        Object.defineProperty(results, "increment", {
-          value: increment,
-          enumerable: false
+      request(`${this.tableName}/${ObjectId}`).then(results => {
+        Object.defineProperty(results, "set", {value: set})
+        Object.defineProperty(results, "save", {value: save})
+        Object.defineProperty(results, "increment", {value: increment})
+        Object.defineProperty(results, "destroy", {
+          value: () => this.destroy(results.objectId)
         })
         resolve(results)
       }).catch(err => {
         reject(err)
       })
     })
+  }
+  destroy(ObjectId) {
+    if (!isString(ObjectId)) {
+      throw new error(415)
+    }
+    return request(`${this.tableName}/${ObjectId}`, 'delete')
   }
   set(key, val = "") {
     if (!isString(key) || !isString(val)) {
