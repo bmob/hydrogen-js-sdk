@@ -5,7 +5,7 @@ import Bmob from './lib/app'
 console.log(Bmob)
 
 
-// Bmob.initialize("83c627d276f41bc0f62adbd5ce875e8a","b939b7e1b0c8b221dd4a1320dbc4cd4d")
+Bmob.initialize("83c627d276f41bc0f62adbd5ce875e8a","b939b7e1b0c8b221dd4a1320dbc4cd4d")
 //
 //  微信小程序模块
 // // 生成二维码 @object
@@ -131,8 +131,51 @@ console.log(Bmob)
 //     console.log(error);
 // });
 
-Bmob.initialize("71acb3659ea66abed6b7739f9bd2e914","45ef983f011036c5868e9e9a38c193ec")
+// 密码重置(Email)
+// let data = {
+//   email: '329685131@qq.com'
+// }
+// Bmob.requestPasswordReset(data).then(res => {
+//   console.log(res)
+// }).catch(err => {
+//   console.log(err)
+// })
 
+
+// 密码重置(短信重置方式)
+// let smsCode= '855828'
+// let param = {
+//   password: 'game20114'
+// }
+// Bmob.resetPasswordBySmsCode(smsCode,param).then(res => {
+//   console.log(res)
+// }).catch(err => {
+//   console.log(err)
+// })
+
+// 获取登录用户sessionToken
+// let data = {
+//   username: 'kken',
+//   password: 'game20114'
+// }
+// Bmob.User.login(data.username,data.password).then(res => {
+//   console.log('sessionToken', res.sessionToken)
+// }).catch(err => {
+//   console.log(err)
+// })
+// 密码重置(登录状态下，密码重置)
+// let objId ='5yej333K'
+// let data = {
+//   oldPassword: 'game2014',
+//   newPassword: 'game20114'
+// }
+// Bmob.updateUserPassword(objId,data).then(res => {
+//     console.log('sessionToken', res.sessionToken)
+//   }).catch(err => {
+//     console.log(err)
+//   })
+
+Bmob.initialize("71acb3659ea66abed6b7739f9bd2e914","45ef983f011036c5868e9e9a38c193ec")
 
 //
 // const query = Bmob.Query('project');
@@ -150,6 +193,11 @@ Bmob.initialize("71acb3659ea66abed6b7739f9bd2e914","45ef983f011036c5868e9e9a38c1
 //   console.log(err)
 // });
 
+Bmob.timestamp().then(res => {
+  console.log(res)
+}).catch(err => {
+  console.log(err)
+})
 
 Bmob.User.requestEmailVerify('bmob2018@bmob.cn').then(res => {
   console.log(res)

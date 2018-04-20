@@ -1,13 +1,16 @@
 const request = require('./request')
+const axiosRequest = require('./axiosRequest')
 const Bmob = require('./bmob')
 const error = require('./error')
 const { isObject, isString } = require('./dataType')
+
+// --------------小程序SDK-------------------
 
 /**
  * 生成小程序二维码
  * @return {Object}
  */
-const generateCode = (data, options) => {
+const generateCode = (data) => {
   if (!isObject(data)) {
     //参数异常
     throw new error(415)
@@ -20,7 +23,7 @@ const generateCode = (data, options) => {
  * 获取access_token
  * @return {Object}
  */
-const getAccessToken = (data, options) => {
+const getAccessToken = (data) => {
   let route = Bmob._config.parameters.GETACCESSTOKEN
   return request(route,'get')
 }
@@ -29,7 +32,7 @@ const getAccessToken = (data, options) => {
  * 小程序模版信息
  * @return {Object}
  */
-const sendWeAppMessage = (data, options) => {
+const sendWeAppMessage = (data) => {
     if (!isObject(data)) {
       //参数异常
       throw new error(415)
@@ -38,7 +41,7 @@ const sendWeAppMessage = (data, options) => {
     return request(route,'post',data)
 }
 
-const sendMessage = (data, options) => {
+const sendMessage = (data) => {
   //       var request = Bmob._request("wechatApp/SendWeAppMessage", null, null, 'POST', Bmob._encode(data, null, true));
   return 1
 }
@@ -49,10 +52,10 @@ const sendMessage = (data, options) => {
  */
 
  /**
- * 退款
+ * 微信退款
  * @return {Object}
  */
-const refund = (data, options) => {
+const refund = (data) => {
   if (!isObject(data)) {
     //参数异常
     throw new error(415)
@@ -62,10 +65,10 @@ const refund = (data, options) => {
 }
 
  /**
- * 微信主人通知
+ * 微信主人通知(主人信息推送)
  * @return {Object}
  */
-const notifyMsg = (data, options) => {
+const notifyMsg = (data) => {
   if (!isObject(data)) {
     //参数异常
     throw new error(415)
@@ -75,11 +78,63 @@ const notifyMsg = (data, options) => {
 }
 
 
+// --------------RESTful SDK-------------------
+
+
+ /**
+ * 密码重置
+ * @return {Object}
+ */
+
+//Email 重置
+const requestPasswordReset = (data) => {
+  if (!isObject(data)) {
+    //参数异常
+    throw new error(415)
+  }
+  let route = Bmob._config.parameters.REQUESTPASSWORDRESET 
+  return request(route,'post',data)
+}
+
+
+// 短信验证码重置
+const resetPasswordBySmsCode = (smsCode,data) => {
+  if (!isString(smsCode)) {
+    //参数异常
+    throw new error(415)
+  }
+  let route = `${Bmob._config.parameters.RESETPASSWORDBYSMSCODE}/${smsCode}`
+  return request(route,'put',data)
+}
+
+// 提供旧密码方式安全修改用户密码
+const updateUserPassword = (objectId,data) => {
+  if (!isObject(data) || !isString(objectId)) {
+    //参数异常
+    throw new error(415)
+  }
+  let route = `${Bmob._config.parameters.UPDATEUSERPASSWORD}/${objectId}`
+  return request(route,'put',data)
+}
+
+ /**
+ * 获取服务器时间
+ * @return {Object}
+ */
+
+ const timestamp = () => {
+   let route = Bmob._config.parameters.TIMESTAMP
+   return request(route,'get')
+ }
+
+
+
+// ---------------云函数------------------------
 /**
  * 云函数
  * @return {Object}
  */
-const functions = (funName, data, options) => {
+const functions = (funName, data) => {
   // 如果运行的云函数不需要传入参数，注意，"{}"是不能缺的
   if (!data) {
     data = {}
@@ -92,4 +147,14 @@ const functions = (funName, data, options) => {
   return request(route,'post',data)
 }
 
-module.exports = {generateCode,sendMessage,getAccessToken,sendWeAppMessage,refund,notifyMsg,functions};
+module.exports = {
+  generateCode,
+  sendMessage,
+  getAccessToken,
+  sendWeAppMessage,
+  refund,notifyMsg,
+  functions,timestamp,
+  requestPasswordReset,
+  resetPasswordBySmsCode,
+  pdateUserPassword
+};

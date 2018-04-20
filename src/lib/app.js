@@ -1,6 +1,18 @@
 
 const Bmob = require('./bmob')
-const {generateCode, sendMessage,getAccessToken,sendWeAppMessage,refund,notifyMsg,functions} = require('./common')
+const {
+  generateCode,
+  sendMessage,
+  getAccessToken,
+  sendWeAppMessage,
+  refund,
+  notifyMsg,
+  functions,
+  timestamp,
+  requestPasswordReset,
+  resetPasswordBySmsCode,
+  updateUserPassword
+} = require('./common')
 const {requestSmsCode,verifySmsCode} = require('./sms')
 
 // 生成二维码
@@ -21,6 +33,14 @@ Bmob.requestSmsCode = requestSmsCode
 Bmob.verifySmsCode = verifySmsCode
 // 云函数
 Bmob.functions = functions
+// 获取服务器时间
+Bmob.timestamp = timestamp
+// 密码重置(Email)
+Bmob.requestPasswordReset = requestPasswordReset
+// 密码重置(短信)
+Bmob.resetPasswordBySmsCode = resetPasswordBySmsCode
+// 密码重置(登录状态下更改密码)
+Bmob.updateUserPassword = updateUserPassword
 if(typeof global.Bmob==undefined){
    global.Bmob = Bmob
  }

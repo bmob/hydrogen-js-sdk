@@ -133,10 +133,121 @@ Bmob.User.requestEmailVerify('bmob2018@bmob.cn').then(res => {
 {code: 120, error: "Email verify should be opened in your app setup page of bmob."}
 ```
 
+### 密码重置
+
+ **简介：**
+
+共提供了3种方法，分别是email重置、短信验证码重置、旧密码重置。
 
 
+Eamil密码重置
+
+ **请求描述：**
+你可以使用这项功能，前提是用户将email与他们的账户关联起来，如果要重设密码，发送一个POST请求到 /1/requestPasswordReset, 同时在request的body部分带上email字段。
+
+密码重置流程如下：
+
+1.用户输入他们的电子邮件，请求重置自己的密码。
+
+2.Bmob向他们的邮箱发送一封包含特殊的密码重置连接的电子邮件，此邮件的模板可在Bmob后台中修改。
+
+3.用户根据向导点击重置密码连接，打开一个特殊的Bmob页面，输入一个新的密码。
+
+4.用户的密码已被重置为新输入的密码。
+
+ **参数说明：**
+
+| 参数      | 类型   | 必填 | 说明     |
+| ---------| ------ | ---- | -------- |
+| email    | string | 是   | 邮箱地址 |
 
 
+**请求示例：**
+
+```
+let data = {
+  email: '329685131@qq.com'
+}
+Bmob.requestPasswordReset(data).then(res => {
+  console.log(res)
+}).catch(err => {
+  console.log(err)
+})
+```
+
+**返回示例:**
+
+```
+{
+  "msg": "ok"
+}
+```
+
+短信密码重置
+
+ **请求描述：**
+如果用户有绑定了手机号码，就可以通过手机验证码短信来实现使用手机号码找回密码的功能，先调用 请求短信验证码API会将验证码发送到用户手机上，用户收到验证码并输入后，调用PUT /1/resetPasswordBySmsCode/smsCode 来为用户设置新的密码。
+
+**参数说明：**
+
+| 参数      | 类型   | 必填 | 说明     |
+| ---------| ------ | ---- | -------- |
+| password    | string | 是   | 新密码 |
+
+**请求示例：**
+```
+let smsCode= 'smsCode'
+let data = {
+  password: 'password'
+}
+Bmob.resetPasswordBySmsCode(smsCode,data).then(res => {
+  console.log(res)
+}).catch(err => {
+  console.log(err)
+})
+```
+**返回示例:**
+
+```
+{
+  "msg": "ok"
+}
+```
+
+提供旧密码方式安全修改用户密码
+
+ **请求描述：**
+很多开发者希望让用户输入一次旧密码做一次校验，旧密码正确才可以修改为新密码，因此我们提供了一个单独的 API PUT /1/updatePassword 来安全地修改用户密码。
+
+注意：仍然需要传入 X-Bmob-Session-Token，也就是登录用户才可以修改自己的密码。
+**参数说明：**
+
+| 参数      | 类型   | 必填 | 说明     |
+| ---------| ------ | ---- | -------- |
+| oldPassword    | string | 是   | 旧密码 |
+| newPassword    | string | 是   | 新密码 |
+
+**请求示例：**
+```
+let objectId ='objectId'
+let data = {
+  oldPassword: 'oldPassword',
+  newPassword: 'newPassword'
+}
+Bmob.updateUserPassword(objectId,data).then(res => {
+    console.log(res)
+  }).catch(err => {
+    console.log(err)
+  })
+```
+
+**返回示例:**
+
+```
+{
+  "msg": "ok"
+}
+```
 ## 数据表操作
 
 ### 获取一行记录
