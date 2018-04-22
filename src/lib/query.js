@@ -10,6 +10,7 @@ const query = class query {
     this.orData = {}
     this.limitNum = 10
     this.skipNum = 0
+    this.orders = ""
   }
   get(ObjectId) {
     if (!isString(ObjectId)) {
@@ -191,6 +192,14 @@ const query = class query {
     }
     this.skipNum = parma
   }
+  order(...key){
+    key.map(item => {
+      if(!isString(item)){
+        throw new error(415)
+      }
+    })
+    this.orders = key.join(',')
+  }
   find() {
     let whereData = {};
     if (Object.keys(this.queryData).length) {
@@ -204,7 +213,7 @@ const query = class query {
     }
     whereData.limit = this.limitNum
     whereData.skip = this.skipNum
-    console.log(whereData.where)
+    whereData.order = this.orders
     return new Promise((resolve, reject) => {
       request(`${this.tableName}`, 'get', whereData).then(({results}) => {
         this.equalToData = {}
