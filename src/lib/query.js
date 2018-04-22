@@ -4,6 +4,9 @@ const error = require('./error')
 const query = class query {
   constructor(parma) {
     this.tableName = `/1/classes/${parma}`
+    this.init()
+  }
+  init(){
     this.setData = {}
     this.queryData = {}
     this.andData = {}
@@ -180,21 +183,21 @@ const query = class query {
       "$and": querys
     }
   }
-  limit(parma){
-    if(!isNumber(parma)){
+  limit(parma) {
+    if (!isNumber(parma)) {
       throw new error(415)
     }
     this.limitNum = parma
   }
-  skip(parma){
-    if(!isNumber(parma)){
+  skip(parma) {
+    if (!isNumber(parma)) {
       throw new error(415)
     }
     this.skipNum = parma
   }
-  order(...key){
+  order(...key) {
     key.map(item => {
-      if(!isString(item)){
+      if (!isString(item)) {
         throw new error(415)
       }
     })
@@ -216,9 +219,17 @@ const query = class query {
     whereData.order = this.orders
     return new Promise((resolve, reject) => {
       request(`${this.tableName}`, 'get', whereData).then(({results}) => {
-        this.equalToData = {}
-        this.notEqualToData = {}
+        this.init()
         resolve(results)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  }
+  count() {
+    return new Promise((resolve, reject) => {
+      request(`${this.tableName}`, 'get', {count:1}).then(({count}) => {
+        resolve(count)
       }).catch(err => {
         reject(err)
       })

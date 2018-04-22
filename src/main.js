@@ -230,8 +230,8 @@ const query = Bmob.Query('test3');
 // query.terms('aab','==','222')
 // const b = query.terms('createdAt','<=','2018-04-18 16:30:01')
 // query.or(a,b)
-// query.limit(3)
-// query.skip(3)
+query.limit(3)
+query.skip(3)
 // query.order('createdAt')
 query.find().then(res => {
   console.log(res)
@@ -239,6 +239,9 @@ query.find().then(res => {
   console.log(err)
 })
 
+query.count().then(res => {
+  console.log(res);
+})
 
 // query.find().then(res => {
 //   console.log(res)
