@@ -232,6 +232,7 @@ const query = Bmob.Query('test3');
 // query.or(a,b)
 query.limit(3)
 query.skip(3)
+query.select('aab','bb')
 // query.order('createdAt')
 query.find().then(res => {
   console.log(res)
