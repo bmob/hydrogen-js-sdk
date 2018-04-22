@@ -5,10 +5,10 @@ import Bmob from './lib/app'
 console.log(Bmob)
 
 
-// Bmob.initialize("83c627d276f41bc0f62adbd5ce875e8a","b939b7e1b0c8b221dd4a1320dbc4cd4d")
+Bmob.initialize("83c627d276f41bc0f62adbd5ce875e8a","b939b7e1b0c8b221dd4a1320dbc4cd4d")
 //
 //  微信小程序模块
-// // 生成二维码
+// // 生成二维码 @object
 // let qrData = { path: 'path', width: 430, type: 1 }
 // Bmob.generateCode(qrData).then(function (response) {
 //     console.log(response);
@@ -26,7 +26,7 @@ console.log(Bmob)
 //     console.log(error);
 // });
 //
-// // 小程序模板消息
+// // 小程序模板消息 @object
 // let modelData = {
 //     "touser": "open_Id",
 //     "template_id": "template_id",
@@ -86,8 +86,117 @@ console.log(Bmob)
 //     console.log(error);
 // });
 
+// 微信主人通知
+// let data = {
+//   touser: "Bmob公众号回复，openid 得到",
+//   template_id:"-ERkPwp0ntimqH39bggQc_Pj55a18CYLpj-Ert8-c8Y",
+//   url: "http://www.bmob.cn/",
+//   data: {
+//       first: {
+//           value: "您好，Restful 失效，请登录控制台查看。",
+//           color: "#c00"
+//       },
+//       keyword1: {
+//           value: "Restful 失效"
+//       },
+//       keyword2: {
+//           value: "2017-07-03 16:13:01"
+//       },
+//       keyword3: {
+//           value: "高"
+//       },
+//       remark: {
+//           value: "如果您十分钟内再次收到此信息，请及时处理。"
+//       }
+//   }}
+// 
+// Bmob.notifyMsg(data).then(function (response) {
+//     console.log(response);
+// })
+// .catch(function (error) {
+//     console.log(error);
+// });
+
+// 云函数
+// let params =　{
+//   funcName: 'hello',
+//   data: {
+//     name : 'bmob'
+//   }
+// }
+// Bmob.functions(params.funcName,params.data).then(function (response) {
+//     console.log(response);
+// })
+// .catch(function (error) {
+//     console.log(error);
+// });
+
+// 密码重置(Email)
+// let data = {
+//   email: '329685131@qq.com'
+// }
+// Bmob.requestPasswordReset(data).then(res => {
+//   console.log(res)
+// }).catch(err => {
+//   console.log(err)
+// })
+
+
+// 密码重置(短信重置方式)
+// let smsCode= '855828'
+// let param = {
+//   password: 'game20114'
+// }
+// Bmob.resetPasswordBySmsCode(smsCode,param).then(res => {
+//   console.log(res)
+// }).catch(err => {
+//   console.log(err)
+// })
+
+// 获取登录用户sessionToken
+// let data = {
+//   username: 'kken',
+//   password: 'game20114'
+// }
+// Bmob.User.login(data.username,data.password).then(res => {
+//   console.log('sessionToken', res.sessionToken)
+// }).catch(err => {
+//   console.log(err)
+// })
+// 密码重置(登录状态下，密码重置)
+// let objId ='5yej333K'
+// let data = {
+//   oldPassword: 'game2014',
+//   newPassword: 'game20114'
+// }
+// Bmob.updateUserPassword(objId,data).then(res => {
+//     console.log(res)
+//   }).catch(err => {
+//     console.log(err)
+//   })
+
+// 查询用户
+// Bmob.User.users().then(res => {
+//   console.log(res)
+// }).catch(err => {
+//   console.log(err)
+// })
+
+// APP推送
+// let data = {
+//   data: {
+//     alert: "Hello From Bmob."
+//   }
+// }
+
+// Bmob.push(data).then(res => {
+//   console.log(res)
+// }).catch(err => {
+//   console.log(err)
+// })
 Bmob.initialize("71acb3659ea66abed6b7739f9bd2e914","45ef983f011036c5868e9e9a38c193ec")
-//
+
+
 // const query = Bmob.Query('project');
 // query.set("name","fff")
 // query.set("cover","333")
@@ -103,6 +212,11 @@ Bmob.initialize("71acb3659ea66abed6b7739f9bd2e914","45ef983f011036c5868e9e9a38c1
 //   console.log(err)
 // });
 
+Bmob.timestamp().then(res => {
+  console.log(res)
+}).catch(err => {
+  console.log(err)
+})
 
 Bmob.User.requestEmailVerify('bmob2018@bmob.cn').then(res => {
   console.log(res)

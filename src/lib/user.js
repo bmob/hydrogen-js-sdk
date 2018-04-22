@@ -37,7 +37,6 @@ const user = class user extends query {
     let route = Bmob._config.parameters.REGISTER
     return request(route, 'post', this.setData)
   }
-
   login(username, password) {
     if (!isString(username) || !isString(password)) {
       //异常
@@ -54,7 +53,10 @@ const user = class user extends query {
       })
     })
   }
-
+  users() {
+    let route = Bmob._config.parameters.USERS
+    return request(route, 'get')
+  }
 }
 
 module.exports = user
