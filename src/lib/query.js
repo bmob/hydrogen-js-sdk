@@ -1,12 +1,13 @@
 const request = require('./request')
-const {isObject, isString, isNumber} = require('./dataType')
+const {isObject, isString, isNumber, isUndefined} = require('./dataType')
 const error = require('./error')
 const query = class query {
   constructor(parma) {
     this.tableName = `/1/classes/${parma}`
     this.setData = {}
-    this.equalToData = {}
-    this.notEqualToData = {}
+    this.queryData = {}
+    this.andData = {}
+    this.orData = {}
   }
   get(ObjectId) {
     if (!isString(ObjectId)) {
@@ -83,35 +84,108 @@ const query = class query {
     this.setData = Object.assign(parma, this.setData)
     return request(`${this.tableName}`, 'post', this.setData)
   }
-  equalTo(key, val) {
+  terms(key, operator, val) {
     if (!isString(key)) {
       throw new error(415)
     }
-    this.equalToData[key] = val
+    const judge = (key, operator, val) => {
+      let data = {},value = null
+      switch (operator) {
+        case '==':
+          data[key] = val
+          break;
+        case '!=':
+          data[key] = {
+            "$ne": val
+          }
+          break;
+        case '<':
+          data[key] = {
+            "$lt": val
+          }
+          break;
+        case '<=':
+          data[key] = {
+            "$lte": val
+          }
+          break;
+        case '>':
+          data[key] = {
+            "$gt": val
+          }
+        case '>=':
+          data[key] = {
+            "$gte": val
+          }
+          break;
+        default:
+          throw new error(415)
+      }
+      return data
+    }
+    let keys = false;
+    for (let item in this.queryData) {
+      if (key == item) {
+        keys = true
+      }
+    }
+    const newData = judge(key, operator, val)
+
+    if (!isUndefined(this.queryData.$and)) {
+      this.queryData.$and.push(newData)
+    } else {
+      if (keys) {
+        this.queryData = {
+          "$and": [this.queryData, newData]
+        }
+      } else {
+        this.queryData = Object.assign(newData, this.queryData)
+      }
+    }
+    return newData
   }
-  notEqualTo(key, val) {
-    if (!isString(key)) {
-      throw new error(415)
+  or(...querys) {
+    querys.map((item, i) => {
+      if (!isObject(item)) {
+        throw new error(415)
+      }
+    })
+    const queryData = this.queryData.$and
+    if (!isUndefined(queryData)) {
+      for (let i = 0; i < queryData.length; i++) {
+        for (let k = 0; k < querys.length; k++) {
+          if(JSON.stringify(queryData[i]) == JSON.stringify(querys[k])){
+            this.queryData.$and.splice(i,1)
+          }
+        }
+      }
     }
-    this.notEqualToData[key] = {
-      "$ne": val
+    this.orData = {
+      "$or": querys
+    }
+  }
+  and(...querys) {
+    querys.map((item, i) => {
+      if (!isObject(item)) {
+        throw new error(415)
+      }
+    })
+    this.andData = {
+      "$and": querys
     }
   }
   find() {
     let whereData = {};
-    const eqLen = Object.keys(this.equalToData).length
-    const notEqlen = Object.keys(this.notEqualToData).length
-    if (eqLen && !notEqlen) {
-      whereData.where = this.equalToData
+    if (Object.keys(this.queryData).length) {
+      whereData.where = this.queryData
     }
-    if (!eqLen && notEqlen) {
-      whereData.where = this.notEqualToData
+    if (Object.keys(this.andData).length) {
+      whereData.where = Object.assign(this.andData, this.queryData)
     }
-    if (eqLen && notEqlen) {
-      whereData.where = {
-        "$and": [this.equalToData, this.notEqualToData]
-      }
+    if (Object.keys(this.orData).length) {
+      whereData.where = Object.assign(this.orData, this.queryData)
     }
+    console.log(whereData.where)
     return new Promise((resolve, reject) => {
       request(`${this.tableName}`, 'get', whereData).then(({results}) => {
         this.equalToData = {}

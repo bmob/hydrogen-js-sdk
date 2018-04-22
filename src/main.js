@@ -112,18 +112,17 @@ Bmob.User.requestEmailVerify('bmob2018@bmob.cn').then(res => {
 
 
 const query = Bmob.Query('test3');
-
-query.notEqualTo('aab',"212")
-query.equalTo('aaa',"333")
+//
+// query.notEqualTo('aab',"212")
+// query.equalTo('aaa',"333")
+// query.terms('createdAt','>','2018-04-17 22:43:09')
+query.terms('createdAt','>','2018-04-18 14:49:50')
 query.find().then(res => {
   console.log(res)
 }).catch(err => {
   console.log(err)
 })
 
-query.get('65f499d80a').then(res => {
-    console.log(res)
-})
 
 // query.find().then(res => {
 //   console.log(res)
