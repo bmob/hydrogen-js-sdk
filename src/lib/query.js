@@ -8,6 +8,8 @@ const query = class query {
     this.queryData = {}
     this.andData = {}
     this.orData = {}
+    this.limitNum = 10
+    this.skipNum = 0
   }
   get(ObjectId) {
     if (!isString(ObjectId)) {
@@ -177,6 +179,18 @@ const query = class query {
       "$and": querys
     }
   }
+  limit(parma){
+    if(!isNumber(parma)){
+      throw new error(415)
+    }
+    this.limitNum = parma
+  }
+  skip(parma){
+    if(!isNumber(parma)){
+      throw new error(415)
+    }
+    this.skipNum = parma
+  }
   find() {
     let whereData = {};
     if (Object.keys(this.queryData).length) {
@@ -188,6 +202,8 @@ const query = class query {
     if (Object.keys(this.orData).length) {
       whereData.where = Object.assign(this.orData, this.queryData)
     }
+    whereData.limit = this.limitNum
+    whereData.skip = this.skipNum
     console.log(whereData.where)
     return new Promise((resolve, reject) => {
       request(`${this.tableName}`, 'get', whereData).then(({results}) => {
