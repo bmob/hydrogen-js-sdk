@@ -89,33 +89,42 @@ const query = class query {
       throw new error(415)
     }
     const judge = (key, operator, val) => {
-      let data = {},value = null
+      let data = {},
+        value = null
+      if (key == "createdAt" || key == "updateAt") {
+        value = {
+          "__type": "Date",
+          "iso": val
+        }
+      } else {
+        value = val
+      }
       switch (operator) {
         case '==':
-          data[key] = val
+          data[key] = value
           break;
         case '!=':
           data[key] = {
-            "$ne": val
+            "$ne": value
           }
           break;
         case '<':
           data[key] = {
-            "$lt": val
+            "$lt": value
           }
           break;
         case '<=':
           data[key] = {
-            "$lte": val
+            "$lte": value
           }
           break;
         case '>':
           data[key] = {
-            "$gt": val
+            "$gt": value
           }
         case '>=':
           data[key] = {
-            "$gte": val
+            "$gte": value
           }
           break;
         default:
@@ -123,25 +132,19 @@ const query = class query {
       }
       return data
     }
-    let keys = false;
-    for (let item in this.queryData) {
-      if (key == item) {
-        keys = true
-      }
-    }
     const newData = judge(key, operator, val)
-
-    if (!isUndefined(this.queryData.$and)) {
-      this.queryData.$and.push(newData)
-    } else {
-      if (keys) {
+    if (Object.keys(this.queryData).length) {
+      if (!isUndefined(this.queryData.$and)) {
+        this.queryData.$and.push(newData)
+      } else {
         this.queryData = {
           "$and": [this.queryData, newData]
         }
-      } else {
-        this.queryData = Object.assign(newData, this.queryData)
       }
+    } else {
+      this.queryData = newData
     }
+
     return newData
   }
   or(...querys) {
@@ -154,8 +157,8 @@ const query = class query {
     if (!isUndefined(queryData)) {
       for (let i = 0; i < queryData.length; i++) {
         for (let k = 0; k < querys.length; k++) {
-          if(JSON.stringify(queryData[i]) == JSON.stringify(querys[k])){
-            this.queryData.$and.splice(i,1)
+          if (JSON.stringify(queryData[i]) == JSON.stringify(querys[k])) {
+            this.queryData.$and.splice(i, 1)
           }
         }
       }

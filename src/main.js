@@ -109,7 +109,7 @@ Bmob.initialize("83c627d276f41bc0f62adbd5ce875e8a","b939b7e1b0c8b221dd4a1320dbc4
 //           value: "如果您十分钟内再次收到此信息，请及时处理。"
 //       }
 //   }}
-// 
+//
 // Bmob.notifyMsg(data).then(function (response) {
 //     console.log(response);
 // })
@@ -211,26 +211,25 @@ Bmob.initialize("71acb3659ea66abed6b7739f9bd2e914","45ef983f011036c5868e9e9a38c1
 //  }).catch(err => {
 //   console.log(err)
 // });
-
-Bmob.timestamp().then(res => {
-  console.log(res)
-}).catch(err => {
-  console.log(err)
-})
-
-Bmob.User.requestEmailVerify('bmob2018@bmob.cn').then(res => {
-  console.log(res)
-}).catch(err => {
- console.log(err)
-});
+//
+// Bmob.timestamp().then(res => {
+//   console.log(res)
+// }).catch(err => {
+//   console.log(err)
+// })
+//
+// Bmob.User.requestEmailVerify('bmob2018@bmob.cn').then(res => {
+//   console.log(res)
+// }).catch(err => {
+//  console.log(err)
+// });
 
 
 const query = Bmob.Query('test3');
-//
-// query.notEqualTo('aab',"212")
-// query.equalTo('aaa',"333")
-// query.terms('createdAt','>','2018-04-17 22:43:09')
-query.terms('createdAt','>','2018-04-18 14:49:50')
+const a = query.terms('createdAt','>','2018-04-17 22:43:09')
+query.terms('aab','==','222')
+const b = query.terms('createdAt','<=','2018-04-18 16:30:01')
+query.or(a,b)
 query.find().then(res => {
   console.log(res)
 }).catch(err => {
