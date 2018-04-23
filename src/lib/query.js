@@ -1,9 +1,10 @@
 const request = require('./request')
+const Bmob = require('./bmob')
 const {isObject, isString, isNumber, isUndefined} = require('./dataType')
 const error = require('./error')
 const query = class query {
   constructor(parma) {
-    this.tableName = `/1/classes/${parma}`
+    this.tableName = `${Bmob._config.parameters.QUERY}/${parma}`
     this.init()
   }
   init() {
