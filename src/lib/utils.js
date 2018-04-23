@@ -19,9 +19,9 @@ const getAppType = () => {
   Bmob._config = getConfig()
   let type;
   // h5
-  if (Bmob._config.type == 1) {
+  if (typeof window != undefined) {
     type = 'h5'
-  } else if (Bmob._config.type == 2) {
+  } else if (typeof wx != undefined == 2) {
     // 小程序
     type = 'wx'
   } else if (Bmob._config.type == 3) {

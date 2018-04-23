@@ -10,7 +10,7 @@ if (type == 'h5') {
   request = require('./axiosRequest')
 } else if (Bmob._config.type == 'wx') {
   // 小程序
-
+  request = require('./wxRequest')
 } else if (Bmob._config.type == 'hap') {
   //快应用功能
 }
