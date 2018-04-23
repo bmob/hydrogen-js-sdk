@@ -109,7 +109,7 @@ Bmob.initialize("83c627d276f41bc0f62adbd5ce875e8a","b939b7e1b0c8b221dd4a1320dbc4
 //           value: "如果您十分钟内再次收到此信息，请及时处理。"
 //       }
 //   }}
-// 
+//
 // Bmob.notifyMsg(data).then(function (response) {
 //     console.log(response);
 // })
@@ -210,6 +210,7 @@ Bmob.initialize("71acb3659ea66abed6b7739f9bd2e914","45ef983f011036c5868e9e9a38c1
 //  }).catch(err => {
 //   console.log(err)
 // });
+<<<<<<< HEAD
 
 Bmob.timestamp().then(res => {
   console.log(res)
@@ -222,19 +223,40 @@ Bmob.User.requestEmailVerify('bmob2018@bmob.cn').then(res => {
 }).catch(err => {
  console.log(err)
 });
+=======
+//
+// Bmob.timestamp().then(res => {
+//   console.log(res)
+// }).catch(err => {
+//   console.log(err)
+// })
+//
+// Bmob.User.requestEmailVerify('bmob2018@bmob.cn').then(res => {
+//   console.log(res)
+// }).catch(err => {
+//  console.log(err)
+// });
+>>>>>>> 04be17f871136fda82c28c5f9971120f60c47776
 
 
 const query = Bmob.Query('test3');
-query.get('65f499d80a').then(res => {
-  res.unset('bb')
-  res.set('aaa','666666')
-  res.save().then(res => {
-    console.log(res)
-  })
+// const a = query.terms('createdAt','>','2018-04-17 22:43:09')
+// query.terms('aab','==','222')
+// const b = query.terms('createdAt','<=','2018-04-18 16:30:01')
+// query.or(a,b)
+query.limit(3)
+query.skip(3)
+query.select('aab','bb')
+// query.order('createdAt')
+query.find().then(res => {
+  console.log(res)
 }).catch(err => {
   console.log(err)
 })
 
+query.count().then(res => {
+  console.log(res);
+})
 
 // query.find().then(res => {
 //   console.log(res)
