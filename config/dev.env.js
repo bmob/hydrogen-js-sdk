@@ -13,13 +13,11 @@ module.exports = {
     path: config.staticPath,
     filename: 'Bmob-' + packageInfo.version + '.min.js',
     library: 'Bmob',
-    libraryExport: "default",
     libraryTarget: "umd"
   },
   plugins: [
     new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({filename: 'index.html', template: 'src/index.html'}),
-    new UglifyJsPlugin()
   ],
   devServer: {
     contentBase: config.staticPath,
