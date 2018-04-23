@@ -570,7 +570,7 @@ query.find().then(res => {
 你可以使用`or`方法操作或查询，示例代码如下：
 
 ```
-const query = new Bmob.Query("tableName");
+const query = Bmob.Query("tableName");
 const query1 = query.terms("isLike", '>', 150);
 const query2 = query.terms("isLike", '<', 150);
 
@@ -622,7 +622,7 @@ query.order("-score","name");
 
 如果你只是想统计满足`query`的结果集到底有多条记录，你可以使用`count`方法。如为了获得diary表的记录数量，示例代码如下：
 ```
-const query = new Bmob.Query('diary');
+const query = Bmob.Query('diary');
 query.count().then(res => {
   console.log(`公有${res}条记录`)
 });
