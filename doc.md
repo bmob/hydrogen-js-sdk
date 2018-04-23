@@ -531,7 +531,7 @@ or
 **请求示例：**
 ```
 // 如果要查询某个属性等于某个值，示例代码如下：
-query.terms("title", "==", "bmob");
+query.terms("isLike", "==", 100);
 
 // 如果要查询某个属性不等于某个值，示例代码如下：
 query.terms("title", "!=", "bmob sdk");
@@ -540,17 +540,19 @@ query.terms("title", "!=", "bmob sdk");
 query.terms("title","==", { "$regex": "" + k + ".*" });
 
 // 查询大于某个日期的数据，示例代码如下
-query.terms("createdAt", ">" ""2011-08-21 18:02:52"");
+query.terms("createdAt", ">" "2018-08-21 18:02:52");
 
 /**
 * terms 方法支持 "==","!=",">",">=","<","<="
 */
 
 ```
-两条查询语句一起写，就相当于AND查询，如下示例代码，查询同时满足`"title"="bmob" and "score">100`的数据：
+两条查询语句一起写，就相当于AND查询，如下示例代码，查询一个月的数据：
 ```
-query.terms("title", "==", "bmob");
-query.terms("score", ">", 100);
+query.terms("createdAt", ">", "2018-04-01 00:00:00");
+query.terms("createdAt", "<", "2018-05-01 00:00:00");
+
+// 因为createdAt updatedAt服务器自动生成的时间，在服务器保存的是精确到微秒值的时间，所以基于时间类型比较的值要加1秒。
 
 ```
 
