@@ -6,15 +6,15 @@ const query = class query {
     this.tableName = `/1/classes/${parma}`
     this.init()
   }
-  init(){
+  init() {
     this.setData = {}
     this.queryData = {}
     this.andData = {}
     this.orData = {}
     this.limitNum = 10
     this.skipNum = 0
-    this.orders = ""
-    this.keys = ""
+    this.orders = null
+    this.keys = null
   }
   get(ObjectId) {
     if (!isString(ObjectId)) {
@@ -188,7 +188,7 @@ const query = class query {
     if (!isNumber(parma)) {
       throw new error(415)
     }
-    if(parma > 1000){
+    if (parma > 1000) {
       parma = 1000
     }
     this.limitNum = parma
@@ -207,7 +207,7 @@ const query = class query {
     })
     this.orders = key.join(',')
   }
-  select(...key){
+  select(...key) {
     key.map(item => {
       if (!isString(item)) {
         throw new error(415)
@@ -216,22 +216,22 @@ const query = class query {
     this.keys = key.join(',')
   }
   find() {
-    let whereData = {};
+    let parmas = {};
     if (Object.keys(this.queryData).length) {
-      whereData.where = this.queryData
+      parmas.where = this.queryData
     }
     if (Object.keys(this.andData).length) {
-      whereData.where = Object.assign(this.andData, this.queryData)
+      parmas.where = Object.assign(this.andData, this.queryData)
     }
     if (Object.keys(this.orData).length) {
-      whereData.where = Object.assign(this.orData, this.queryData)
+      parmas.where = Object.assign(this.orData, this.queryData)
     }
-    whereData.limit = this.limitNum
-    whereData.skip = this.skipNum
-    whereData.order = this.orders
-    whereData.keys = this.keys
+    parmas.limit = this.limitNum
+    parmas.skip = this.skipNum
+    parmas.order = this.orders
+    parmas.keys = this.keys
     return new Promise((resolve, reject) => {
-      request(`${this.tableName}`, 'get', whereData).then(({results}) => {
+      request(`${this.tableName}`, 'get', parmas).then(({results}) => {
         this.init()
         resolve(results)
       }).catch(err => {
@@ -241,7 +241,7 @@ const query = class query {
   }
   count() {
     return new Promise((resolve, reject) => {
-      request(`${this.tableName}`, 'get', {count:1}).then(({count}) => {
+      request(`${this.tableName}`, 'get', {count: 1}).then(({count}) => {
         resolve(count)
       }).catch(err => {
         reject(err)
