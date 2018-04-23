@@ -196,7 +196,6 @@ Bmob.initialize("83c627d276f41bc0f62adbd5ce875e8a","b939b7e1b0c8b221dd4a1320dbc4
 // })
 Bmob.initialize("71acb3659ea66abed6b7739f9bd2e914","45ef983f011036c5868e9e9a38c193ec")
 
-
 // const query = Bmob.Query('project');
 // query.set("name","fff")
 // query.set("cover","333")
@@ -219,7 +218,7 @@ Bmob.timestamp().then(res => {
 })
 
 Bmob.User.requestEmailVerify('bmob2018@bmob.cn').then(res => {
-  console.log(res)
+ console.log(res)
 }).catch(err => {
  console.log(err)
 });
