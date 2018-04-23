@@ -14,7 +14,7 @@ const setHeader = (config) => {
   return header
 }
 
-const request = (route, method = "get", parma = {}) => {
+const request = (route, method = 'get', parma = {}) => {
   return new Promise((resolve, reject) => {
     const header = setHeader(Bmob._config)
 
@@ -41,13 +41,11 @@ const request = (route, method = "get", parma = {}) => {
       url: route,
       method: method
     }
-
     if (serverData.method == 'get') {
       serverData.params = parma
     } else {
       serverData.data = parma
     }
-
     server(serverData).then(({data}) => {
       if (data.code) {
         reject(data);
