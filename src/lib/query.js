@@ -188,6 +188,9 @@ const query = class query {
     if (!isNumber(parma)) {
       throw new error(415)
     }
+    if(parma > 1000){
+      parma = 1000
+    }
     this.limitNum = parma
   }
   skip(parma) {

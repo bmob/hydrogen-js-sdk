@@ -210,21 +210,6 @@ Bmob.initialize("71acb3659ea66abed6b7739f9bd2e914","45ef983f011036c5868e9e9a38c1
 //  }).catch(err => {
 //   console.log(err)
 // });
-<<<<<<< HEAD
-
-Bmob.timestamp().then(res => {
-  console.log(res)
-}).catch(err => {
-  console.log(err)
-})
-
-Bmob.User.requestEmailVerify('bmob2018@bmob.cn').then(res => {
- console.log(res)
-}).catch(err => {
- console.log(err)
-});
-=======
-//
 // Bmob.timestamp().then(res => {
 //   console.log(res)
 // }).catch(err => {
@@ -232,18 +217,17 @@ Bmob.User.requestEmailVerify('bmob2018@bmob.cn').then(res => {
 // })
 //
 // Bmob.User.requestEmailVerify('bmob2018@bmob.cn').then(res => {
-//   console.log(res)
+//  console.log(res)
 // }).catch(err => {
 //  console.log(err)
 // });
->>>>>>> 04be17f871136fda82c28c5f9971120f60c47776
 
 
 const query = Bmob.Query('test3');
-// const a = query.terms('createdAt','>','2018-04-17 22:43:09')
-// query.terms('aab','==','222')
-// const b = query.terms('createdAt','<=','2018-04-18 16:30:01')
-// query.or(a,b)
+const b = query.terms('createdAt','<=','2018-04-18 16:30:01')
+const a = query.terms('createdAt','>','2018-04-17 22:43:09')
+query.terms('aab','==','222')
+query.and(a,b)
 query.limit(3)
 query.skip(3)
 query.select('aab','bb')
