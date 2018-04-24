@@ -1,14 +1,15 @@
 const request = require('./request')
 const Bmob = require('./bmob')
-const {isObject, isString, isNumber, isUndefined} = require('./dataType')
+const {isObject, isString, isNumber, isUndefined, isArray} = require('./dataType')
 const error = require('./error')
 const query = class query {
   constructor(parma) {
     this.tableName = `${Bmob._config.parameters.QUERY}/${parma}`
     this.init()
+    this.addArray = {}
+    this.setData = {}
   }
   init() {
-    this.setData = {}
     this.queryData = {}
     this.andData = {}
     this.orData = {}
@@ -25,7 +26,26 @@ const query = class query {
     let oneData = {}
     const incrementData = {}
     const unsetData = {}
+    const addArray = {}
 
+    const add = (key, val) => {
+      if (!isString(key) || !isArray(val)) {
+        throw new error(415)
+      }
+      addArray[key] = {
+        "__op": "Add",
+        "objects": val
+      }
+    }
+    const addUnique = (key, val) => {
+      if (!isString(key) || !isArray(val)) {
+        throw new error(415)
+      }
+      addArray[key] = {
+        "__op": "AddUnique",
+        "objects": val
+      }
+    }
     const increment = (key, val = 1) => {
       if (!isString(key) || !isNumber(val)) {
         throw new error(415)
@@ -50,13 +70,8 @@ const query = class query {
       oneData[key] = val
     }
     const save = () => {
-      if (Object.keys(incrementData).length) {
-        oneData = Object.assign(incrementData, oneData)
-      }
-      if (Object.keys(unsetData).length) {
-        oneData = Object.assign(unsetData, oneData)
-      }
-      return request(`${this.tableName}/${ObjectId}`, 'put', oneData)
+      const saveData = Object.assign(unsetData, oneData, incrementData, addArray)
+      return request(`${this.tableName}/${ObjectId}`, 'put', saveData)
     }
     return new Promise((resolve, reject) => {
       request(`${this.tableName}/${ObjectId}`).then(results => {
@@ -64,6 +79,8 @@ const query = class query {
         Object.defineProperty(results, "unset", {value: unset})
         Object.defineProperty(results, "save", {value: save})
         Object.defineProperty(results, "increment", {value: increment})
+        Object.defineProperty(results, "add", {value: add})
+        Object.defineProperty(results, "addUnique", {value: addUnique})
         Object.defineProperty(results, "destroy", {
           value: () => this.destroy(ObjectId)
         })
@@ -85,12 +102,38 @@ const query = class query {
     }
     this.setData[key] = val;
   }
+  add(key, val) {
+    if (!isString(key) || !isArray(val)) {
+      throw new error(415)
+    }
+    this.addArray[key] = {
+      "__op": "Add",
+      "objects": val
+    }
+  }
+  addUnique(key, val) {
+    if (!isString(key) || !isArray(val)) {
+      throw new error(415)
+    }
+    this.addArray[key] = {
+      "__op": "AddUnique",
+      "objects": val
+    }
+  }
   save(parma = {}) {
     if (!isObject(parma)) {
       throw new error(415)
     }
-    this.setData = Object.assign(parma, this.setData)
-    return request(`${this.tableName}`, 'post', this.setData)
+    const saveData = Object.assign(parma, this.setData, this.addArray)
+    return new Promise((resolve, reject) => {
+      request(`${this.tableName}`, 'post', saveData).then((results) => {
+        this.addArray = {}
+        this.setData = {}
+        resolve(results)
+      }).catch(err => {
+        reject(err)
+      })
+    })
   }
   terms(key, operator, val) {
     if (!isString(key)) {

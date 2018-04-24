@@ -213,24 +213,11 @@ Bmob.initialize("71acb3659ea66abed6b7739f9bd2e914","45ef983f011036c5868e9e9a38c1
 
 
 const query = Bmob.Query('test3');
-const b = query.terms('createdAt','<=','2018-04-18 16:30:01')
-const a = query.terms('createdAt','>','2018-04-17 22:43:09')
-query.terms('aab','==','222')
-query.and(a,b)
-query.limit(3)
-query.skip(3)
-query.select('aab','bb')
-// query.order('createdAt')
-query.find().then(res => {
+query.get('4997bfec60').then(res => {
   console.log(res)
-}).catch(err => {
-  console.log(err)
+  res.addUnique('asd',['333'])
+  res.save()
 })
-
-query.count().then(res => {
-  console.log(res);
-})
-
 // query.find().then(res => {
 //   console.log(res)
 // }).catch(err => {
