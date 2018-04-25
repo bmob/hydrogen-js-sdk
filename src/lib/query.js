@@ -46,6 +46,15 @@ const query = class query {
         "objects": val
       }
     }
+    const remove = (key,val) => {
+      if (!isString(key) || !isArray(val)) {
+        throw new error(415)
+      }
+      addArray[key] = {
+        "__op": "Remove",
+        "objects": val
+      }
+    }
     const increment = (key, val = 1) => {
       if (!isString(key) || !isNumber(val)) {
         throw new error(415)
@@ -80,6 +89,7 @@ const query = class query {
         Object.defineProperty(results, "save", {value: save})
         Object.defineProperty(results, "increment", {value: increment})
         Object.defineProperty(results, "add", {value: add})
+        Object.defineProperty(results, "remove", {value: remove})
         Object.defineProperty(results, "addUnique", {value: addUnique})
         Object.defineProperty(results, "destroy", {
           value: () => this.destroy(ObjectId)

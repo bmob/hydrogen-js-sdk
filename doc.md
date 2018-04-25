@@ -628,6 +628,43 @@ query.count().then(res => {
 });
 ```
 
+## 数组操作
+为了帮你存储数组类数据，有三种操作你可以原子性地改动一个数组，这需要一个给定的 key：
+
+-  `add`在一个数组的末尾加入一个给定的对象。
+- `addUnique`只会把原本不存在的对象加入数组，所以加入的位置没有保证。
+比如, 我们想在数组"DiaryType"中加入日记类型：
+
+**添加数组：**
+```
+const query = Bmob.Query('tableName')
+query.add("DiaryType", ["public"]);
+query.addUnique("DiaryType", ["secret"]);
+query.save();
+```
+
+**更新数组：**
+```
+const query = Bmob.Query('tableName')
+query.get('ObjectId').then(res => {
+  res.add("DiaryType", ["public"]);
+  res.addUnique("DiaryType", ["secret"]);
+  res.save();
+})
+```
+
+
+**删除数组：**
+```
+const query = Bmob.Query('tableName')
+query.get('ObjectId').then(res => {
+  res.remove("DiaryType", ["secret"]);
+  res.save();
+})
+```
+
+
+
 
 ## 小程序操作 ##
 ### 生成二维码 ###
