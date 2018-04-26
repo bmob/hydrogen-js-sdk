@@ -88,6 +88,51 @@ Bmob.User.register(params).then(res => {
 {"code":107,"error":"content is empty."}
 ```
 
+### 手机验证码登陆
+
+ **简介：**
+
+手机号码和验证码一键快速登录的功能，而 **smsCode** 是调用短信请求验证码函数
+
+ **参数说明：**
+
+| 参数    | 类型   | 必填 | 说明   |
+| ------- | ------ | ---- | ------ |
+| phone   | Number | 是   | 用户名 |
+| smsCode | Number | 是   | 密码   |
+
+**请求示例：**
+
+```
+Bmob.User.signOrLoginByMobilePhone(phone,smsCode).then(res => {
+ console.log(res)
+}).catch(err => {
+ console.log(err)
+});
+```
+
+**返回示例:**
+
+```
+成功：
+{
+  "username": username,
+  "mobilePhoneNumber": mobilePhoneNumber,
+  "mobilePhoneVerified": boolValue,
+  "createdAt": YYYY-mm-dd HH:ii:ss,
+  "updatedAt": YYYY-mm-dd HH:ii:ss,
+  "objectId": objectId,
+  "sessionToken": sessionToekn,
+  key1:value1,
+  key2:value2,
+  ...
+}
+失败：
+{"code":207,"error":"code error."}
+```
+
+### 
+
 ### 查询用户
 
  **简介：**
@@ -246,7 +291,6 @@ Bmob.resetPasswordBySmsCode(smsCode,data).then(res => {
       "msg": "ok"
     }
 
-
 提供旧密码方式安全修改用户密码
 
  **请求描述：**
@@ -282,7 +326,6 @@ Bmob.updateUserPassword(objectId,data).then(res => {
     }
 
 
-
 ### APP推送
 
  **简介：**
@@ -303,13 +346,12 @@ Bmob.updateUserPassword(objectId,data).then(res => {
     alert: "Hello From Bmob."
       }
     }
-
+    
     Bmob.push(data).then(res => {
       console.log(res)
     }).catch(err => {
       console.log(err)
     })
-
 
 **返回示例:**
 
@@ -382,11 +424,10 @@ query.get('objectId').then(res => {
     query.set("cover","1111")
     query.save().then(res => {
       console.log(res)
-
+    
     }).catch(err => {
       console.log(err)
     })
-
 
 
 
@@ -762,7 +803,7 @@ Bmob.generateCode 参数列表
     	}
     	,"emphasis_keyword": ""
     }
-
+    
     Bmob.sendWeAppMessage(modelData).then(function (response) {
     	console.log(response);
     })
@@ -825,25 +866,25 @@ Bmob.generateCode 参数列表
       template_id:"template_id",
       url: "http://www.bmob.cn/",
       data: {
-			first: {
-				value: "您好，Restful 失效，请登录控制台查看。",
-				color: "#c00"
-			},
-			keyword1: {
-				value: "Restful 失效"
-			},
-			keyword2: {
-				value: "2017-07-03 16:13:01"
-			},
-			keyword3: {
-				value: "高"
-			},
-			remark: {
-				value: "如果您十分钟内再次收到此信息，请及时处理。"
-			}
+    		first: {
+    			value: "您好，Restful 失效，请登录控制台查看。",
+    			color: "#c00"
+    		},
+    		keyword1: {
+    			value: "Restful 失效"
+    		},
+    		keyword2: {
+    			value: "2017-07-03 16:13:01"
+    		},
+    		keyword3: {
+    			value: "高"
+    		},
+    		remark: {
+    			value: "如果您十分钟内再次收到此信息，请及时处理。"
+    		}
       	}
-	}
-
+    }
+    
     Bmob.notifyMsg(temp).then(function (response) {
     console.log(response);
     })

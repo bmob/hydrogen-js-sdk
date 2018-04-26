@@ -2,7 +2,7 @@ const request = require('./request')
 const query = require('./query')
 const Bmob = require('./bmob')
 const error = require('./error')
-const { isObject, isString } = require('./dataType')
+const { isObject, isString,isNumber } = require('./dataType')
 
 const user = class user extends query {
   constructor() {
@@ -56,6 +56,16 @@ const user = class user extends query {
   users() {
     let route = Bmob._config.parameters.USERS
     return request(route, 'get')
+  }
+  signOrLoginByMobilePhone(mobilePhoneNumber,smsCode){
+    // 手机号登陆
+    if (!isNumber(mobilePhoneNumber) || !isNumber(smsCode)) {
+      //异常
+      throw new error(415)
+    }
+    this.setData = Object.assign({}, { mobilePhoneNumber, smsCode })
+    let route = Bmob._config.parameters.LOGIN
+    return request(route, 'get', this.setData)
   }
 }
 

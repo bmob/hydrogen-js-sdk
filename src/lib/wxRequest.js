@@ -15,7 +15,22 @@ const setHeader = (config) => {
 }
 
 const request = (route, method = "get", parma = {}) => {
-
+  return new Promise((resolve, reject) => {
+    const header = setHeader(Bmob._config)
+    wx.request({
+      url: Bmob._config.host+route, //仅为示例，并非真实的接口地址
+      method:method,
+      data: parma,
+      header: header,
+      success: res=> {
+        console.log(res.data)
+        resolve(res.data);
+      },
+      fail: err=> {
+        console.log(err)
+      }
+    })
+  })
 }
 
 module.exports = request
