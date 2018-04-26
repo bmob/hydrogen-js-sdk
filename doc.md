@@ -669,7 +669,61 @@ query.count().then(res => {
 });
 ```
 
+## 数据关联
+
+### Pointer的使用
+
+#### 查询Pointer
+
+**简介：**
+
+通过字段类型Pointer 查询出连表的内容，支持多个参数，连接多表
+
+ **参数说明：**
+
+| 参数      | 类型   | 必填 | 说明            |
+| --------- | ------ | ---- | --------------- |
+| tableName | string | 是   | 数据表名称      |
+| own       | string | 是   | Pointer类型字段 |
+
+**请求示例：**
+
+```
+const query = Bmob.Query('tableName');
+//下面参数为Pointer字段名称， 可以一次查询多个表
+query.include('own','post')
+query.find().then(res => {
+    console.log(res)
+  }).catch(err => {
+    console.log(err)
+  })
+```
+
+**返回示例:**
+
+```
+成功：
+{
+  "results": [
+    {
+      key1:value1,
+      key2:value2,
+      ...
+    },
+    {
+      key1:value1,
+      key2:value2,
+      ...
+    },
+    ...
+}
+
+```
+
+
+
 ## 数组操作
+
 为了帮你存储数组类数据，有三种操作你可以原子性地改动一个数组，这需要一个给定的 key：
 
 -  `add`在一个数组的末尾加入一个给定的对象。

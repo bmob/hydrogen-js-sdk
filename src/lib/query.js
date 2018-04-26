@@ -15,6 +15,7 @@ const query = class query {
     this.orData = {}
     this.limitNum = 10
     this.skipNum = 0
+    this.includes = ""
     this.orders = null
     this.keys = null
   }
@@ -261,6 +262,14 @@ const query = class query {
     })
     this.orders = key.join(',')
   }
+  include(...key){
+    key.map(item => {
+      if (!isString(item)) {
+        throw new error(415)
+      }
+    })
+    this.includes = key.join(',')
+  }
   select(...key) {
     key.map(item => {
       if (!isString(item)) {
@@ -282,8 +291,16 @@ const query = class query {
     }
     parmas.limit = this.limitNum
     parmas.skip = this.skipNum
+    parmas.include = this.includes
     parmas.order = this.orders
     parmas.keys = this.keys
+
+    for (const key in parmas) {
+      if (parmas.hasOwnProperty(key) && parmas[key]==null || parmas[key]==0) {
+          delete parmas[key]
+        }
+    }
+
     return new Promise((resolve, reject) => {
       request(`${this.tableName}`, 'get', parmas).then(({results}) => {
         this.init()

@@ -120,8 +120,7 @@ npm run dev
 - [ ] 文件删除 *
 - [x] APP推送 *
 - [x] 云函数调用
-- [ ] ACL 和角色
-- [ ] 数据关联Pointer、Relation
+- [x] 数据关联Pointer
 - [ ] 批量数据操作 *
 - [x] 主人推送消息
 - [x] 获取服务器时间
@@ -168,7 +167,14 @@ npm run dev
 
 - [ ] 快应用
 
-  ​
+
+
+增强功能
+
+- [ ] Relation  
+- [ ] ACL
+
+
 
 
 ### 开发规范

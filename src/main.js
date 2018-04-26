@@ -213,10 +213,10 @@ Bmob.initialize("71acb3659ea66abed6b7739f9bd2e914","45ef983f011036c5868e9e9a38c1
 
 
 const query = Bmob.Query('test3');
-query.get('4997bfec60').then(res => {
+// query.include('hh','ff')
+query.find().then(res => {
   console.log(res)
-  res.remove('asd',['333'])
-  res.save()
+ 
 })
 // query.find().then(res => {
 //   console.log(res)
