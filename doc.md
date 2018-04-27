@@ -315,6 +315,71 @@ Bmob.updateUserPassword(objectId,data).then(res => {
 
 待补充返回示例
 
+### 文件上传
+
+ **简介：**
+
+文件上传操作
+
+ **参数说明：**
+
+| 参数     | 类型   | 必填 | 说明   |
+| -------- | ------ | ---- | ------ |
+| fileName | string | 是   | 文件名(带后缀) |
+
+**请求示例：**
+
+
+    let data = {
+      filename: 'hello.txt'
+    }
+    
+    Bmob.pushfile(data.filename).then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
+
+
+**返回示例:**
+    {
+      "filename": filename,
+      "url": url,
+      "cdn":cdnname
+    }
+
+### 文件删除
+
+ **简介：**
+
+文件删除操作
+
+ **参数说明：**
+
+| 参数     | 类型   | 必填 | 说明   |
+| -------- | ------ | ---- | ------ |
+| cdnName | string | 是   | 上传文件时返回的cdn |
+| url  | string | 是   | 上传文件时返回的url |
+
+**请求示例：**
+
+
+    let params = {
+      "filename": filename,
+      "url": url,
+      "cdn":cdnname
+    }
+    Bmob.deletefile(params.cdn,params.url).then(res => {
+    	console.log(res)
+    }).catch(err => {
+    	console.log(err)
+    })
+
+
+**返回示例:**
+    {
+      "msg": "ok"
+    }
 
 ## 数据表操作
 

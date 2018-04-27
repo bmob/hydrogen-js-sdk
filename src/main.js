@@ -194,6 +194,26 @@ Bmob.initialize("83c627d276f41bc0f62adbd5ce875e8a","b939b7e1b0c8b221dd4a1320dbc4
 // }).catch(err => {
 //   console.log(err)
 // })
+let data = {
+  filename: 'hello.txt'
+}
+
+// Bmob.pushfile(data.filename).then(res => {
+//   console.log(res)
+// }).catch(err => {
+//   console.log(err)
+// })
+
+let params = {
+  cdn: 'upyun',
+  url: 'http://bmob-cdn-18237.b0.upaiyun.com/2018/04/27/efa9ccd3406e2a558053eefd57eeba95.txt'
+}
+Bmob.deletefile(params.cdn,params.url).then(res => {
+    console.log(res)
+}).catch(err => {
+    console.log(err)
+})
+
 Bmob.initialize("71acb3659ea66abed6b7739f9bd2e914","45ef983f011036c5868e9e9a38c193ec")
 
 // const query = Bmob.Query('project');
@@ -210,20 +230,6 @@ Bmob.initialize("71acb3659ea66abed6b7739f9bd2e914","45ef983f011036c5868e9e9a38c1
 //  }).catch(err => {
 //   console.log(err)
 // });
-<<<<<<< HEAD
-
-Bmob.timestamp().then(res => {
-  console.log(res)
-}).catch(err => {
-  console.log(err)
-})
-
-Bmob.User.requestEmailVerify('bmob2018@bmob.cn').then(res => {
- console.log(res)
-}).catch(err => {
- console.log(err)
-});
-=======
 //
 // Bmob.timestamp().then(res => {
 //   console.log(res)
@@ -236,7 +242,6 @@ Bmob.User.requestEmailVerify('bmob2018@bmob.cn').then(res => {
 // }).catch(err => {
 //  console.log(err)
 // });
->>>>>>> 04be17f871136fda82c28c5f9971120f60c47776
 
 
 const query = Bmob.Query('test3');

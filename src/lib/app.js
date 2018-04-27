@@ -12,7 +12,9 @@ const {
   requestPasswordReset,
   resetPasswordBySmsCode,
   updateUserPassword,
-  push
+  push,
+  pushfile,
+  deletefile
 } = require('./common')
 const {requestSmsCode,verifySmsCode} = require('./sms')
 
@@ -42,6 +44,10 @@ Bmob.requestPasswordReset = requestPasswordReset
 Bmob.resetPasswordBySmsCode = resetPasswordBySmsCode
 // 密码重置(登录状态下更改密码)
 Bmob.updateUserPassword = updateUserPassword
+// 上传文件
+Bmob.pushfile = pushfile
+// 删除文件
+Bmob.deletefile = deletefile
 // APP推送
 Bmob.push = push
 if(typeof global.Bmob==undefined){

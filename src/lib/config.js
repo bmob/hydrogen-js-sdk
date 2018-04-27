@@ -20,6 +20,7 @@ const PARAMETERS = {
   RESETPASSWORDBYSMSCODE: '/1/resetPasswordBySmsCode',// 重置密码(短信)
   UPDATEUSERPASSWORD: '/1/updateUserPassword',// 重置密码(登录状态下旧密码换新密码)
   PUSH: '/1/push', //APP推送
+  FILES: '/2/files', // 单个文件上传/删除
   TIMESTAMP: '/1/timestamp', // 获取服务器时间
   LOGIN:'/1/login',//登陆
   REGISTER:'/1/users',//注册
