@@ -6,7 +6,8 @@ const utils = require('./utils')
 const setHeader = (config) => {
   let header = {
     'content-type': 'application/json',
-    'X-Bmob-SDK-Type': 'hybrid',
+    // 'X-Bmob-SDK-Type': 'hybrid',
+    'X-Bmob-SDK-Type': 'wechatApp',
     'X-Bmob-Application-Id': config.applicationId,
     'X-Bmob-REST-API-Key': config.applicationKey
   }

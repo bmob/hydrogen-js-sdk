@@ -1,20 +1,23 @@
 const request = require('./request')
-const {isObject, isString, isNumber, isUndefined} = require('./dataType')
+const Bmob = require('./bmob')
+const {isObject, isString, isNumber, isUndefined, isArray} = require('./dataType')
 const error = require('./error')
 const query = class query {
   constructor(parma) {
-    this.tableName = `/1/classes/${parma}`
+    this.tableName = `${Bmob._config.parameters.QUERY}/${parma}`
     this.init()
-  }
-  init(){
+    this.addArray = {}
     this.setData = {}
+  }
+  init() {
     this.queryData = {}
     this.andData = {}
     this.orData = {}
     this.limitNum = 10
     this.skipNum = 0
-    this.orders = ""
-    this.keys = ""
+    this.includes = ""
+    this.orders = null
+    this.keys = null
   }
   get(ObjectId) {
     if (!isString(ObjectId)) {
@@ -24,7 +27,35 @@ const query = class query {
     let oneData = {}
     const incrementData = {}
     const unsetData = {}
+    const addArray = {}
 
+    const add = (key, val) => {
+      if (!isString(key) || !isArray(val)) {
+        throw new error(415)
+      }
+      addArray[key] = {
+        "__op": "Add",
+        "objects": val
+      }
+    }
+    const addUnique = (key, val) => {
+      if (!isString(key) || !isArray(val)) {
+        throw new error(415)
+      }
+      addArray[key] = {
+        "__op": "AddUnique",
+        "objects": val
+      }
+    }
+    const remove = (key,val) => {
+      if (!isString(key) || !isArray(val)) {
+        throw new error(415)
+      }
+      addArray[key] = {
+        "__op": "Remove",
+        "objects": val
+      }
+    }
     const increment = (key, val = 1) => {
       if (!isString(key) || !isNumber(val)) {
         throw new error(415)
@@ -49,13 +80,8 @@ const query = class query {
       oneData[key] = val
     }
     const save = () => {
-      if (Object.keys(incrementData).length) {
-        oneData = Object.assign(incrementData, oneData)
-      }
-      if (Object.keys(unsetData).length) {
-        oneData = Object.assign(unsetData, oneData)
-      }
-      return request(`${this.tableName}/${ObjectId}`, 'put', oneData)
+      const saveData = Object.assign(unsetData, oneData, incrementData, addArray)
+      return request(`${this.tableName}/${ObjectId}`, 'put', saveData)
     }
     return new Promise((resolve, reject) => {
       request(`${this.tableName}/${ObjectId}`).then(results => {
@@ -63,6 +89,9 @@ const query = class query {
         Object.defineProperty(results, "unset", {value: unset})
         Object.defineProperty(results, "save", {value: save})
         Object.defineProperty(results, "increment", {value: increment})
+        Object.defineProperty(results, "add", {value: add})
+        Object.defineProperty(results, "remove", {value: remove})
+        Object.defineProperty(results, "addUnique", {value: addUnique})
         Object.defineProperty(results, "destroy", {
           value: () => this.destroy(ObjectId)
         })
@@ -84,12 +113,38 @@ const query = class query {
     }
     this.setData[key] = val;
   }
+  add(key, val) {
+    if (!isString(key) || !isArray(val)) {
+      throw new error(415)
+    }
+    this.addArray[key] = {
+      "__op": "Add",
+      "objects": val
+    }
+  }
+  addUnique(key, val) {
+    if (!isString(key) || !isArray(val)) {
+      throw new error(415)
+    }
+    this.addArray[key] = {
+      "__op": "AddUnique",
+      "objects": val
+    }
+  }
   save(parma = {}) {
     if (!isObject(parma)) {
       throw new error(415)
     }
-    this.setData = Object.assign(parma, this.setData)
-    return request(`${this.tableName}`, 'post', this.setData)
+    const saveData = Object.assign(parma, this.setData, this.addArray)
+    return new Promise((resolve, reject) => {
+      request(`${this.tableName}`, 'post', saveData).then((results) => {
+        this.addArray = {}
+        this.setData = {}
+        resolve(results)
+      }).catch(err => {
+        reject(err)
+      })
+    })
   }
   terms(key, operator, val) {
     if (!isString(key)) {
@@ -188,6 +243,9 @@ const query = class query {
     if (!isNumber(parma)) {
       throw new error(415)
     }
+    if (parma > 1000) {
+      parma = 1000
+    }
     this.limitNum = parma
   }
   skip(parma) {
@@ -204,7 +262,15 @@ const query = class query {
     })
     this.orders = key.join(',')
   }
-  select(...key){
+  include(...key){
+    key.map(item => {
+      if (!isString(item)) {
+        throw new error(415)
+      }
+    })
+    this.includes = key.join(',')
+  }
+  select(...key) {
     key.map(item => {
       if (!isString(item)) {
         throw new error(415)
@@ -213,22 +279,30 @@ const query = class query {
     this.keys = key.join(',')
   }
   find() {
-    let whereData = {};
+    let parmas = {};
     if (Object.keys(this.queryData).length) {
-      whereData.where = this.queryData
+      parmas.where = this.queryData
     }
     if (Object.keys(this.andData).length) {
-      whereData.where = Object.assign(this.andData, this.queryData)
+      parmas.where = Object.assign(this.andData, this.queryData)
     }
     if (Object.keys(this.orData).length) {
-      whereData.where = Object.assign(this.orData, this.queryData)
+      parmas.where = Object.assign(this.orData, this.queryData)
     }
-    whereData.limit = this.limitNum
-    whereData.skip = this.skipNum
-    whereData.order = this.orders
-    whereData.keys = this.keys
+    parmas.limit = this.limitNum
+    parmas.skip = this.skipNum
+    parmas.include = this.includes
+    parmas.order = this.orders
+    parmas.keys = this.keys
+
+    for (const key in parmas) {
+      if (parmas.hasOwnProperty(key) && parmas[key]==null || parmas[key]==0) {
+          delete parmas[key]
+        }
+    }
+
     return new Promise((resolve, reject) => {
-      request(`${this.tableName}`, 'get', whereData).then(({results}) => {
+      request(`${this.tableName}`, 'get', parmas).then(({results}) => {
         this.init()
         resolve(results)
       }).catch(err => {
@@ -238,7 +312,7 @@ const query = class query {
   }
   count() {
     return new Promise((resolve, reject) => {
-      request(`${this.tableName}`, 'get', {count:1}).then(({count}) => {
+      request(`${this.tableName}`, 'get', {count: 1}).then(({count}) => {
         resolve(count)
       }).catch(err => {
         reject(err)

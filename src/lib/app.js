@@ -50,8 +50,13 @@ Bmob.pushfile = pushfile
 Bmob.deletefile = deletefile
 // APP推送
 Bmob.push = push
-if(typeof global.Bmob==undefined){
-   global.Bmob = Bmob
- }
+
+
+try {
+  window.Bmob = Bmob
+}
+catch(err) {
+    wx.Bmob = Bmob
+}
 
  module.exports = Bmob

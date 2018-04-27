@@ -5,7 +5,6 @@ import Bmob from './lib/app'
 console.log(Bmob)
 
 
-Bmob.initialize("83c627d276f41bc0f62adbd5ce875e8a","b939b7e1b0c8b221dd4a1320dbc4cd4d")
 //
 //  微信小程序模块
 // // 生成二维码 @object
@@ -238,31 +237,18 @@ Bmob.initialize("71acb3659ea66abed6b7739f9bd2e914","45ef983f011036c5868e9e9a38c1
 // })
 //
 // Bmob.User.requestEmailVerify('bmob2018@bmob.cn').then(res => {
-//   console.log(res)
+//  console.log(res)
 // }).catch(err => {
 //  console.log(err)
 // });
 
 
 const query = Bmob.Query('test3');
-// const a = query.terms('createdAt','>','2018-04-17 22:43:09')
-// query.terms('aab','==','222')
-// const b = query.terms('createdAt','<=','2018-04-18 16:30:01')
-// query.or(a,b)
-query.limit(3)
-query.skip(3)
-query.select('aab','bb')
-// query.order('createdAt')
+// query.include('hh','ff')
 query.find().then(res => {
   console.log(res)
-}).catch(err => {
-  console.log(err)
+ 
 })
-
-query.count().then(res => {
-  console.log(res);
-})
-
 // query.find().then(res => {
 //   console.log(res)
 // }).catch(err => {

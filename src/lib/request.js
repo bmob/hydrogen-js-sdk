@@ -1,17 +1,17 @@
+// const Bmob = require('./bmob')
 const utils = require('./utils')
-
-// Bmob._config = utils.getConfig()
 
 let request
 // //获取当前应用类型
 const type = utils.getAppType()
+console.log('type',type)
 // h5
 if (type == 'h5') {
   request = require('./axiosRequest')
-} else if (Bmob._config.type == 'wx') {
+} else if (type == 'wx') {
   // 小程序
-
-} else if (Bmob._config.type == 'hap') {
+  request = require('./wxRequest')
+} else if (type == 'hap') {
   //快应用功能
 }
 

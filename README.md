@@ -17,7 +17,6 @@ npm run dev
 ### 目录结构
 
 ```
-.
 |-- bmob.html
 |-- index.html
 |-- lib			库文件
@@ -75,7 +74,26 @@ npm run dev
        https://api.bmob.cn/1/classes/GameScore/e1kXT22L
    ```
 
+   ​
 
+   ​
+
+4. 文件上传，内部接口
+
+   ```
+   curl -X POST \
+       -H "X-Bmob-Application-Id: Your Application ID" \
+       -H "X-Bmob-REST-API-Key: Your REST API Key" \
+       https://api.bmobcloud.com/2/files/test.png
+   ```
+
+
+   ```
+   返回
+   {"cdn":"upyun","filename":"test.png","url":"http://bmob-cdn-12948.b0.upaiyun.com/2018/04/20/cbd266a4409ce4cd80d4ec8a081b7d7f.png"}
+   ```
+
+   ​
 
 ### 功能列表
 
@@ -87,23 +105,24 @@ npm run dev
 - [x] 增加一行数据
 - [x] 删除字段的值
 - [x] 字段原子计数器
-- [ ] 查询数据列表
+- [x] 条件查询
+- [x] 数组操作
+- [x] 查询数据列表
 - [ ] 地理位置查询
 - [x] 注册
 - [x] 登录
+- [x] 手机验证码登陆
 - [x] 验证Email
 - [x] 修改密码
 - [x] 查询用户
-- [ ] 手机号、QQ、等第三方登录
 - [x] 短信验证码、发送、验证
 - [ ] 文件（图片）上传
 - [ ] 文件删除 *
 - [x] APP推送 *
-- [x] 云函数调用 
-- [ ] ACL 和角色
-- [ ] 数据关联Pointer、Relation
+- [x] 云函数调用
+- [x] 数据关联Pointer
 - [ ] 批量数据操作 *
-- [x] 主人推送消息 
+- [x] 主人推送消息
 - [x] 获取服务器时间
 
 
@@ -148,7 +167,14 @@ npm run dev
 
 - [ ] 快应用
 
-  ​
+
+
+增强功能
+
+- [ ] Relation  
+- [ ] ACL
+
+
 
 
 ### 开发规范
@@ -157,7 +183,7 @@ npm run dev
 
 1. 请求链接路由放到config文件PARAMETERS变量
 2. 变量函数命令统一用英文，尽量优先参考Bmob目前`jssdk` 相关名称。
-3. 开发一个函数功能，记得补上文档 `Doc.md`
+3. 开发一个函数功能，记得补上文档，具体请看文档模板 `doc.md`
 4. 操作数据库的函数语法在群里与队友商量确定
 
 

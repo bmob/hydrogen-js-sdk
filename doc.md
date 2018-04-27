@@ -88,6 +88,51 @@ Bmob.User.register(params).then(res => {
 {"code":107,"error":"content is empty."}
 ```
 
+### 手机验证码登陆
+
+ **简介：**
+
+手机号码和验证码一键快速登录的功能，而 **smsCode** 是调用短信请求验证码函数
+
+ **参数说明：**
+
+| 参数    | 类型   | 必填 | 说明   |
+| ------- | ------ | ---- | ------ |
+| phone   | Number | 是   | 用户名 |
+| smsCode | Number | 是   | 密码   |
+
+**请求示例：**
+
+```
+Bmob.User.signOrLoginByMobilePhone(phone,smsCode).then(res => {
+ console.log(res)
+}).catch(err => {
+ console.log(err)
+});
+```
+
+**返回示例:**
+
+```
+成功：
+{
+  "username": username,
+  "mobilePhoneNumber": mobilePhoneNumber,
+  "mobilePhoneVerified": boolValue,
+  "createdAt": YYYY-mm-dd HH:ii:ss,
+  "updatedAt": YYYY-mm-dd HH:ii:ss,
+  "objectId": objectId,
+  "sessionToken": sessionToekn,
+  key1:value1,
+  key2:value2,
+  ...
+}
+失败：
+{"code":207,"error":"code error."}
+```
+
+### 
+
 ### 查询用户
 
  **简介：**
@@ -246,7 +291,6 @@ Bmob.resetPasswordBySmsCode(smsCode,data).then(res => {
       "msg": "ok"
     }
 
-
 提供旧密码方式安全修改用户密码
 
  **请求描述：**
@@ -282,7 +326,6 @@ Bmob.updateUserPassword(objectId,data).then(res => {
     }
 
 
-
 ### APP推送
 
  **简介：**
@@ -309,7 +352,6 @@ Bmob.updateUserPassword(objectId,data).then(res => {
     }).catch(err => {
       console.log(err)
     })
-
 
 **返回示例:**
 
@@ -441,7 +483,7 @@ query.get('objectId').then(res => {
 
 **请求示例：**
 
-    
+
     const query = Bmob.Query('tableName');
     query.set("name","fff")
     query.set("cover","1111")
@@ -451,7 +493,6 @@ query.get('objectId').then(res => {
     }).catch(err => {
       console.log(err)
     })
-
 
 
 
@@ -554,7 +595,6 @@ query.get('objectId').then(res => {
 
 **请求示例：**
 
-
     const query = Bmob.Query('tableName');
     query.destroy('objectId').then(res => {
       console.log(res)
@@ -576,8 +616,6 @@ or
       console.log(err)
     })
 
-
-
 **返回示例:**
 
 ```
@@ -585,6 +623,208 @@ or
   msg: "ok"
 }
 ```
+
+
+### 条件查询
+
+ **参数说明：**
+
+| 参数      | 类型   | 必填 | 说明     |
+| --------- | ------ | ---- | -------- |
+| tableName | string | 是   | 数据表名 |
+
+
+**请求示例：**
+```
+// 如果要查询某个属性等于某个值，示例代码如下：
+query.terms("isLike", "==", 100);
+
+// 如果要查询某个属性不等于某个值，示例代码如下：
+query.terms("title", "!=", "bmob sdk");
+
+// 如果要模糊查询某个值，示例代码如下（模糊查询目前只提供给付费套餐会员使用）：
+query.terms("title","==", { "$regex": "" + k + ".*" });
+
+// 查询大于某个日期的数据，示例代码如下
+query.terms("createdAt", ">" "2018-08-21 18:02:52");
+
+/**
+* terms 方法支持 "==","!=",">",">=","<","<="
+*/
+
+```
+两条查询语句一起写，就相当于AND查询，如下示例代码，查询一个月的数据：
+```
+query.terms("createdAt", ">", "2018-04-01 00:00:00");
+query.terms("createdAt", "<", "2018-05-01 00:00:00");
+
+// 因为createdAt updatedAt服务器自动生成的时间，在服务器保存的是精确到微秒值的时间，所以基于时间类型比较的值要加1秒。
+
+```
+
+一个完整的例子
+```
+const query = Bmob.Query("tableName");
+query.terms("title", "hello");
+query.find().then(res => {
+    console.log(res)
+});
+```
+
+**或查询**
+
+你可以使用`or`方法操作或查询，示例代码如下：
+
+```
+const query = Bmob.Query("tableName");
+const query1 = query.terms("isLike", '>', 150);
+const query2 = query.terms("isLike", '<', 150);
+
+query.or(query1, query2);
+query.find().then(res => {
+  // 返回 isLike > 150 or isLike < 5 的值
+  console.log(res)
+});
+```
+
+**查询指定列**
+```
+const query = Bmob.Query("tableName");
+// 只返回select的字段值
+query.select("title");
+query.find().then(res => {
+  // 返回成功
+  console.log(res)
+});
+```
+
+
+**分页查询**
+
+有时，在数据比较多的情况下，你希望查询出的符合要求的所有数据能按照多少条为一页来显示，这时可以使用`limit`方法来限制查询结果的数据条数来进行分页。默认情况下，Limit的值为10，最大有效设置值1000（设置的数值超过1000还是视为1000）。
+```
+// 返回最多10条数据
+query.limit(10);
+```
+在数据较多的情况下，在`limit`的基础上分页显示数据是比较合理的解决办法，`skip`方法可以做到跳过查询的前多少条数据来实现分页查询的功能。默认情况下`skip`的值为10。
+```
+query.skip(10); // skip the first 10 results
+```
+**结果排序**
+
+我们可以对返回的结果进行排序（只支持`number`，`date`，`string`类型的排序），示例代码如下：
+```
+// 对score字段升序排列
+query.order("score");
+
+// 对score字段降序排列
+query.order("-score");
+
+// 多个字段进行排序
+query.order("-score","name");
+```
+
+**统计记录数量**
+
+如果你只是想统计满足`query`的结果集到底有多条记录，你可以使用`count`方法。如为了获得diary表的记录数量，示例代码如下：
+```
+const query = Bmob.Query('diary');
+query.count().then(res => {
+  console.log(`公有${res}条记录`)
+});
+```
+
+## 数据关联
+
+### Pointer的使用
+
+#### 查询Pointer
+
+**简介：**
+
+通过字段类型Pointer 查询出连表的内容，支持多个参数，连接多表
+
+ **参数说明：**
+
+| 参数      | 类型   | 必填 | 说明            |
+| --------- | ------ | ---- | --------------- |
+| tableName | string | 是   | 数据表名称      |
+| own       | string | 是   | Pointer类型字段 |
+
+**请求示例：**
+
+```
+const query = Bmob.Query('tableName');
+//下面参数为Pointer字段名称， 可以一次查询多个表
+query.include('own','post')
+query.find().then(res => {
+    console.log(res)
+  }).catch(err => {
+    console.log(err)
+  })
+```
+
+**返回示例:**
+
+```
+成功：
+{
+  "results": [
+    {
+      key1:value1,
+      key2:value2,
+      ...
+    },
+    {
+      key1:value1,
+      key2:value2,
+      ...
+    },
+    ...
+}
+
+```
+
+
+
+## 数组操作
+
+为了帮你存储数组类数据，有三种操作你可以原子性地改动一个数组，这需要一个给定的 key：
+
+-  `add`在一个数组的末尾加入一个给定的对象。
+- `addUnique`只会把原本不存在的对象加入数组，所以加入的位置没有保证。
+比如, 我们想在数组"DiaryType"中加入日记类型：
+
+**添加数组：**
+```
+const query = Bmob.Query('tableName')
+query.add("DiaryType", ["public"]);
+query.addUnique("DiaryType", ["secret"]);
+query.save();
+```
+
+**更新数组：**
+```
+const query = Bmob.Query('tableName')
+query.get('ObjectId').then(res => {
+  res.add("DiaryType", ["public"]);
+  res.addUnique("DiaryType", ["secret"]);
+  res.save();
+})
+```
+
+
+**删除数组：**
+```
+const query = Bmob.Query('tableName')
+query.get('ObjectId').then(res => {
+  res.remove("DiaryType", ["secret"]);
+  res.save();
+})
+```
+
+
+
 
 ## 小程序操作 ##
 ### 生成二维码 ###
@@ -682,7 +922,7 @@ Bmob.generateCode 参数列表
     	}
     	,"emphasis_keyword": ""
     }
-
+    
     Bmob.sendWeAppMessage(modelData).then(function (response) {
     	console.log(response);
     })
@@ -739,30 +979,30 @@ Bmob.generateCode 参数列表
 模版信息
 
 **请求示例：**
-    
+
     let temp = {
       touser: "openid",
       template_id:"template_id",
       url: "http://www.bmob.cn/",
       data: {
-			first: {
-				value: "您好，Restful 失效，请登录控制台查看。",
-				color: "#c00"
-			},
-			keyword1: {
-				value: "Restful 失效"
-			},
-			keyword2: {
-				value: "2017-07-03 16:13:01"
-			},
-			keyword3: {
-				value: "高"
-			},
-			remark: {
-				value: "如果您十分钟内再次收到此信息，请及时处理。"
-			}
+    		first: {
+    			value: "您好，Restful 失效，请登录控制台查看。",
+    			color: "#c00"
+    		},
+    		keyword1: {
+    			value: "Restful 失效"
+    		},
+    		keyword2: {
+    			value: "2017-07-03 16:13:01"
+    		},
+    		keyword3: {
+    			value: "高"
+    		},
+    		remark: {
+    			value: "如果您十分钟内再次收到此信息，请及时处理。"
+    		}
       	}
-	}
+    }
     
     Bmob.notifyMsg(temp).then(function (response) {
     console.log(response);
@@ -814,7 +1054,7 @@ Bmob.generateCode 参数列表
 	    response.end('输入错误，请重新输入');
     }  
 **返回示例:**
-	
+
     {
     	result: "欢迎使用Bmob"
     }
