@@ -203,18 +203,23 @@ let data = {
 //   console.log(err)
 // })
 
-let params = {
-  cdn: 'upyun',
-  url: 'http://bmob-cdn-18237.b0.upaiyun.com/2018/04/27/efa9ccd3406e2a558053eefd57eeba95.txt'
-}
-Bmob.deletefile(params.cdn,params.url).then(res => {
-    console.log(res)
-}).catch(err => {
-    console.log(err)
-})
+// let params = {
+//   cdn: 'upyun',
+//   url: 'http://bmob-cdn-18237.b0.upaiyun.com/2018/04/27/efa9ccd3406e2a558053eefd57eeba95.txt'
+// }
+// Bmob.deletefile(params.cdn,params.url).then(res => {
+//     console.log(res,'ok')
+// }).catch(err => {
+//     console.log(err)
+// })
 
 Bmob.initialize("71acb3659ea66abed6b7739f9bd2e914","45ef983f011036c5868e9e9a38c193ec")
 
+Bmob.User.login('bbbbbb','bbbbbb').then(res => {
+  console.log(res,'ok')
+}).catch(err => {
+ console.log(err,'err')
+});
 // const query = Bmob.Query('project');
 // query.set("name","fff")
 // query.set("cover","333")

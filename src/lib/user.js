@@ -1,8 +1,9 @@
 const request = require('./request')
+const storage = require('./storage')
 const query = require('./query')
 const Bmob = require('./bmob')
 const error = require('./error')
-const { isObject, isString,isNumber } = require('./dataType')
+const { isObject, isString, isNumber } = require('./dataType')
 
 const user = class user extends query {
   constructor() {
@@ -16,12 +17,12 @@ const user = class user extends query {
       this.setData[key] = val;
     }
   }
-  requestEmailVerify(email){
+  requestEmailVerify(email) {
     if (!isString(email)) {
       //异常
       throw new error(415)
     }
-    
+
     this.setData = Object.assign({}, { email })
     console.log(this.setData)
     let route = Bmob._config.parameters.REQUEST_EMAIL_VERIFY
@@ -37,7 +38,9 @@ const user = class user extends query {
     let route = Bmob._config.parameters.REGISTER
     return request(route, 'post', this.setData)
   }
+
   login(username, password) {
+
     if (!isString(username) || !isString(password)) {
       //异常
       throw new error(415)
@@ -46,6 +49,7 @@ const user = class user extends query {
     let route = Bmob._config.parameters.LOGIN
     return new Promise((resolve, reject) => {
       request(route, 'get', this.setData).then(res => {
+        storage.save('bmob', res);
         resolve(res)
       }).catch(err => {
         console.log('登陆失败')
@@ -57,7 +61,7 @@ const user = class user extends query {
     let route = Bmob._config.parameters.USERS
     return request(route, 'get')
   }
-  signOrLoginByMobilePhone(mobilePhoneNumber,smsCode){
+  signOrLoginByMobilePhone(mobilePhoneNumber, smsCode) {
     // 手机号登陆
     if (!isNumber(mobilePhoneNumber) || !isNumber(smsCode)) {
       //异常
@@ -66,6 +70,104 @@ const user = class user extends query {
     this.setData = Object.assign({}, { mobilePhoneNumber, smsCode })
     let route = Bmob._config.parameters.LOGIN
     return request(route, 'get', this.setData)
+  }
+  requestOpenId(code) {
+    return request("/1/wechatApp/" + code, "POST", {});
+  }
+  linkWith(data) {
+    // 第三方登陆
+    let authData = { "authData": data }
+    let route = Bmob._config.parameters.USERS
+    return request(route, "POST", authData);
+  }
+  loginWithWeapp(code) {
+
+    return new Promise((resolve, reject) => {
+      this.requestOpenId(code).then(res => {
+        const data = { "weapp": res }
+        const result = this.linkWith(data)
+        resolve(result);
+      }).catch(err => {
+        reject(err);
+      })
+    })
+
+  }
+  current() {
+    const data = storage.fetch('bmob')
+    return JSON.parse(data)
+  }
+  upInfo(userInfo) {
+    console.log('userInfo',userInfo)
+    var nickName = userInfo.nickName
+    var avatarUrl = userInfo.avatarUrl
+   
+    var currentUser = this.current()
+    if (!currentUser) {
+      console.log('未获取到用户信息')
+    }
+    var openid = storage.fetch('openid')
+    console.log(currentUser,openid)
+    // const query = new query('_user');
+    this.get(currentUser.objectId).then(res => {
+      console.log(res)
+      res.set('nickName', nickName)
+      res.set('userPic', avatarUrl)
+      res.set('openid', openid)
+      res.save()
+    }).catch(err => {
+      console.log(err)
+    })
+
+   
+    // query.get(currentUser.id, {
+    //   success: function (result) {
+    //     result.set('nickName', nickName)
+    //     result.set('userPic', avatarUrl)
+    //     result.set('openid', openid)
+    //     result.save().then((res) => {
+    //       // var currentUser = Bmob.User.current()
+    //       currentUser.set('nickName', nickName)
+    //       currentUser.set('userPic', avatarUrl)
+    //       Bmob.User._saveCurrentUser(currentUser)
+    //     })
+    //   }
+    // })
+  }
+  auth() {
+    var that = this;
+    return new Promise((resolve, reject) => {
+      const login = () => {
+        wx.login({
+          success: res => {
+            that.loginWithWeapp(res.code).then(
+              user => {
+                var openid = user.authData.weapp.openid
+                storage.save('openid', openid)
+                storage.save('bmob', user)
+                //保存用户其他信息到用户表
+                resolve(user);
+              },
+              function (err) {
+                reject(err);
+              }
+            )
+          }
+        })
+      }
+      wx.checkSession({
+        success: function () {
+          console.log('用户在线中')
+          resolve('用户在线中');
+          login()
+        },
+        fail: () => {
+          login()
+        }
+      })
+
+    })
+
   }
 }
 

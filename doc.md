@@ -8,7 +8,7 @@
 
  **简介：**
 
-通过用户名密码登陆
+通过用户名密码登陆，登陆成功后会在本地缓存保存用户的信息
 
  **参数说明：**
 
@@ -325,7 +325,6 @@ Bmob.updateUserPassword(objectId,data).then(res => {
       "msg": "ok"
     }
 
-
 ### APP推送
 
  **简介：**
@@ -382,7 +381,6 @@ Bmob.updateUserPassword(objectId,data).then(res => {
       console.log(err)
     })
 
-
 **返回示例:**
     {
       "filename": filename,
@@ -416,7 +414,6 @@ Bmob.updateUserPassword(objectId,data).then(res => {
     }).catch(err => {
     	console.log(err)
     })
-
 
 **返回示例:**
     {
@@ -493,7 +490,6 @@ query.get('objectId').then(res => {
     }).catch(err => {
       console.log(err)
     })
-
 
 
 **返回示例:**

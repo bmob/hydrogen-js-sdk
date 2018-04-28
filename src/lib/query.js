@@ -342,7 +342,7 @@ const query = class query {
       });
       
       let params={"requests":key};
-      // 批量更新
+      // 批量操作
       const saveData = Object.assign(oneData)
       return request(`/1/batch`, 'POST', params)
     }
@@ -351,7 +351,6 @@ const query = class query {
     }
 
     const destroyAll = () => {
-      // 批量更新
       return batch('delete')
     }
     return new Promise((resolve, reject) => {
