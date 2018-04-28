@@ -13,6 +13,9 @@ class error {
     case 415:
       // 参数类型不正确
       return 'incorrect parameter type'
+    case 416:
+      // 参数为空
+      return 'Parameter is null'
     default:
       return 'unknown error'
     }

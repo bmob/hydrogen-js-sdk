@@ -669,6 +669,146 @@ query.count().then(res => {
 });
 ```
 
+## 数据库批量操作
+
+**温馨提示： ** 为保障数据安全，此处所有批量操作数据库，单次最多为50条。
+
+### 批量修改
+
+ **简介：** 
+
+通过查询条件批量修改符合条件记录
+
+ **参数说明：**
+
+| 参数 | 类型   | 必填 | 说明   |
+| ---- | ------ | ---- | ------ |
+| aab  | string | 否   | 列名称 |
+| bb   | string | 否   | 列名称 |
+
+**请求示例：**
+
+```
+const query = Bmob.Query('tableName');
+query.find().then(todos => {
+  todos.set('aab', "Bmob后端云");
+  todos.set('bb', 'Bmob后端云');
+  todos.saveAll().then(res => {
+    // 成功批量修改
+    console.log(res,'ok')
+  }).catch(err => {
+    console.log(err)
+  });
+})
+```
+
+**返回示例:**
+
+```
+[
+(添加对象返回的信息)
+  {
+    "success": {
+      "createdAt": YYYY-mm-dd HH:ii:ss,
+      "objectId": "d746635d0b"
+    }
+  },
+  (修改对象返回的信息)
+  {
+    "success": {
+      "updatedAt": YYYY-mm-dd HH:ii:ss
+    }
+  },
+  (删除对象返回的信息)
+  {
+    "success": {
+      "msg": "ok"
+    }
+  }
+]
+```
+
+### 批量增加
+
+ **简介：** 
+
+通过查询条件查询0条记录，然后模拟假数据
+
+```
+const query = Bmob.Query('tableName');
+// 设置一个不存在的条件，查询出0条数据
+query.terms("createdAt", "<", "1971-04-01 00:00:00");
+query.find().then(todos => {
+  //模拟50条数据
+  for (let index = 0; index < 50; index++) {
+    todos.push({})
+  }
+  todos.set('aab', "Bmob后端云");
+  todos.set('bb', 'Bmob后端云');
+  todos.saveAll().then(res => {
+    // 成功批量修改
+    console.log(res,'ok')
+  }).catch(err => {
+    console.log(err)
+  });
+})
+```
+
+**返回与批量修改一致: **
+
+### 批量删除
+
+ **简介：** 
+
+通过查询条件批量修改符合条件记录
+
+ **参数说明：**
+
+**请求示例：**
+
+```
+const query = Bmob.Query('tableName');
+// 单词最多删除50条
+query.limit(50)
+query.find().then(todos => {
+
+  todos.destroyAll().then(res => {
+    // 成功批量修改
+    console.log(res,'ok')
+  }).catch(err => {
+    console.log(err)
+  });
+})
+```
+
+**返回示例:**
+
+```
+[
+(添加对象返回的信息)
+  {
+    "success": {
+      "createdAt": YYYY-mm-dd HH:ii:ss,
+      "objectId": "d746635d0b"
+    }
+  },
+  (修改对象返回的信息)
+  {
+    "success": {
+      "updatedAt": YYYY-mm-dd HH:ii:ss
+    }
+  },
+  (删除对象返回的信息)
+  {
+    "success": {
+      "msg": "ok"
+    }
+  }
+]
+```
+
+
+
 ## 数据关联
 
 ### Pointer的使用
@@ -718,6 +858,26 @@ query.find().then(res => {
     ...
 }
 
+```
+
+#### 添加Pointer类型
+
+简介：Pointer 类型在数据库是一个json数据类型，单遇到Pointer字段，只需要按照以下操作
+
+```
+const own = {
+  "__type": "Pointer",
+  "className": "Game",
+  "objectId": "DdUOIIIW"
+}
+const query = Bmob.Query('tableName');
+query.get('objectId').then(res => {
+  console.log(res)
+  res.set('own',own)
+  res.save()
+}).catch(err => {
+  console.log(err)
+})
 ```
 
 

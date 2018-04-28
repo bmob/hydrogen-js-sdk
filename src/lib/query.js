@@ -1,6 +1,6 @@
 const request = require('./request')
 const Bmob = require('./bmob')
-const {isObject, isString, isNumber, isUndefined, isArray} = require('./dataType')
+const { isObject, isString, isNumber, isUndefined, isArray } = require('./dataType')
 const error = require('./error')
 const query = class query {
   constructor(parma) {
@@ -13,7 +13,7 @@ const query = class query {
     this.queryData = {}
     this.andData = {}
     this.orData = {}
-    this.limitNum = 10
+    this.limitNum = 100
     this.skipNum = 0
     this.includes = ""
     this.orders = null
@@ -47,7 +47,7 @@ const query = class query {
         "objects": val
       }
     }
-    const remove = (key,val) => {
+    const remove = (key, val) => {
       if (!isString(key) || !isArray(val)) {
         throw new error(415)
       }
@@ -85,13 +85,13 @@ const query = class query {
     }
     return new Promise((resolve, reject) => {
       request(`${this.tableName}/${ObjectId}`).then(results => {
-        Object.defineProperty(results, "set", {value: set})
-        Object.defineProperty(results, "unset", {value: unset})
-        Object.defineProperty(results, "save", {value: save})
-        Object.defineProperty(results, "increment", {value: increment})
-        Object.defineProperty(results, "add", {value: add})
-        Object.defineProperty(results, "remove", {value: remove})
-        Object.defineProperty(results, "addUnique", {value: addUnique})
+        Object.defineProperty(results, "set", { value: set })
+        Object.defineProperty(results, "unset", { value: unset })
+        Object.defineProperty(results, "save", { value: save })
+        Object.defineProperty(results, "increment", { value: increment })
+        Object.defineProperty(results, "add", { value: add })
+        Object.defineProperty(results, "remove", { value: remove })
+        Object.defineProperty(results, "addUnique", { value: addUnique })
         Object.defineProperty(results, "destroy", {
           value: () => this.destroy(ObjectId)
         })
@@ -262,7 +262,7 @@ const query = class query {
     })
     this.orders = key.join(',')
   }
-  include(...key){
+  include(...key) {
     key.map(item => {
       if (!isString(item)) {
         throw new error(415)
@@ -279,7 +279,9 @@ const query = class query {
     this.keys = key.join(',')
   }
   find() {
+    let oneData = {};
     let parmas = {};
+    let items = {};
     if (Object.keys(this.queryData).length) {
       parmas.where = this.queryData
     }
@@ -296,23 +298,86 @@ const query = class query {
     parmas.keys = this.keys
 
     for (const key in parmas) {
-      if (parmas.hasOwnProperty(key) && parmas[key]==null || parmas[key]==0) {
-          delete parmas[key]
-        }
+      if (parmas.hasOwnProperty(key) && parmas[key] == null || parmas[key] == 0) {
+        delete parmas[key]
+      }
+    }
+    const set = (key, val) => {
+      console.log(key,val)
+      if (!key || !val) {
+        throw new error(415)
+      }
+      oneData[key] = val
     }
 
+    const batch = (method='updata') => {
+      console.log(method)
+      if(items.length<1){
+        throw new error(416)
+      }
+
+      let id,k,v,p,m='put';
+      let key = new Array()
+      items.map(item=>{
+       
+        id = `/${item.objectId}`
+        if(id=='/undefined'){
+          id=''
+          m='post'
+        }
+        
+        p = {
+          "method": m,
+          "path": `${this.tableName}${id}`,
+          "body": oneData
+        };
+        if(method=='delete'){
+          p = {
+            "method": 'DELETE',
+            "path": `${this.tableName}${id}`,
+          };
+        }
+        key.push(p)
+        return item
+      });
+      
+      let params={"requests":key};
+      // 批量更新
+      const saveData = Object.assign(oneData)
+      return request(`/1/batch`, 'POST', params)
+    }
+    const saveAll = () => {
+      return batch()
+    }
+
+    const destroyAll = () => {
+      // 批量更新
+      return batch('delete')
+    }
     return new Promise((resolve, reject) => {
-      request(`${this.tableName}`, 'get', parmas).then(({results}) => {
+      request(`${this.tableName}`, 'get', parmas).then(({ results }) => {
         this.init()
+        Object.defineProperty(results, "set", { value: set })
+        Object.defineProperty(results, "saveAll",{ value: saveAll})
+        Object.defineProperty(results, "destroyAll",{ value: destroyAll})
+        items = results
         resolve(results)
       }).catch(err => {
         reject(err)
       })
     })
+
+   
+   
+    const fetchAll = () => {
+      // 批量获取
+      const saveData = Object.assign(unsetData, oneData, incrementData, addArray)
+      return request(`${this.tableName}/${ObjectId}`, 'put', saveData)
+    }
   }
   count() {
     return new Promise((resolve, reject) => {
-      request(`${this.tableName}`, 'get', {count: 1}).then(({count}) => {
+      request(`${this.tableName}`, 'get', { count: 1 }).then(({ count }) => {
         resolve(count)
       }).catch(err => {
         reject(err)
