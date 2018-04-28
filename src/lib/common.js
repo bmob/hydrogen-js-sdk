@@ -140,6 +140,33 @@ const push = (data) => {
   return request(route,'post',data)
 }
 
+ /**
+ * 上传文件
+ * @return {Object}
+ */
+const pushfile = (fileName,data) => {
+  // if (!isString(fileName) || !isObject(data)) {
+  //   //参数异常
+  //   throw new error(415)
+  // }
+  let route = `${Bmob._config.parameters.FILES}/${fileName}`
+  return request(route,'post',data)
+}
+
+ /**
+ * 删除文件
+ * @return {Object}
+ */
+const deletefile = (cdnname,url) => {
+  if (!isString(url) || !isString(cdnname)) {
+    //参数异常
+    throw new error(415)
+  }
+  console.log(cdnname, url)
+  console.log(url.split('.com/'))
+  let route = `${Bmob._config.parameters.FILES}/${cdnname}/${url.split('.com/')[1]}`
+  return request(route,'delete')
+}
 
 // ---------------云函数------------------------
 /**
@@ -171,5 +198,7 @@ module.exports = {
   requestPasswordReset,
   resetPasswordBySmsCode,
   updateUserPassword,
-  push
+  push,
+  pushfile,
+  deletefile
 };
