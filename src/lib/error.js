@@ -3,7 +3,7 @@ class error {
     let error = new Error()
 
     error.code = code
-    error.message = msg ? `Bmob.Error:${code} ${msg}` : `Bmob.Error:${code} ${this.errorMsg(code)}`
+    error.message = msg ? `Bmob.Error:{code:${code}, message:${msg}}` : `Bmob.Error:{code:${code}, message:${this.errorMsg(code)}}`
 
     return error
   }

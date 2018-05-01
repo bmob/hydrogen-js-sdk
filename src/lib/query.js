@@ -1,6 +1,6 @@
 const request = require('./request')
 const Bmob = require('./bmob')
-const { isObject, isString, isNumber, isUndefined, isArray } = require('./dataType')
+const {isObject, isString, isNumber, isUndefined, isArray} = require('./dataType')
 const error = require('./error')
 const query = class query {
   constructor(parma) {
@@ -85,13 +85,13 @@ const query = class query {
     }
     return new Promise((resolve, reject) => {
       request(`${this.tableName}/${ObjectId}`).then(results => {
-        Object.defineProperty(results, "set", { value: set })
-        Object.defineProperty(results, "unset", { value: unset })
-        Object.defineProperty(results, "save", { value: save })
-        Object.defineProperty(results, "increment", { value: increment })
-        Object.defineProperty(results, "add", { value: add })
-        Object.defineProperty(results, "remove", { value: remove })
-        Object.defineProperty(results, "addUnique", { value: addUnique })
+        Object.defineProperty(results, "set", {value: set})
+        Object.defineProperty(results, "unset", {value: unset})
+        Object.defineProperty(results, "save", {value: save})
+        Object.defineProperty(results, "increment", {value: increment})
+        Object.defineProperty(results, "add", {value: add})
+        Object.defineProperty(results, "remove", {value: remove})
+        Object.defineProperty(results, "addUnique", {value: addUnique})
         Object.defineProperty(results, "destroy", {
           value: () => this.destroy(ObjectId)
         })
@@ -303,45 +303,51 @@ const query = class query {
       }
     }
     const set = (key, val) => {
-      console.log(key,val)
+      console.log(key, val)
       if (!key || !val) {
         throw new error(415)
       }
       oneData[key] = val
     }
 
-    const batch = (method='updata') => {
+    const batch = (method = 'updata') => {
       console.log(method)
-      if(items.length<1){
+      if (items.length < 1) {
         throw new error(416)
       }
 
-      let id,k,v,p,m='put';
+      let id,
+        k,
+        v,
+        p,
+        m = 'put'
       let key = new Array()
-      items.map(item=>{
-       
+      items.map(item => {
+
         id = `/${item.objectId}`
-        if(id=='/undefined'){
-          id=''
-          m='post'
+        if (id == '/undefined') {
+          id = ''
+          m = 'post'
         }
-        
+
         p = {
           "method": m,
           "path": `${this.tableName}${id}`,
           "body": oneData
         };
-        if(method=='delete'){
+        if (method == 'delete') {
           p = {
             "method": 'DELETE',
-            "path": `${this.tableName}${id}`,
+            "path": `${this.tableName}${id}`
           };
         }
         key.push(p)
         return item
       });
-      
-      let params={"requests":key};
+
+      let params = {
+        "requests": key
+      };
       // 批量操作
       const saveData = Object.assign(oneData)
       return request(`/1/batch`, 'POST', params)
@@ -354,11 +360,11 @@ const query = class query {
       return batch('delete')
     }
     return new Promise((resolve, reject) => {
-      request(`${this.tableName}`, 'get', parmas).then(({ results }) => {
+      request(`${this.tableName}`, 'get', parmas).then(({results}) => {
         this.init()
-        Object.defineProperty(results, "set", { value: set })
-        Object.defineProperty(results, "saveAll",{ value: saveAll})
-        Object.defineProperty(results, "destroyAll",{ value: destroyAll})
+        Object.defineProperty(results, "set", {value: set})
+        Object.defineProperty(results, "saveAll", {value: saveAll})
+        Object.defineProperty(results, "destroyAll", {value: destroyAll})
         items = results
         resolve(results)
       }).catch(err => {
@@ -366,8 +372,6 @@ const query = class query {
       })
     })
 
-   
-   
     const fetchAll = () => {
       // 批量获取
       const saveData = Object.assign(unsetData, oneData, incrementData, addArray)
@@ -376,7 +380,7 @@ const query = class query {
   }
   count() {
     return new Promise((resolve, reject) => {
-      request(`${this.tableName}`, 'get', { count: 1 }).then(({ count }) => {
+      request(`${this.tableName}`, 'get', {count: 1}).then(({count}) => {
         resolve(count)
       }).catch(err => {
         reject(err)
