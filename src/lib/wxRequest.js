@@ -1,6 +1,6 @@
 // import axios from "axios";
 
-const Bmob = require('./bmob')
+let Bmob = require('./bmob')
 const utils = require('./utils')
 
 const setHeader = (config) => {
@@ -17,12 +17,16 @@ const setHeader = (config) => {
 const request = (route, method = "get", parma = {}) => {
   return new Promise((resolve, reject) => {
     const header = setHeader(Bmob._config)
-    // console.log(Bmob)
-    // var current = Bmob.User.current()
-    // if (current) {
-    //   console.log(current)
-    //   header['X-Bmob-Session-Token'] = current.sessionToken
-    // }
+    
+    console.log(Bmob)
+    if(undefined==Bmob.User){
+      Bmob = require('./bmob')
+    }
+    var current = Bmob.User.current()
+    if (current) {
+      console.log(current)
+      header['X-Bmob-Session-Token'] = current.sessionToken
+    }
     wx.request({
       url: Bmob._config.host + route, //仅为示例，并非真实的接口地址
       method: method,
