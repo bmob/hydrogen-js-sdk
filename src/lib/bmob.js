@@ -1,5 +1,6 @@
 const utils = require('./utils')
 const query = require('./query')
+const file = require('./file')
 const user = require('./user')
 
 const Bmob = global.Bmob || {}
@@ -13,6 +14,7 @@ Bmob.initialize = (applicationId, applicationKey, masterKey) => {
 
 Bmob.User =  new user()
 Bmob.Query = parma => new query(parma)
+Bmob.File = (name,object) => new file(name,object)
 
 
 module.exports = Bmob

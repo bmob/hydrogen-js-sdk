@@ -220,6 +220,30 @@ Bmob.User.login('bbbbbb','bbbbbb').then(res => {
 }).catch(err => {
  console.log(err,'err')
 });
+//
+const fileUploadControl = document.getElementById('profilePhotoFileUpload');
+fileUploadControl.onchange = () => {
+  const pic = fileUploadControl.files
+  let file
+  for(let item of pic){
+     file = Bmob.File(item.name, item);
+  }
+  file.save().then(res => {
+    console.log(res.length);
+    console.log(res);
+  })
+}
+
+const del = Bmob.File();
+const val =  ["http://bmob-cdn-15009.b0.upaiyun.com/2018/05/02/aae4998a403e018680a7eff90852905e.jpg"]
+del.destroy(val).then(res => {
+  console.log(res);
+}).catch(err => {
+  err
+})
+
+
+
 // const query = Bmob.Query('project');
 // query.set("name","fff")
 // query.set("cover","333")
@@ -248,12 +272,16 @@ Bmob.User.login('bbbbbb','bbbbbb').then(res => {
 // });
 
 
-const query = Bmob.Query('test3');
-// query.include('hh','ff')
-query.find().then(res => {
-  console.log(res)
- 
-})
+// const query = Bmob.Query('test3');
+// // query.include('hh','ff')
+// query.find().then(res => {
+//   console.log(res)
+//
+// })
+//
+
+
+
 // query.find().then(res => {
 //   console.log(res)
 // }).catch(err => {
