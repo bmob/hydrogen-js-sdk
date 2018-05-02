@@ -12,10 +12,13 @@ class error {
     switch (code) {
     case 415:
       // 参数类型不正确
-      return 'incorrect parameter type'
+      return 'incorrect parameter type.'
     case 416:
       // 参数为空
-      return 'Parameter is null'
+      return 'Parameter is null.'
+    case 417:
+        // 内容为空
+        return 'There is no upload content.'
     default:
       return 'unknown error'
     }

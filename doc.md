@@ -131,7 +131,7 @@ Bmob.User.signOrLoginByMobilePhone(phone,smsCode).then(res => {
 {"code":207,"error":"code error."}
 ```
 
-### 
+###
 
 ### 查询用户
 
@@ -345,7 +345,7 @@ Bmob.updateUserPassword(objectId,data).then(res => {
     alert: "Hello From Bmob."
       }
     }
-    
+
     Bmob.push(data).then(res => {
       console.log(res)
     }).catch(err => {
@@ -355,70 +355,6 @@ Bmob.updateUserPassword(objectId,data).then(res => {
 **返回示例:**
 
 待补充返回示例
-
-### 文件上传
-
- **简介：**
-
-文件上传操作
-
- **参数说明：**
-
-| 参数     | 类型   | 必填 | 说明   |
-| -------- | ------ | ---- | ------ |
-| fileName | string | 是   | 文件名(带后缀) |
-
-**请求示例：**
-
-
-    let data = {
-      filename: 'hello.txt'
-    }
-    
-    Bmob.pushfile(data.filename).then(res => {
-      console.log(res)
-    }).catch(err => {
-      console.log(err)
-    })
-
-**返回示例:**
-    {
-      "filename": filename,
-      "url": url,
-      "cdn":cdnname
-    }
-
-### 文件删除
-
- **简介：**
-
-文件删除操作
-
- **参数说明：**
-
-| 参数     | 类型   | 必填 | 说明   |
-| -------- | ------ | ---- | ------ |
-| cdnName | string | 是   | 上传文件时返回的cdn |
-| url  | string | 是   | 上传文件时返回的url |
-
-**请求示例：**
-
-
-    let params = {
-      "filename": filename,
-      "url": url,
-      "cdn":cdnname
-    }
-    Bmob.deletefile(params.cdn,params.url).then(res => {
-    	console.log(res)
-    }).catch(err => {
-    	console.log(err)
-    })
-
-**返回示例:**
-    {
-      "msg": "ok"
-    }
 
 ## 数据表操作
 
@@ -486,7 +422,7 @@ query.get('objectId').then(res => {
     query.set("cover","1111")
     query.save().then(res => {
       console.log(res)
-    
+
     }).catch(err => {
       console.log(err)
     })
@@ -736,7 +672,7 @@ query.count().then(res => {
 
 ### 批量修改
 
- **简介：** 
+ **简介：**
 
 通过查询条件批量修改符合条件记录
 
@@ -791,7 +727,7 @@ query.find().then(todos => {
 
 ### 批量增加
 
- **简介：** 
+ **简介：**
 
 通过查询条件查询0条记录，然后模拟假数据
 
@@ -819,7 +755,7 @@ query.find().then(todos => {
 
 ### 批量删除
 
- **简介：** 
+ **简介：**
 
 通过查询条件批量修改符合条件记录
 
@@ -980,6 +916,72 @@ query.get('ObjectId').then(res => {
 ```
 
 
+## 文件
+
+### 文件上传
+
+
+ **参数说明：**
+
+| 参数     | 类型   | 必填 | 说明   |
+| -------- | ------ | ---- | ------ |
+| fileName | string | 是   | 文件名(带后缀) |
+| file     | Object | 是   | 相应的文本或者二进制流 |
+
+**web请求示例：**
+
+```
+// 在页面中创建一个 file input来允许用户选择磁盘上的文件
+<input type="file" id="profilePhotoFileUpload"  multiple="multiple" >
+```
+然后，在一个处理onchange的函数里，将文件加入上传队列进行批量操作：
+```
+const fileUploadControl = document.getElementById('profilePhotoFileUpload');
+fileUploadControl.onchange = () => {
+  const pic = fileUploadControl.files
+  let file
+  for(let item of pic){
+     file = Bmob.File(item.name, item);
+  }
+  file.save().then(res => {
+    console.log(res.length);
+    console.log(res);
+  })
+}
+```
+
+**返回示例:**
+```
+ ["http://bmob-cdn-15009.b0.upaiyun.com/2018/05/02/f4e60e8d40b7c20b8031bae55a837875.js", "http://bmob-cdn-15009.b0.upaiyun.com/2018/05/02/1d39af8b40b8ede28098a9d4067b5ced.png"]
+```
+
+### 文件删除
+
+
+ **参数说明：**
+
+| 参数     | 类型           | 必填 | 说明   |
+| -------- | ------------  | ---- | ------ |
+| url     | string或array  | 是   | 上传文件时返回的url |
+
+**请求示例：**
+```
+// 传入string是单个文件删除，传入array是批量删除
+const del = Bmob.File();
+const val =  ["http://bmob-cdn-15009.b0.upaiyun.com/2018/05/02/aae4998a403e018680a7eff90852905e.jpg"]
+del.destroy(val).then(res => {
+  console.log(res);
+}).catch(err => {
+  console.log(err)
+})  
+```
+**返回示例:**
+```
+{
+  "msg": "ok"
+}
+```
+
 
 
 ## 小程序操作 ##
@@ -1078,7 +1080,7 @@ Bmob.generateCode 参数列表
     	}
     	,"emphasis_keyword": ""
     }
-    
+
     Bmob.sendWeAppMessage(modelData).then(function (response) {
     	console.log(response);
     })
@@ -1159,7 +1161,7 @@ Bmob.generateCode 参数列表
     		}
       	}
     }
-    
+
     Bmob.notifyMsg(temp).then(function (response) {
     console.log(response);
     })
