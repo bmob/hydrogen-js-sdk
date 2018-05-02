@@ -3,6 +3,7 @@ const query = require('./query')
 const user = require('./user')
 
 const Bmob = global.Bmob || {}
+Bmob._test=1
 Bmob._config = utils.getConfig()
 
 Bmob.initialize = (applicationId, applicationKey, masterKey) => {

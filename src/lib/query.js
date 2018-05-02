@@ -146,7 +146,7 @@ const query = class query {
       })
     })
   }
-  terms(key, operator, val) {
+  equalTo(key, operator, val) {
     if (!isString(key)) {
       throw new error(415)
     }

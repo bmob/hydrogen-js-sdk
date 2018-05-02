@@ -633,26 +633,26 @@ or
 **请求示例：**
 ```
 // 如果要查询某个属性等于某个值，示例代码如下：
-query.terms("isLike", "==", 100);
+query.equalTo("isLike", "==", 100);
 
 // 如果要查询某个属性不等于某个值，示例代码如下：
-query.terms("title", "!=", "bmob sdk");
+query.equalTo("title", "!=", "bmob sdk");
 
 // 如果要模糊查询某个值，示例代码如下（模糊查询目前只提供给付费套餐会员使用）：
-query.terms("title","==", { "$regex": "" + k + ".*" });
+query.equalTo("title","==", { "$regex": "" + k + ".*" });
 
 // 查询大于某个日期的数据，示例代码如下
-query.terms("createdAt", ">" "2018-08-21 18:02:52");
+query.equalTo("createdAt", ">" "2018-08-21 18:02:52");
 
 /**
-* terms 方法支持 "==","!=",">",">=","<","<="
+* equalTo 方法支持 "==","!=",">",">=","<","<="
 */
 
 ```
 两条查询语句一起写，就相当于AND查询，如下示例代码，查询一个月的数据：
 ```
-query.terms("createdAt", ">", "2018-04-01 00:00:00");
-query.terms("createdAt", "<", "2018-05-01 00:00:00");
+query.equalTo("createdAt", ">", "2018-04-01 00:00:00");
+query.equalTo("createdAt", "<", "2018-05-01 00:00:00");
 
 // 因为createdAt updatedAt服务器自动生成的时间，在服务器保存的是精确到微秒值的时间，所以基于时间类型比较的值要加1秒。
 
@@ -661,7 +661,7 @@ query.terms("createdAt", "<", "2018-05-01 00:00:00");
 一个完整的例子
 ```
 const query = Bmob.Query("tableName");
-query.terms("title", "hello");
+query.equalTo("title", "hello");
 query.find().then(res => {
     console.log(res)
 });
@@ -673,8 +673,8 @@ query.find().then(res => {
 
 ```
 const query = Bmob.Query("tableName");
-const query1 = query.terms("isLike", '>', 150);
-const query2 = query.terms("isLike", '<', 150);
+const query1 = query.equalTo("isLike", '>', 150);
+const query2 = query.equalTo("isLike", '<', 150);
 
 query.or(query1, query2);
 query.find().then(res => {
@@ -798,7 +798,7 @@ query.find().then(todos => {
 ```
 const query = Bmob.Query('tableName');
 // 设置一个不存在的条件，查询出0条数据
-query.terms("createdAt", "<", "1971-04-01 00:00:00");
+query.equalTo("createdAt", "<", "1971-04-01 00:00:00");
 query.find().then(todos => {
   //模拟50条数据
   for (let index = 0; index < 50; index++) {
@@ -983,7 +983,99 @@ query.get('ObjectId').then(res => {
 
 
 ## 小程序操作 ##
+### 小程序一键登录
+
+**简介：**
+
+通过微信支持的code实现一键登录，登陆成功后会在本地缓存保存用户的信息，此代码一般写入到`app.js `
+
+ **参数说明：**
+
+无需传参数
+
+**请求示例：**
+
+```
+Bmob.User.auth().then(res => {
+      console.log(res)
+      console.log('一键登陆成功')
+
+    }).catch(err => {
+      console.log(err)
+    });
+```
+
+**返回示例:**
+
+```
+成功：
+{
+    "createdAt":"2018-04-19 17:26:45",
+    "objectId":"X43SIIIH",
+    "sessionToken":"cc4fbcfd40583af980f4e6e52085adbf",
+    "updatedAt":"2018-04-19 17:26:48",
+    "username":"aaaaaa"
+}
+```
+
+
+
+### 小程序更新用户信息
+
+**简介：**
+
+2018年5月1号起，微信官方彻底废除`wx.getUserInfo` 函数，如需获取用户信息，请使用按钮获取。
+
+> wxml：
+
+```
+ <button open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+```
+
+> js：
+
+```
+getUserInfo: function(e) {
+    app.globalData.userInfo = e.detail.userInfo
+    Bmob.User.upInfo(e.detail.userInfo)
+    this.setData({
+      userInfo: e.detail.userInfo,
+      hasUserInfo: true
+    })
+  }
+```
+
+> wxml显示
+
+```
+<image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+```
+
+ **参数说明：**
+
+无需传参数
+
+**请求示例：**
+
+```
+Bmob.User.upInfo(e.detail.userInfo).then(result => {
+      console.log(result)
+    }).catch(err => {
+      console.log(err)
+    })
+```
+
+**返回示例:**
+
+```
+{"updatedAt":"2018-05-02 14:43:26"}
+```
+
+
+
 ### 生成二维码 ###
+
 **简介：**
 
 通过路径生成二维码图片
@@ -1128,11 +1220,20 @@ Bmob.generateCode 参数列表
 ### 微信主人通知 ###
 **简介：**
 
-微信主动推送通知，业务场景：比如你有APP，有人下单了，或者有人留言了。你可以收到微信推送通知。
+微信主动推送通知，业务场景：比如你有APP，有人下单了，或者有人留言了。你可以收到微信推送通知。每日限制50条，如需更多，请工单联系客服
+
+**注意事项：**
+
+此模板是Bmob 云提供，不可使用自己`template_id`，`openid`在Bmob后端云服务号回复`openid`拿到。
 
 **参数说明：**
 
-模版信息
+| 参数        | 类型   | 必填 | 说明               |
+| ----------- | ------ | ---- | ------------------ |
+| touser      | string | 是   | 公众号openid       |
+| template_id | string | 是   | 公众号 template_id |
+| url         | string | 是   | 用户点击网址       |
+| data        | object | 是   | 模板对应的格式     |
 
 **请求示例：**
 
@@ -1173,7 +1274,53 @@ Bmob.generateCode 参数列表
     	msg: "ok"
     }
 
+#### 提供模板
+
+1. 新订单通知（template_id：`K9-6_Ayj4MLC2yvwY60-cq18tngJHAlqDfsOvv3D7a8` ）
+
+```
+{{first.DATA}}
+
+提交时间：{{tradeDateTime.DATA}}
+订单类型：{{orderType.DATA}}
+客户信息：{{customerInfo.DATA}}
+{{orderItemName.DATA}}：{{orderItemData.DATA}}
+{{remark.DATA}}
+```
+
+2. 系统报警通知（template_id：`-ERkPwp0ntimqH39bggQc_Pj55a18CYLpj-Ert8-c8Y` ）
+
+```
+{{first.DATA}}
+系统名称：{{keyword1.DATA}}
+报警时间：{{keyword2.DATA}}
+报警级别：{{keyword3.DATA}}
+{{remark.DATA}}
+```
+
+3. 购买成功通知（template_id：`Mbk3kYqRGkL98ch6Lie4XSXtOsxXj2SC0SRQXd89G1Y `）
+
+```
+您好，您已购买成功。
+
+商品信息：{{name.DATA}}
+{{remark.DATA}}
+```
+
+4. 审核结果通知（template_id：`aNNNmi7WK4kohleWhCkDRKJiHOZnIpkrhXx5XPx4dx0` ）
+
+```
+{{first.DATA}}
+账号名称：{{keyword1.DATA}}
+审核状态：{{keyword2.DATA}}
+审核时间：{{keyword3.DATA}}
+{{remark.DATA}}
+```
+
+
+
 ### 云函数 ###
+
 **简介：**
 
 云函数调用
@@ -1201,7 +1348,9 @@ Bmob.generateCode 参数列表
     });
 
 **云函数示例:**
-    function onRequest(request, response, modules) {
+
+```
+  function onRequest(request, response, modules) {
       //获取SDK客户端上传的name参数
       var name = request.body.name;
 	  if(name == 'bmob')
@@ -1209,11 +1358,23 @@ Bmob.generateCode 参数列表
 	  else
 	    response.end('输入错误，请重新输入');
     }  
+```
+
 **返回示例:**
 
     {
     	result: "欢迎使用Bmob"
     }
+
+### 小程序下载域名
+
+由于最近微信封了~~*.upaiyun.com~~ 域名，如果你没做文件下载功能，只是显示图片，可以不填写。如果你需要做下载功能，在应用设置里面，可以开启独立域名， 开启后，填写到微信平台就好了，当然有时候你想用自己的域名，也是可以的，可以工单联系我们。
+
+### 小程序客服消息
+
+经常有人有需求，希望手机端回复客户消息。这时，可以基于微信客服接口函数使用云函数开发相关功能， 如果你不想开发，希望自己小程序直接可用客服消息，可以使用Bmob官方提供的服务消息解决方案，主动提醒、自动回复、手机一键处理客服。如需使用请应用升级页面操作
+
+
 
 ## 短信服务操作 ##
 

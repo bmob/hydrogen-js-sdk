@@ -1,6 +1,6 @@
 // import axios from "axios";
 const axios = require('../../node_modules/axios/index')
-const Bmob = require('./bmob')
+let Bmob = require('./bmob')
 const utils = require('./utils')
 
 const setHeader = (config) => {
@@ -16,8 +16,18 @@ const setHeader = (config) => {
 
 const request = (route, method = 'get', parma = {}) => {
   return new Promise((resolve, reject) => {
+   
+
+    if(undefined==Bmob.User){
+      Bmob = require('./bmob')
+    }
+
     const header = setHeader(Bmob._config)
 
+    var current = Bmob.User.current()
+    if (current) {
+      header['X-Bmob-Session-Token'] = current.sessionToken
+    }
     const server = axios.create({
       baseURL: Bmob._config.host,
       headers: header,

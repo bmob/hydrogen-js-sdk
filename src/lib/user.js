@@ -95,44 +95,36 @@ const user = class user extends query {
   }
   current() {
     const data = storage.fetch('bmob')
-    return JSON.parse(data)
+    return typeof data == 'object' ? data : JSON.parse(data)
   }
   upInfo(userInfo) {
-    console.log('userInfo',userInfo)
-    var nickName = userInfo.nickName
-    var avatarUrl = userInfo.avatarUrl
-   
-    var currentUser = this.current()
-    if (!currentUser) {
-      console.log('未获取到用户信息')
-    }
-    var openid = storage.fetch('openid')
-    console.log(currentUser,openid)
-    // const query = new query('_user');
-    this.get(currentUser.objectId).then(res => {
-      console.log(res)
-      res.set('nickName', nickName)
-      res.set('userPic', avatarUrl)
-      res.set('openid', openid)
-      res.save()
-    }).catch(err => {
-      console.log(err)
-    })
+    return new Promise((resolve, reject) => {
 
-   
-    // query.get(currentUser.id, {
-    //   success: function (result) {
-    //     result.set('nickName', nickName)
-    //     result.set('userPic', avatarUrl)
-    //     result.set('openid', openid)
-    //     result.save().then((res) => {
-    //       // var currentUser = Bmob.User.current()
-    //       currentUser.set('nickName', nickName)
-    //       currentUser.set('userPic', avatarUrl)
-    //       Bmob.User._saveCurrentUser(currentUser)
-    //     })
-    //   }
-    // })
+      var nickName = userInfo.nickName
+      var avatarUrl = userInfo.avatarUrl
+
+      var currentUser = this.current()
+      if (!currentUser) {
+        console.log('未获取到用户信息')
+        reject('未获取到用户信息');
+      }
+      var openid = storage.fetch('openid')
+      this.get(currentUser.objectId).then(res => {
+        res.set('nickName', nickName)
+        res.set('userPic', avatarUrl)
+        res.set('openid', openid)
+        res.save().then(result => {
+          resolve(result);
+        }).catch(err => {
+          console.log(err)
+          reject(err);
+        })
+       
+      }).catch(err => {
+        console.log(err)
+        reject(err);
+      })
+    })
   }
   auth() {
     var that = this;
