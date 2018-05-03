@@ -1,5 +1,4 @@
 const request = require('./request')
-const axiosRequest = require('./axiosRequest')
 const Bmob = require('./bmob')
 const error = require('./error')
 const { isObject, isString } = require('./dataType')

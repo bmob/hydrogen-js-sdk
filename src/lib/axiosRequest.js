@@ -1,4 +1,3 @@
-// import axios from "axios";
 const axios = require('../../node_modules/axios/index')
 let Bmob = require('./bmob')
 const utils = require('./utils')

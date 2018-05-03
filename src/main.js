@@ -1,7 +1,7 @@
-import Bmob from './lib/app'
-// var Bmob = require('./lib/bmob')
+// import Bmob from './lib/bmob'
+var Bmob = require('./lib/app')
 
-// import Bmob from './js/Bmob-1.0.0.min.js'
+
 console.log(Bmob)
 
 
@@ -214,7 +214,7 @@ let data = {
 // })
 
 Bmob.initialize("71acb3659ea66abed6b7739f9bd2e914","45ef983f011036c5868e9e9a38c193ec")
-
+console.log(Bmob)
 Bmob.User.login('bbbbbb','bbbbbb').then(res => {
   console.log(res,'ok')
 }).catch(err => {

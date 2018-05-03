@@ -2,8 +2,8 @@ const ROOT = require('../../package.json')
 const HOST = 'https://api.bmob.cn'
 const APPLICATION_ID = ''
 const APPLICATION_KEY = ''
+// 这行在小程序引入app.js报错
 const VERSION = `v${ROOT.version}`
-
 // 1.h5 2.小程序 3.快应用
 const TYPE = 1
 
@@ -29,7 +29,6 @@ const PARAMETERS = {
   USERS: '/1/users',// 查询用户
   QUERY: '/1/classes' // 查询数据
 }
-
 module.exports = {
   host: HOST,
   applicationId: APPLICATION_ID,

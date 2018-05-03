@@ -1,5 +1,3 @@
-// import axios from "axios";
-
 let Bmob = require('./bmob')
 const utils = require('./utils')
 
@@ -17,8 +15,8 @@ const setHeader = (config) => {
 const request = (route, method = "get", parma = {}) => {
   return new Promise((resolve, reject) => {
     const header = setHeader(Bmob._config)
-    
-    if(undefined==Bmob.User){
+
+    if (undefined == Bmob.User) {
       Bmob = require('./bmob')
     }
     var current = Bmob.User.current()

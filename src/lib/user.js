@@ -8,9 +8,7 @@ const { isObject, isString, isNumber } = require('./dataType')
 const user = class user extends query {
   constructor() {
     const tableName = '_User'
-    // this.setData = {}
     super(tableName)
-    // super.tableNmae
   }
   set(key, val = "") {
     if (isString(key)) {

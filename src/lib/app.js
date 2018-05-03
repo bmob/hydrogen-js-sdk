@@ -1,5 +1,10 @@
 
 const Bmob = require('./bmob')
+
+const query = require('./query')
+const user = require('./user')
+const file = require('./file')
+const pay = require('./pay')
 const {
   generateCode,
   sendMessage,
@@ -45,6 +50,13 @@ Bmob.updateUserPassword = updateUserPassword
 // APP推送
 Bmob.push = push
 
+
+Bmob.Pay = new pay()
+Bmob.User =  new user()
+Bmob.Query = parma => new query(parma)
+
+Bmob.File = (name,object) => new file(name,object)
+Bmob.request = require('./request') 
 
 try {
   window.Bmob = Bmob
