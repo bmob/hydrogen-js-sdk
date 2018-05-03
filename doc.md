@@ -345,7 +345,7 @@ Bmob.updateUserPassword(objectId,data).then(res => {
     alert: "Hello From Bmob."
       }
     }
-
+    
     Bmob.push(data).then(res => {
       console.log(res)
     }).catch(err => {
@@ -422,11 +422,10 @@ query.get('objectId').then(res => {
     query.set("cover","1111")
     query.save().then(res => {
       console.log(res)
-
+    
     }).catch(err => {
       console.log(err)
     })
-
 
 **返回示例:**
 
@@ -1172,19 +1171,85 @@ Bmob.generateCode 参数列表
     	}
     	,"emphasis_keyword": ""
     }
-
+    
     Bmob.sendWeAppMessage(modelData).then(function (response) {
     	console.log(response);
-    })
-    .catch(function (error) {
+    }).catch(function (error) {
     	console.log(error);
     });
-**返回示例:**
+****
 
-### 小程序模板消息返回示例待补充 ###
+###  ###
+
+### 小程序付款到零钱
+
+付款到零钱目前已经支持，常见使用场景是用户小程序里面提现，由于此接口用的人少，如需要使用可提交工单联系工作人员。
+
+### 小程序支付
+
+**简介：**
+
+微信小程序支付，用户付款到微信支付账户。
+
+**使用条件：**
+
+1. 需企业用户提前开通微信支付
+2. 填写支付商户id到Bmob控制台
+3. 开通Bmob专业版或以上版本（可开通试用，工单联系）
 
 
-### 退款 ###
+
+**参数说明：**
+
+```
+var openId = wx.getStorageSync('openid');
+//传参数金额，名称，描述,openid
+    Bmob.Pay.weApp(0.01, '哇哈哈1瓶', '哇哈哈饮料，杭州生产', openId).then(function (resp) {
+      console.log(resp);
+
+      that.setData({
+        loading: true,
+        dataInfo: resp
+      })
+
+      //服务端返回成功
+      var timeStamp = resp.timestamp,
+        nonceStr = resp.noncestr,
+        packages = resp.package,
+        orderId = resp.out_trade_no,//订单号，如需保存请建表保存。
+        sign = resp.sign;
+
+      //打印订单号
+      console.log(orderId);
+
+      //发起支付
+      wx.requestPayment({
+        'timeStamp': timeStamp,
+        'nonceStr': nonceStr,
+        'package': packages,
+        'signType': 'MD5',
+        'paySign': sign,
+        'success': function (res) {
+          //付款成功,这里可以写你的业务代码
+          console.log(res);
+        },
+        'fail': function (res) {
+          //付款失败
+          console.log('付款失败');
+          console.log(res);
+        }
+      })
+
+    }, function (err) {
+      console.log('服务端返回失败');
+      console.log(err);
+    });
+```
+
+
+
+### 小程序退款 ###
+
 **简介：**
 
 退款操作
@@ -1262,7 +1327,7 @@ Bmob.generateCode 参数列表
     		}
       	}
     }
-
+    
     Bmob.notifyMsg(temp).then(function (response) {
     console.log(response);
     })

@@ -2,6 +2,7 @@ const utils = require('./utils')
 const query = require('./query')
 const file = require('./file')
 const user = require('./user')
+const pay = require('./pay')
 
 const Bmob = global.Bmob || {}
 Bmob._test=1
@@ -13,6 +14,7 @@ Bmob.initialize = (applicationId, applicationKey, masterKey) => {
 }
 
 Bmob.User =  new user()
+Bmob.Pay = new pay()
 Bmob.Query = parma => new query(parma)
 Bmob.File = (name,object) => new file(name,object)
 
