@@ -1,5 +1,5 @@
 const ROOT = require('../../package.json')
-const HOST = 'https://api.bmob.cn'
+const HOST = 'https://api.bmobcloud.com'
 const APPLICATION_ID = ''
 const APPLICATION_KEY = ''
 // 这行在小程序引入app.js报错

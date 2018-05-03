@@ -1,5 +1,5 @@
 // const ROOT = require('../../package.json')
-const HOST = 'https://api.bmob.cn'
+const HOST = 'https://api.bmobcloud.com'
 const APPLICATION_ID = ''
 const APPLICATION_KEY = ''
 // const VERSION = `v${ROOT.version}`
