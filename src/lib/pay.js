@@ -6,13 +6,15 @@ const list = []
 
 class pay {
   constructor() {
-
+    // 初始化
   }
-  weApp(price, product_name, body, openid) {
-    if (!price || !product_name || !body || !openid){
+  weApp(price, product_name, body) {
+    var openid = wx.getStorageSync('openid');
+    if (!price || !product_name || !body || !openid) {
       throw new error(416)
     }
-      var data = { "order_price": price, "product_name": product_name, "body": body, "open_id": openid, "pay_type": 4 }
+    //传参数金额，名称，描述,openid
+    var data = { "order_price": price, "product_name": product_name, "body": body, "open_id": openid, "pay_type": 4 }
     let route = '/1/pay'
     return request(route, 'post', data)
   }
