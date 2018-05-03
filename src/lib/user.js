@@ -134,6 +134,11 @@ const user = class user extends query {
           success: res => {
             that.loginWithWeapp(res.code).then(
               user => {
+
+                if(user.error){
+                  throw new error(415)
+                  return
+                }
                 var openid = user.authData.weapp.openid
                 storage.save('openid', openid)
                 storage.save('bmob', user)

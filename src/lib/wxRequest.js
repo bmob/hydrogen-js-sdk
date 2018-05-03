@@ -18,13 +18,11 @@ const request = (route, method = "get", parma = {}) => {
   return new Promise((resolve, reject) => {
     const header = setHeader(Bmob._config)
     
-    console.log(Bmob)
     if(undefined==Bmob.User){
       Bmob = require('./bmob')
     }
     var current = Bmob.User.current()
     if (current) {
-      console.log(current)
       header['X-Bmob-Session-Token'] = current.sessionToken
     }
     wx.request({
@@ -33,7 +31,6 @@ const request = (route, method = "get", parma = {}) => {
       data: parma,
       header: header,
       success: res => {
-        console.log(res.data)
         resolve(res.data);
       },
       fail: err => {
