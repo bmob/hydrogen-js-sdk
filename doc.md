@@ -131,9 +131,7 @@ Bmob.User.signOrLoginByMobilePhone(phone,smsCode).then(res => {
 {"code":207,"error":"code error."}
 ```
 
-###
-
-### 查询用户
+###查询用户
 
  **简介：**
 
@@ -914,10 +912,65 @@ query.get('ObjectId').then(res => {
 })
 ```
 
+## 云函数使用
+
+**简介：**
+
+云函数调用
+
+**参数说明：**
+
+| 参数        | 类型   | 必填 | 说明     |
+| ----------- | ------ | ---- | -------- |
+| funcName    | string | 是   | 手机号   |
+| requestData | string | 否   | 模板信息 |
+
+**请求示例：**
+
+```
+let params =　{
+  funcName: 'hello',
+  data: {
+	name : 'bmob'
+  }
+}
+Bmob.functions(params.funcName,params.data).then(function (response) {
+	console.log(response);
+})
+.catch(function (error) {
+	console.log(error);
+});
+
+```
+
+**云函数示例:**
+
+```
+  function onRequest(request, response, modules) {
+      //获取SDK客户端上传的name参数
+      var name = request.body.name;
+	  if(name == 'bmob')
+	    response.end('欢迎使用Bmob');
+	  else
+	    response.end('输入错误，请重新输入');
+    }  
+
+```
+
+**返回示例:**
+
+```
+{
+	result: "欢迎使用Bmob"
+}
+
+```
+
+### 
 
 ## 文件
 
-### 文件上传
+### WEB文件上传
 
 
  **参数说明：**
@@ -952,7 +1005,51 @@ fileUploadControl.onchange = () => {
 **返回示例:**
 ```
  ["http://bmob-cdn-15009.b0.upaiyun.com/2018/05/02/f4e60e8d40b7c20b8031bae55a837875.js", "http://bmob-cdn-15009.b0.upaiyun.com/2018/05/02/1d39af8b40b8ede28098a9d4067b5ced.png"]
+
 ```
+
+### 小程序文件上传
+
+ **参数说明：**
+
+| 参数     | 类型   | 必填 | 说明                   |
+| -------- | ------ | ---- | ---------------------- |
+| fileName | string | 是   | 文件名(带后缀)         |
+| file     | Object | 是   | 相应的文本或者二进制流 |
+
+给页面上传按钮一个点击事件，这里使用了for，支持批量上传
+
+```
+upload:function(){
+    wx.chooseImage({
+      success: function (res) {
+        console.log(res)
+        var tempFilePaths = res.tempFilePaths
+        var file;
+        for (let item of tempFilePaths) {
+          console.log('itemn',item)
+          file = Bmob.File('abc.jpg', item);
+        }
+        file.save().then(res => {
+          console.log(res.length);
+          console.log(res);
+        })
+       
+      }
+    })
+  }
+```
+
+**返回示例:**
+
+```
+ ["http://bmob-cdn-15009.b0.upaiyun.com/2018/05/02/f4e60e8d40b7c20b8031bae55a837875.js", "http://bmob-cdn-15009.b0.upaiyun.com/2018/05/02/1d39af8b40b8ede28098a9d4067b5ced.png"]
+
+```
+
+### 
+
+
 
 ### 文件删除
 
@@ -1179,9 +1276,7 @@ Bmob.generateCode 参数列表
     });
 ****
 
-###  ###
-
-### 小程序付款到零钱
+###  小程序付款到零钱##
 
 付款到零钱目前已经支持，常见使用场景是用户小程序里面提现，由于此接口用的人少，如需要使用可提交工单联系工作人员。
 
@@ -1386,52 +1481,7 @@ var openId = wx.getStorageSync('openid');
 
 
 
-### 云函数 ###
 
-**简介：**
-
-云函数调用
-
-**参数说明：**
-
-| 参数      | 类型   | 必填 | 说明     |
-| --------- | ------ | ---- | -------- |
-| funcName | string | 是   | 手机号 |
-| requestData  | string | 否   | 模板信息  |
-
-**请求示例：**
-
-    let params =　{
-      funcName: 'hello',
-      data: {
-    	name : 'bmob'
-      }
-    }
-    Bmob.functions(params.funcName,params.data).then(function (response) {
-    	console.log(response);
-    })
-    .catch(function (error) {
-    	console.log(error);
-    });
-
-**云函数示例:**
-
-```
-  function onRequest(request, response, modules) {
-      //获取SDK客户端上传的name参数
-      var name = request.body.name;
-	  if(name == 'bmob')
-	    response.end('欢迎使用Bmob');
-	  else
-	    response.end('输入错误，请重新输入');
-    }  
-```
-
-**返回示例:**
-
-    {
-    	result: "欢迎使用Bmob"
-    }
 
 ### 小程序下载域名
 
@@ -1440,6 +1490,132 @@ var openId = wx.getStorageSync('openid');
 ### 小程序客服消息
 
 经常有人有需求，希望手机端回复客户消息。这时，可以基于微信客服接口函数使用云函数开发相关功能， 如果你不想开发，希望自己小程序直接可用客服消息，可以使用Bmob官方提供的服务消息解决方案，主动提醒、自动回复、手机一键处理客服。如需使用请应用升级页面操作
+
+
+
+## 小程序WebSocket
+
+**简介：**
+
+小程序WebSocket主要用来做实时数据处理，例如实时监听订单表变化，聊天室等场景。（此业务每月99）
+
+
+
+
+
+Bmob提供了数据实时功能，当开发者监听某个变化事件，例如监听表更新时，表的内容一旦变化，服务器就会通知SDK，SDK提供了相应回调函数来给开发者使用。当然开发者也可以取消相对应的监听，这样就不会收到数据变化的消息了。
+
+
+
+### 使用实时数据平台的js
+
+对实时数据对象进行初始化
+
+```
+let BmobSocketIo =new Bmob.Socket()
+```
+
+### 订阅事件
+
+#### 订阅表更新的事件
+
+订阅表"GameScore"更新的事件。
+
+```
+BmobSocketIo.updateTable("GameScore");
+```
+
+#### 订阅行更新的事件
+
+订阅表"GameScore"中行objectId为"3342e40e4f"更新的事件。
+
+```
+BmobSocketIo.updateRow("GameScore","3342e40e4f");
+
+```
+
+#### 订阅行删除的事件
+
+订阅表"GameScore"中行objectId为"3342e40e4f"删除的事件。
+
+```
+BmobSocketIo.deleteRow("GameScore","1256e40e4f");
+
+```
+
+### 取消订阅事件
+
+#### 取消订阅表更新的事件
+
+取消订阅表"GameScore"更新的事件。
+
+```
+BmobSocketIo.unsubUpdateTable("GameScore");
+
+```
+
+#### 取消订阅行更新的事件
+
+取消订阅表"GameScore"中objectId为"3342e40e4f"行更新的事件。
+
+```
+BmobSocketIo.unsubUpdateRow("GameScore","3342e40e4f");
+
+```
+
+#### 取消订阅行删除的事件
+
+取消订阅表"GameScore"中objectId为"3342e40e4f"行删除的事件。
+
+```
+BmobSocketIo.unsubDeleteRow("GameScore","1256e40e4f");
+
+```
+
+### 监听触发的事件
+
+#### 监听更新表的事件
+
+当订阅了表更新的表数据发送变化时，js中会触发函数onUpdateTable。
+
+tablename为更新的表，data为服务端返回的更新数据。
+
+```
+   BmobSocketIo.onUpdateTable = function(tablename,data) {    
+      //业务逻辑的代码
+   };
+
+```
+
+#### 监听行更新的事件
+
+tablename为更新的表，objectId为更新行的objectId，data为服务端返回的更新数据。
+
+```
+   BmobSocketIo.onUpdateRow = function(tablename,objectId,data) {    
+      //业务逻辑的代码
+   };
+
+```
+
+#### 监听行删除的事件
+
+tablename为更新的表，objectId为更新行的objectId，data为服务端返回的更新数据。
+
+```
+   BmobSocketIo.onDeleteRow = function(tablename,objectId,data) {    
+      //业务逻辑的代码
+   };
+
+```
+
+### demo
+
+在线上演示实时数据平台的一个聊天应用的demo：[chat room demo](http://chatroom.bmob.cn) ，演示了如何使用实时数据服务实现聊天的功能。
+
+用浏览器打开两个窗口，在其中一个窗口输入`昵称`和`内容`，按`发送`按钮，在另外一个窗口能看到发送的内容。
+
+小程序DEMO，搜索小程序：**Bmob 示例 **
 
 
 

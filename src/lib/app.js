@@ -1,10 +1,10 @@
-
 const Bmob = require('./bmob')
 
 const query = require('./query')
 const user = require('./user')
 const file = require('./file')
 const pay = require('./pay')
+const socket = require('./socket')
 const {
   generateCode,
   sendMessage,
@@ -53,6 +53,7 @@ Bmob.push = push
 
 Bmob.Pay = new pay()
 Bmob.User =  new user()
+Bmob.Socket =  socket
 Bmob.Query = parma => new query(parma)
 
 Bmob.File = (name,object) => new file(name,object)
