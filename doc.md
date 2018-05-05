@@ -343,7 +343,7 @@ Bmob.updateUserPassword(objectId,data).then(res => {
     alert: "Hello From Bmob."
       }
     }
-    
+
     Bmob.push(data).then(res => {
       console.log(res)
     }).catch(err => {
@@ -420,7 +420,7 @@ query.get('objectId').then(res => {
     query.set("cover","1111")
     query.save().then(res => {
       console.log(res)
-    
+
     }).catch(err => {
       console.log(err)
     })
@@ -625,6 +625,24 @@ query.find().then(res => {
   // 返回成功
   console.log(res)
 });
+```
+
+**复杂查询**
+
+如果你想查询某一字段值在某一集合中的记录的话，可以使用`containedIn`方法，如获取`"Bmob"、"Codenow"、"JS"`这三位玩家的记录信息，那么示例代码如下
+```
+// 第一个参数是字段名称，第二个参数是数组
+query.containedIn("playerName", ["Bmob", "Codenow", "JS"]);
+```
+相反地，你可以使用`notContainedIn`方法来查询在集合外的目标对象。
+
+如果想要查询含有某一特定属性的对象，可以使用`exists`。相对地，如果你想获取没有这一特定属性的对象，你可以使用`doesNotExist`，示例代码如下：
+```
+// 查询含有score属性的对象
+query.exists("score");
+
+// 查询不含有score属性的对象
+query.doesNotExist("score");
 ```
 
 
@@ -966,7 +984,7 @@ Bmob.functions(params.funcName,params.data).then(function (response) {
 
 ```
 
-### 
+###
 
 ## 文件
 
@@ -1034,7 +1052,7 @@ upload:function(){
           console.log(res.length);
           console.log(res);
         })
-       
+
       }
     })
   }
@@ -1047,7 +1065,7 @@ upload:function(){
 
 ```
 
-### 
+###
 
 
 
@@ -1268,7 +1286,7 @@ Bmob.generateCode 参数列表
     	}
     	,"emphasis_keyword": ""
     }
-    
+
     Bmob.sendWeAppMessage(modelData).then(function (response) {
     	console.log(response);
     }).catch(function (error) {
@@ -1422,7 +1440,7 @@ var openId = wx.getStorageSync('openid');
     		}
       	}
     }
-    
+
     Bmob.notifyMsg(temp).then(function (response) {
     console.log(response);
     })

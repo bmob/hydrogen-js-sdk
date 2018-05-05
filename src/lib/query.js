@@ -3,7 +3,6 @@ const request = require('./request')
 const {isObject, isString, isNumber, isUndefined, isArray} = require('./dataType')
 const error = require('./error')
 const query = class query {
-  
   constructor(parma) {
     this.tableName = `${Bmob._config.parameters.QUERY}/${parma}`
     this.init()
@@ -210,6 +209,30 @@ const query = class query {
 
     return newData
   }
+  containedIn(key,val){
+    if(!isString(key) || !isArray(val)){
+      throw new error(415)
+    }
+    return queryData.call(this,key,"$in",val)
+  }
+  notContainedIn(key,val){
+    if(!isString(key) || !isArray(val)){
+      throw new error(415)
+    }
+    return queryData.call(this,key,"$nin",val)
+  }
+  exists(key){
+    if(!isString(key)){
+      throw new error(415)
+    }
+    return queryData.call(this,key,"$exists",true)
+  }
+  doesNotExist(key){
+    if(!isString(key)){
+      throw new error(415)
+    }
+    return queryData.call(this,key,"$exists",false)
+  }
   or(...querys) {
     querys.map((item, i) => {
       if (!isObject(item)) {
@@ -304,7 +327,6 @@ const query = class query {
       }
     }
     const set = (key, val) => {
-      console.log(key, val)
       if (!key || !val) {
         throw new error(415)
       }
@@ -353,19 +375,17 @@ const query = class query {
       const saveData = Object.assign(oneData)
       return request(`/1/batch`, 'POST', params)
     }
-    const saveAll = () => {
-      return batch()
-    }
 
-    const destroyAll = () => {
-      return batch('delete')
-    }
     return new Promise((resolve, reject) => {
       request(`${this.tableName}`, 'get', parmas).then(({results}) => {
         this.init()
         Object.defineProperty(results, "set", {value: set})
-        Object.defineProperty(results, "saveAll", {value: saveAll})
-        Object.defineProperty(results, "destroyAll", {value: destroyAll})
+        Object.defineProperty(results, "saveAll", {value: () => {
+          return batch()
+        }})
+        Object.defineProperty(results, "destroyAll", {value: () => {
+          return batch('delete')
+        }})
         items = results
         resolve(results)
       }).catch(err => {
@@ -389,5 +409,27 @@ const query = class query {
     })
   }
 }
+
+function queryData(key,operator,val){
+  let parent = {}
+  let child = {}
+  child[operator] = val
+  parent[key] = child
+  let newData = parent
+  if (Object.keys(this.queryData).length) {
+    if (!isUndefined(this.queryData.$and)) {
+      this.queryData.$and.push(newData)
+    } else {
+      this.queryData = {
+        "$and": [this.queryData, newData]
+      }
+    }
+  } else {
+    this.queryData = newData
+  }
+  return newData
+}
+
+
 
 module.exports = query

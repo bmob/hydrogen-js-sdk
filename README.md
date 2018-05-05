@@ -5,31 +5,53 @@
 本SDK基于es6开发，致力打造基于前端混合开发需求，支持微信小程序、H5、快应用、混合App等平台
 
 
+#### <i class="icon-file"></i> 版本 v1.0.1
+
+> **Note:**
+>
+> - 增加`containedIn`方法,查询某一字段值在某一集合中的记录
+> - 增加`notContainedIn`方法来查询在集合外的目标对象
+> - 增加`exists`方法,查询含有某一特定属性的对象
+> - 增加`doesNotExist`方法,查询没有这一特定属性的对象
+
+
 
 ### 运行
 
 ```
+//安装依赖
+npm install
+
+//项目运行
 npm run dev
 ```
-
-
 
 ### 目录结构
 
 ```
-|-- bmob.html
 |-- index.html
-|-- lib			库文件
-|   |-- app.js	导出文件
-|   |-- axiosRequest.js		请求库
-|   |-- bmob.js		初始化文件
-|   |-- common.js	短请求接口
-|   |-- config.dev.js
-|   |-- config.js	配置文件
-|   |-- request.js	请求入口
-|   |-- sms.js
-|   -- utils.js	公用函数
-|-- main.js			入口
+|-- lib                   源码库文件
+|   |-- app.js            导出文件
+|   |-- axiosRequest.js   web请求库
+|   |-- bmob.js           初始化文件
+|   |-- common.js         短请求接口
+|   |-- config.dev.js     测试配置文件
+|   |-- config.js         配置文件
+|   |-- dataType.js       类型判断
+|   |-- error.js          错误警告
+|   |-- file.js           文件操作
+|   |-- pay.js            小程序支付
+|   |-- query.js          数据操作
+|   |-- request.js        请求判断
+|   |-- sms.js            短信
+|   |-- socket.js         实时通讯
+|   |-- storage.js        缓存
+|   |-- user.js           用户
+|   |-- utils.js          公用函数
+|   |-- webstorage.js     web缓存
+|   |-- wxRequest.js      小程序请求库
+|   |-- wxstorage.js      小程序缓存
+|-- main.js               web调试入口
 ```
 
 ### 完成的开发文档
@@ -106,6 +128,7 @@ npm run dev
 - [x] 删除字段的值
 - [x] 字段原子计数器
 - [x] 条件查询
+- [x] 复杂查询
 - [x] 数组操作
 - [x] 查询数据列表
 - [ ] 地理位置查询
@@ -142,7 +165,7 @@ npm run dev
 
 ### 公用网络请求库
 
-- [x] H5
+- [x] web
 
 
 - [ ] nodejs
@@ -157,7 +180,7 @@ npm run dev
 
 公用本地缓存处理
 
-- [x] H5
+- [x] web
 
 
 - [ ] nodejs
