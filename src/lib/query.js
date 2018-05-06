@@ -140,7 +140,6 @@ const query = class query {
     let objectId = this.setData.id ? this.setData.id : '' ;
     const saveData = Object.assign(parma, this.setData, this.addArray)
     return new Promise((resolve, reject) => {
-      debugger
       request(`${this.tableName}/${objectId}`, method, saveData).then((results) => {
         this.addArray = {}
         this.setData = {}
