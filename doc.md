@@ -744,26 +744,24 @@ query.find().then(todos => {
 
  **简介：**
 
-通过查询条件查询0条记录，然后模拟假数据
+传入一个Query的数组，进行批量保存
 
 ```
-const query = Bmob.Query('tableName');
-// 设置一个不存在的条件，查询出0条数据
-query.equalTo("createdAt", "<", "1971-04-01 00:00:00");
-query.find().then(todos => {
-  //模拟50条数据
-  for (let index = 0; index < 50; index++) {
-    todos.push({})
-  }
-  todos.set('aab', "Bmob后端云");
-  todos.set('bb', 'Bmob后端云');
-  todos.saveAll().then(res => {
-    // 成功批量修改
-    console.log(res,'ok')
-  }).catch(err => {
-    console.log(err)
-  });
-})
+const queryArray = new Array();
+// 构造含有50个对象的数组
+for(var i = 0 ; i < 50 ; i++){
+  var queryObj = Bmob.Query('tableName');
+  queryObj.set('columnName','abc' + i);
+  queryArray.push(queryObj);
+}
+
+
+// 传入刚刚构造的数组
+Bmob.Query('BusinessImg').saveAll(queryArray).then(result => {
+  console.log(result);
+}).catch(err => {
+  console.log(err);
+});
 ```
 
 **返回与批量修改一致: **
