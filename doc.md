@@ -757,7 +757,7 @@ for(var i = 0 ; i < 50 ; i++){
 
 
 // 传入刚刚构造的数组
-Bmob.Query('BusinessImg').saveAll(queryArray).then(result => {
+Bmob.Query('tableName').saveAll(queryArray).then(result => {
   console.log(result);
 }).catch(err => {
   console.log(err);
