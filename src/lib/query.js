@@ -74,7 +74,7 @@ const query = class query {
       }
     }
     const set = (key, val) => {
-      if (!isString(key) || !isString(val)) {
+      if (!isString(key) || !val) {
         throw new error(415)
       }
       oneData[key] = val
@@ -108,7 +108,7 @@ const query = class query {
     return request(`${this.tableName}/${ObjectId}`, 'delete')
   }
   set(key, val = "") {
-    if (!isString(key) || !isString(val)) {
+    if (!isString(key) || !val) {
       throw new error(415)
     }
     this.setData[key] = val;
