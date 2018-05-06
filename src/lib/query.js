@@ -74,7 +74,7 @@ const query = class query {
       }
     }
     const set = (key, val) => {
-      if (!isString(key) || !isString(val)) {
+      if (!isString(key) || !val) {
         throw new error(415)
       }
       oneData[key] = val
@@ -108,7 +108,7 @@ const query = class query {
     return request(`${this.tableName}/${ObjectId}`, 'delete')
   }
   set(key, val = "") {
-    if (!isString(key) || !isString(val)) {
+    if (!isString(key) || !val) {
       throw new error(415)
     }
     this.setData[key] = val;
@@ -135,9 +135,12 @@ const query = class query {
     if (!isObject(parma)) {
       throw new error(415)
     }
+
+    let method = this.setData.id ? 'PUT' : 'POST';
+    let objectId = this.setData.id ? this.setData.id : '' ;
     const saveData = Object.assign(parma, this.setData, this.addArray)
     return new Promise((resolve, reject) => {
-      request(`${this.tableName}`, 'post', saveData).then((results) => {
+      request(`${this.tableName}/${objectId}`, method, saveData).then((results) => {
         this.addArray = {}
         this.setData = {}
         resolve(results)
