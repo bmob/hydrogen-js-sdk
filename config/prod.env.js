@@ -16,7 +16,7 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(['dist']),
-    // new UglifyJsPlugin()
+    new UglifyJsPlugin()
   ],
   watch: true
 }

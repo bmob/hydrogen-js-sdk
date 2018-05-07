@@ -343,7 +343,7 @@ Bmob.updateUserPassword(objectId,data).then(res => {
     alert: "Hello From Bmob."
       }
     }
-
+    
     Bmob.push(data).then(res => {
       console.log(res)
     }).catch(err => {
@@ -416,11 +416,10 @@ query.get('objectId').then(res => {
 
 
     const query = Bmob.Query('tableName');
-    query.set("name","fff")
-    query.set("cover","1111")
+    query.set("name","Bmob")
+    query.set("cover","后端云")
     query.save().then(res => {
       console.log(res)
-
     }).catch(err => {
       console.log(err)
     })
@@ -553,6 +552,31 @@ or
 }
 ```
 
+### 查询所有数据
+
+ **简介：**
+
+返回你表的数据列表，默认创建时间排序，默认取100条数据，下面文档可以增加条件。
+
+ **参数说明：**
+
+| 参数      | 类型   | 必填 | 说明           |
+| --------- | ------ | ---- | -------------- |
+| tableName | string | 是   | 数据表名       |
+| res       | string | 是   | 返回的数据集合 |
+
+**请求示例：**
+
+```
+const query = Bmob.Query("tableName");
+query.find().then(res => {
+    console.log(res)
+});
+```
+
+**返回： **
+
+表中数据
 
 ### 条件查询
 
@@ -1286,7 +1310,7 @@ Bmob.generateCode 参数列表
     	}
     	,"emphasis_keyword": ""
     }
-
+    
     Bmob.sendWeAppMessage(modelData).then(function (response) {
     	console.log(response);
     }).catch(function (error) {
@@ -1440,7 +1464,7 @@ var openId = wx.getStorageSync('openid');
     		}
       	}
     }
-
+    
     Bmob.notifyMsg(temp).then(function (response) {
     console.log(response);
     })
