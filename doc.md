@@ -594,7 +594,7 @@ query.equalTo("createdAt", "<", "2018-05-01 00:00:00");
 一个完整的例子
 ```
 const query = Bmob.Query("tableName");
-query.equalTo("title", "hello");
+query.equalTo("title","==", "hello");
 query.find().then(res => {
     console.log(res)
 });
