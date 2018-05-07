@@ -149,6 +149,44 @@ const query = class query {
       })
     })
   }
+  saveAll(items) {
+    if (!isArray(items)) {
+      throw new error(415)
+    }
+    if (items.length < 1) {
+      throw new error(416)
+    }
+
+    let id,
+      k,
+      v,
+      p,
+      m = 'put'
+    let key = new Array()
+    items.map(item => {
+
+      id = `/${item.objectId}`
+      if (id == '/undefined') {
+        id = ''
+        m = 'post'
+      }
+
+      p = {
+        "method": m,
+        "path": `${this.tableName}${id}`,
+        "body": item.setData
+      };
+      key.push(p)
+      return item
+    });
+
+    let params = {
+      "requests": key
+    };
+    // 批量操作
+    return request(`/1/batch`, 'POST', params)
+
+  }
   equalTo(key, operator, val) {
     if (!isString(key)) {
       throw new error(415)
