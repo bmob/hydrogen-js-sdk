@@ -26,7 +26,7 @@ class file {
       fileObj = new Promise((resolve, reject) => {
         const data = []
         for (let item of list) {
-          request(item.route, 'post', item.data).then(({ url }) => {
+          request(item.route, 'post', item.data).then((url) => {
             data.push(url)
             if (data.length == list.length) {
               list = []

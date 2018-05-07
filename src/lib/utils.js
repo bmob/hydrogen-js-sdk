@@ -19,11 +19,11 @@ const getAppType = () => {
   // Bmob._config = getConfig()
   let type;
   // h5
-  if (typeof window != 'undefined') {
-    type = 'h5'
-  } else if (typeof wx != 'undefined') {
+  if (typeof wx != 'undefined') {
     // 小程序
     type = 'wx'
+  } else if (typeof window != 'undefined') {
+    type = 'h5'
   } else if (Bmob._config.type == 3) {
     //快应用功能
     type = 'hap'

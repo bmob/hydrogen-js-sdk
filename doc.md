@@ -1,6 +1,35 @@
-# SDK使用文档
+## SDK使用文档
+
+## 安装使用
+
+### 下载
+
+> https://github.com/bmob/hydrogen-js-sdk/
+
+### 安装使用
+
+ **简介：**
+
+1. 整个SDK，就dist目录下Bmob.*.js 这个文件即可使用全部功能
+2. 目前支持H5、小程序、weex等常见JavaScript引擎
 
 
+
+**引入：**
+
+```
+var Bmob = require('../dist/Bmob-1.0.1.min.js');
+```
+
+
+
+### **初始化**
+
+```
+Bmob.initialize("你的Application ID", "你的REST API Key");
+```
+
+> 接下来就可参照下面的文档使用
 
 ## 用户操作
 
@@ -1006,9 +1035,7 @@ Bmob.functions(params.funcName,params.data).then(function (response) {
 
 ```
 
-###
-
-## 文件
+##文件
 
 ### WEB文件上传
 
@@ -1044,7 +1071,7 @@ fileUploadControl.onchange = () => {
 
 **返回示例:**
 ```
- ["http://bmob-cdn-15009.b0.upaiyun.com/2018/05/02/f4e60e8d40b7c20b8031bae55a837875.js", "http://bmob-cdn-15009.b0.upaiyun.com/2018/05/02/1d39af8b40b8ede28098a9d4067b5ced.png"]
+["{"cdn":"upyun","filename":"abc.jpg","url":"http://…2018/05/07/e65172f540195fe880043cc74236e397.jpg"}", "{"cdn":"upyun","filename":"abc.jpg","url":"http://…2018/05/07/5670bf6740385bca802f9c33beb69ab9.jpg"}"]
 
 ```
 
@@ -1083,11 +1110,19 @@ upload:function(){
 **返回示例:**
 
 ```
- ["http://bmob-cdn-15009.b0.upaiyun.com/2018/05/02/f4e60e8d40b7c20b8031bae55a837875.js", "http://bmob-cdn-15009.b0.upaiyun.com/2018/05/02/1d39af8b40b8ede28098a9d4067b5ced.png"]
+["{"cdn":"upyun","filename":"abc.jpg","url":"http://…2018/05/07/e65172f540195fe880043cc74236e397.jpg"}", "{"cdn":"upyun","filename":"abc.jpg","url":"http://…2018/05/07/5670bf6740385bca802f9c33beb69ab9.jpg"}"]
+
+备注：
+上传文件写入Bmob File字段，上面选择了2张图片，所以返回2个File对象，如果需要写到数据库，字段，一个File字段只能写入一张图，例如下面这样
+
+res.set('files',res[0])
+
+这里的0指的是第一个对象，默认如果不是批量上传传一张图，可以直接res[0]写入到file类型里面
+
 
 ```
 
-###
+
 
 
 

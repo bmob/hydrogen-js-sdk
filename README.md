@@ -2,7 +2,58 @@
 
 ### SDK介绍
 
-本SDK基于es6开发，致力打造基于前端混合开发需求，支持微信小程序、H5、快应用、混合App等平台
+本SDK基于es6开发，致力打造基于前端混合开发需求，支持微信小程序、H5、快应用、游戏Cocos、混合App等平台
+
+
+
+## 安装使用
+
+### 下载
+
+> https://github.com/bmob/hydrogen-js-sdk/
+
+### 安装使用
+
+ **简介：**
+
+1. 整个SDK，就dist目录下Bmob.*.js 这个文件即可使用全部功能
+2. 目前支持H5、小程序、weex等常见JavaScript引擎
+
+
+
+**引入：**
+
+```
+var Bmob = require('../dist/Bmob-1.0.1.min.js');
+```
+
+
+
+### **初始化**
+
+```
+Bmob.initialize("你的Application ID", "你的REST API Key");
+```
+
+> 具体详细开发可参照下面的开发文档
+
+### 开发文档
+
+------
+
+[doc.md]: ./doc.md	"doc.md"
+
+
+
+#### <i class="icon-file"></i> 版本 v1.0.2
+
+> **Note:**
+>
+> - 修复`set` 类型只能传字符串类型
+> - 修复H5文件上传返回只返回连接
+> - 增加兼容小程序游戏SDK
+
+
 
 
 #### <i class="icon-file"></i> 版本 v1.0.1
@@ -54,68 +105,7 @@ npm run dev
 |-- main.js               web调试入口
 ```
 
-### 完成的开发文档
 
----
-
-[doc.md]: ./doc.md	"doc.md"
-
-
-
-### API接口说明
-
----
-
-1. 获取一行数据
-
-   ```
-   curl -X GET \
-       -H "X-Bmob-Application-Id: Your Application ID" \
-       -H "X-Bmob-REST-API-Key: Your REST API Key" \
-       https://api.bmob.cn/1/classes/GameScore/e1kXT22L
-   ```
-
-
-2. 修改一行数据
-
-   ```
-   curl -X PUT \
-       -H "X-Bmob-Application-Id: Your Application ID" \
-       -H "X-Bmob-REST-API-Key: Your REST API Key" \
-       -H "Content-Type: application/json" \
-       -d '{"score":73453}' \
-       https://api.bmob.cn/1/classes/GameScore/e1kXT22L
-   ```
-
-3. 删除一行数据
-
-   ```
-   curl -X DELETE \
-       -H "X-Bmob-Application-Id: Your Application ID" \
-       -H "X-Bmob-REST-API-Key: Your REST API Key" \
-       https://api.bmob.cn/1/classes/GameScore/e1kXT22L
-   ```
-
-   ​
-
-   ​
-
-4. 文件上传，内部接口
-
-   ```
-   curl -X POST \
-       -H "X-Bmob-Application-Id: Your Application ID" \
-       -H "X-Bmob-REST-API-Key: Your REST API Key" \
-       https://api.bmobcloud.com/2/files/test.png
-   ```
-
-
-   ```
-   返回
-   {"cdn":"upyun","filename":"test.png","url":"http://bmob-cdn-12948.b0.upaiyun.com/2018/04/20/cbd266a4409ce4cd80d4ec8a081b7d7f.png"}
-   ```
-
-   ​
 
 ### 功能列表
 
@@ -168,10 +158,10 @@ npm run dev
 - [x] web
 
 
-- [ ] nodejs
+- [x] nodejs
 
 
-- [ ] 小程序
+- [x] 小程序
 
 
 - [ ] 快应用
@@ -227,3 +217,7 @@ npm run dev
 
 1. yanghuanrong   https://github.com/yanghuanrong
 2. youngjuning  https://github.com/youngjuning
+3. magic007 https://github.com/magic007
+4. BoolTrue https://github.com/BoolTrue
+
+> 在此欢迎大家贡献代码
