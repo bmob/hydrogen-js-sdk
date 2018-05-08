@@ -59,11 +59,17 @@ Bmob.Query = parma => new query(parma)
 Bmob.File = (name,object) => new file(name,object)
 Bmob.request = require('./request') 
 
-try {
+Bmob.type = Bmob.utils.getAppType()
+
+if(Bmob.type=='wx'){
+  wx.Bmob = Bmob
+}else if(Bmob.type=='h5'){
   window.Bmob = Bmob
+}else if(Bmob.type=='hap'){
+// 快应用功能
 }
-catch(err) {
-    wx.Bmob = Bmob
+else if(Bmob.type=='nodejs'){
+// nodejs
 }
 
  module.exports = Bmob

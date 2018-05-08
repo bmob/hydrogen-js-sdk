@@ -12,6 +12,9 @@ if (type == 'h5') {
   storage = require('./wxstorage')
 } else if (type == 'hap') {
   //快应用功能
+}else if (type == 'nodejs') {
+  //快应用功能
+  storage = require('./nodestorage')
 }
 
 module.exports = storage

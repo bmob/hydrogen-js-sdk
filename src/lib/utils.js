@@ -16,20 +16,23 @@ const getConfig = () => {
 
 // 获取SDK类型
 const getAppType = () => {
-  // Bmob._config = getConfig()
+  const config = getConfig()
   let type;
   // h5
   if (typeof wx != 'undefined') {
     // 小程序
     type = 'wx'
   } else if (typeof window != 'undefined') {
-    type = 'h5'
-  } else if (Bmob._config.type == 3) {
+    type = 'h51'
+  } else if (config.type == 3) {
     //快应用功能
     type = 'hap'
+  }else if (config.type == 4) {
+    //快应用功能
+    type = 'nodejs'
   } else {
     // 默认H5
-    type = 'h5'
+    type = 'h52'
   }
   return type
 }

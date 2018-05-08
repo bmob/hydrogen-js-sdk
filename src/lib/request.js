@@ -12,6 +12,9 @@ if (type == 'h5') {
   request = require('./wxRequest')
 } else if (type == 'hap') {
   //快应用功能
+}else if (type == 'nodejs') {
+  //快应用功能
+  request = require('./axiosRequest')
 }
 
 module.exports = request

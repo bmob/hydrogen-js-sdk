@@ -45,7 +45,14 @@ Bmob.initialize("你的Application ID", "你的REST API Key");
 
 
 
-#### <i class="icon-file"></i> 版本 v1.0.2
+####  版本 v1.1.0
+
+> **Note:**
+>
+> - 增加服务端`nodejs`支持
+> - 修复H5文件上传返回只返回连接
+
+####  版本 v1.0.2
 
 > **Note:**
 >
@@ -56,7 +63,7 @@ Bmob.initialize("你的Application ID", "你的REST API Key");
 
 
 
-#### <i class="icon-file"></i> 版本 v1.0.1
+####  版本 v1.0.1
 
 > **Note:**
 >

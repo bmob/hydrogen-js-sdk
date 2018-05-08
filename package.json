@@ -1,6 +1,6 @@
 {
   "name": "js-sdk",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Bmob SDK",
   "main": "./src/lib/app.js",
   "scripts": {

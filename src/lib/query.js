@@ -416,7 +416,7 @@ const query = class query {
       const saveData = Object.assign(oneData)
       return request(`/1/batch`, 'POST', params)
     }
-
+console.log(888,request)
     return new Promise((resolve, reject) => {
       request(`${this.tableName}`, 'get', parmas).then(({results}) => {
         this.init()

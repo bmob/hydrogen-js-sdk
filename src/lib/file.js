@@ -22,7 +22,7 @@ class file {
     // //获取当前应用类型
     const type = utils.getAppType()
     // h5
-    if (type == 'h5') {
+    if (type == 'h5' || type == 'nodejs') {
       fileObj = new Promise((resolve, reject) => {
         const data = []
         for (let item of list) {
