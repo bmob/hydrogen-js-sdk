@@ -1115,9 +1115,6 @@ upload:function(){
 备注：
 
 res.set('files',res[0])
-
-
-
 ```
 
 ### file对象关联
