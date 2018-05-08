@@ -372,7 +372,7 @@ Bmob.updateUserPassword(objectId,data).then(res => {
     alert: "Hello From Bmob."
       }
     }
-    
+
     Bmob.push(data).then(res => {
       console.log(res)
     }).catch(err => {
@@ -1113,18 +1113,23 @@ upload:function(){
 ["{"cdn":"upyun","filename":"abc.jpg","url":"http://…2018/05/07/e65172f540195fe880043cc74236e397.jpg"}", "{"cdn":"upyun","filename":"abc.jpg","url":"http://…2018/05/07/5670bf6740385bca802f9c33beb69ab9.jpg"}"]
 
 备注：
-上传文件写入Bmob File字段，上面选择了2张图片，所以返回2个File对象，如果需要写到数据库，字段，一个File字段只能写入一张图，例如下面这样
 
 res.set('files',res[0])
 
-这里的0指的是第一个对象，默认如果不是批量上传传一张图，可以直接res[0]写入到file类型里面
 
 
 ```
 
+### file对象关联
 
-
-
+上传文件写入Bmob File字段，上面选择了2张图片，所以返回2个File对象，如果需要写到数据库，字段，一个File字段只能写入一张图，例如下面这样
+```
+const file = ["{"cdn":"upyun","filename":"abc.jpg","url":"http://…2018/05/07/e65172f540195fe880043cc74236e397.jpg"}", "{"cdn":"upyun","filename":"abc.jpg","url":"http://…2018/05/07/5670bf6740385bca802f9c33beb69ab9.jpg"}"]
+query.set('files',file[0])
+query.save().then(res => {
+  console.log(res)
+})
+```
 
 ### 文件删除
 
@@ -1343,7 +1348,7 @@ Bmob.generateCode 参数列表
     	}
     	,"emphasis_keyword": ""
     }
-    
+
     Bmob.sendWeAppMessage(modelData).then(function (response) {
     	console.log(response);
     }).catch(function (error) {
@@ -1497,7 +1502,7 @@ var openId = wx.getStorageSync('openid');
     		}
       	}
     }
-    
+
     Bmob.notifyMsg(temp).then(function (response) {
     console.log(response);
     })

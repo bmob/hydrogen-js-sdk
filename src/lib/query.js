@@ -74,10 +74,22 @@ const query = class query {
       }
     }
     const set = (key, val) => {
-      if (!isString(key) || !val) {
+      if (!isString(key) || isUndefined(val)) {
         throw new error(415)
       }
-      oneData[key] = val
+      if(isObject(val)){
+        const {filename,cdn,url} = val
+        if(!isUndefined(filename) && !isUndefined(cdn) && !isUndefined(url)){
+          oneData[key] = {
+            "__type": "File",
+            "group": cdn,
+            "filename": filename,
+            "url": url
+          }
+        }
+      }else{
+        oneData[key] = val
+      }
     }
     const save = () => {
       const saveData = Object.assign(unsetData, oneData, incrementData, addArray)
@@ -107,11 +119,23 @@ const query = class query {
     }
     return request(`${this.tableName}/${ObjectId}`, 'delete')
   }
-  set(key, val = "") {
-    if (!isString(key) || !val) {
+  set(key,val) {
+    if (!isString(key) || isUndefined(val)) {
       throw new error(415)
     }
-    this.setData[key] = val;
+    if(isObject(val)){
+      const {filename,cdn,url} = val
+      if(!isUndefined(filename) && !isUndefined(cdn) && !isUndefined(url)){
+        this.setData[key] = {
+          "__type": "File",
+          "group": cdn,
+          "filename": filename,
+          "url": url
+        }
+      }
+    }else{
+      this.setData[key] = val
+    }
   }
   add(key, val) {
     if (!isString(key) || !isArray(val)) {
@@ -137,7 +161,7 @@ const query = class query {
     }
 
     let method = this.setData.id ? 'PUT' : 'POST';
-    let objectId = this.setData.id ? this.setData.id : '' ;
+    let objectId = this.setData.id ? this.setData.id : ''
     const saveData = Object.assign(parma, this.setData, this.addArray)
     return new Promise((resolve, reject) => {
       request(`${this.tableName}/${objectId}`, method, saveData).then((results) => {
@@ -175,14 +199,14 @@ const query = class query {
         "method": m,
         "path": `${this.tableName}${id}`,
         "body": item.setData
-      };
+      }
       key.push(p)
       return item
-    });
+    })
 
     let params = {
       "requests": key
-    };
+    }
     // 批量操作
     return request(`/1/batch`, 'POST', params)
 
@@ -416,7 +440,6 @@ const query = class query {
       const saveData = Object.assign(oneData)
       return request(`/1/batch`, 'POST', params)
     }
-console.log(888,request)
     return new Promise((resolve, reject) => {
       request(`${this.tableName}`, 'get', parmas).then(({results}) => {
         this.init()

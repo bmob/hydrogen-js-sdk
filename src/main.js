@@ -221,31 +221,50 @@ console.log(Bmob)
 //  console.log(err,'err')
 // });
 
+//
+const query = Bmob.Query('abcd');
+const fileUploadControl = document.getElementById('profilePhotoFileUpload');
+fileUploadControl.onchange = () => {
+  const pic = fileUploadControl.files
+  let file
+  for(let item of pic){
+     file = Bmob.File(item.name, item);
+  }
+  file.save().then(res => {
+    console.log(res.length);
+    console.log(res);
+    const file = res[0]
+    query.get('jzQMAAAO').then(res => {
+      res.set('aaa',0)
+      res.set('buer',true)
+      res.set('text',"6666")
+      res.set('file',file)
+      res.set('arr',['2','4','5'])
+      res.set('json',{a:11,b:[1],c:{d:"33"}})
+      res.save().then(res => {
+        console.log(res);
+      })
+    })
+  })
+}
 
-// const fileUploadControl = document.getElementById('profilePhotoFileUpload');
-// fileUploadControl.onchange = () => {
-//   const pic = fileUploadControl.files
-//   let file
-//   for(let item of pic){
-//      file = Bmob.File(item.name, item);
-//   }
-//   file.save().then(res => {
-//     console.log(res.length);
-//     console.log(res);
-//   })
-// }
+query.get('jzQMAAAO').then(res => {
+  res.unset('file')
+  res.save().then(res => {
+    console.log(res);
+  })
+})
 //
 // const del = Bmob.File();
 // const val =  ["http://bmob-cdn-15009.b0.upaiyun.com/2018/05/02/aae4998a403e018680a7eff90852905e.jpg"]
 // del.destroy(val).then(res => {
 //   console.log(res);
 // }).catch(err => {
-//   err
+//   console.log(err);
 // })
 
 
 
-const query = Bmob.Query('abcd');
 query.find().then(res => {
   console.log(res)
 }).catch(err => {
