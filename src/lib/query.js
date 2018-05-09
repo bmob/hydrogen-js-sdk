@@ -74,7 +74,7 @@ const query = class query {
       }
     }
     const set = (key, val) => {
-      if (!isString(key) || !val) {
+      if (!isString(key) || isUndefined(val)) {
         throw new error(415)
       }
       oneData[key] = val
@@ -368,7 +368,7 @@ const query = class query {
       }
     }
     const set = (key, val) => {
-      if (!key || !val) {
+      if (!key || isUndefined(val)) {
         throw new error(415)
       }
       oneData[key] = val
@@ -416,7 +416,6 @@ const query = class query {
       const saveData = Object.assign(oneData)
       return request(`/1/batch`, 'POST', params)
     }
-console.log(888,request)
     return new Promise((resolve, reject) => {
       request(`${this.tableName}`, 'get', parmas).then(({results}) => {
         this.init()

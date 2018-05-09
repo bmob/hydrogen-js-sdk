@@ -50,7 +50,6 @@ Bmob.initialize("你的Application ID", "你的REST API Key");
 > **Note:**
 >
 > - 增加服务端`nodejs`支持
-> - 修复H5文件上传返回只返回连接
 
 ####  版本 v1.0.2
 

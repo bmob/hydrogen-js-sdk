@@ -29,7 +29,15 @@ var Bmob = require('../dist/Bmob-1.0.1.min.js');
 Bmob.initialize("你的Application ID", "你的REST API Key");
 ```
 
-> 接下来就可参照下面的文档使用
+> 接下来就可参照下面的文档使用,
+>
+>  `nodejs`请使用源码引入 app.js ，初始化与其他一样
+
+```
+var Bmob = require('./src/lib/app.js');
+```
+
+
 
 ## 用户操作
 
