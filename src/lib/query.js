@@ -207,8 +207,9 @@ const query = class query {
     let params = {
       "requests": key
     }
+    let route = Bmob._config.parameters.BATCH
     // 批量操作
-    return request(`/1/batch`, 'POST', params)
+    return request(route, 'POST', params)
 
   }
   equalTo(key, operator, val) {
@@ -438,7 +439,8 @@ const query = class query {
       };
       // 批量操作
       const saveData = Object.assign(oneData)
-      return request(`/1/batch`, 'POST', params)
+      let route = Bmob._config.parameters.BATCH
+      return request(route, 'POST', params)
     }
     return new Promise((resolve, reject) => {
       request(`${this.tableName}`, 'get', parmas).then(({results}) => {

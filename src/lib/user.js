@@ -70,7 +70,8 @@ const user = class user extends query {
     return request(route, 'get', this.setData)
   }
   requestOpenId(code) {
-    return request("/1/wechatApp/" + code, "POST", {});
+    let route = Bmob._config.parameters.WECHAT_APP
+    return request(route + code, "POST", {});
   }
   linkWith(data) {
     // 第三方登陆

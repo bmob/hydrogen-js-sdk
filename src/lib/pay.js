@@ -15,7 +15,8 @@ class pay {
     }
     //传参数金额，名称，描述,openid
     var data = { "order_price": price, "product_name": product_name, "body": body, "open_id": openid, "pay_type": 4 }
-    let route = '/1/pay'
+
+    let route = Bmob._config.parameters.PAY
     return request(route, 'post', data)
   }
 
