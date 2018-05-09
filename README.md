@@ -45,6 +45,13 @@ Bmob.initialize("你的Application ID", "你的REST API Key");
 
 
 
+####  版本 v1.1.1
+
+> **Note:**
+>
+> - 修复`set`方法类型判断错误
+> - 增加文件上传`file`类型关联
+
 ####  版本 v1.1.0
 
 > **Note:**

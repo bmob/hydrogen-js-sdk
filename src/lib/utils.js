@@ -32,7 +32,7 @@ const getAppType = () => {
     type = 'nodejs'
   } else {
     // 默认H5
-    type = 'h52'
+    type = 'h5'
   }
   return type
 }
