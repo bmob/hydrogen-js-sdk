@@ -5,7 +5,7 @@ const APPLICATION_KEY = ''
 // 这行在小程序引入app.js报错
 const VERSION = `v${ROOT.version}`
 // 1.h5 2.小程序 3.快应用 4.nodejs
-const TYPE = 4
+const TYPE = 3
 
 const PARAMETERS = {
   GENERATECODE:'/1/wechatApp/qr/generatecode',// 生成二维码

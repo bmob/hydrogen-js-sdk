@@ -27,7 +27,7 @@ const getAppType = () => {
   } else if (config.type == 3) {
     //快应用功能
     type = 'hap'
-  }else if (config.type == 4) {
+  }else if (process === global.process) {
     //快应用功能
     type = 'nodejs'
   } else {
