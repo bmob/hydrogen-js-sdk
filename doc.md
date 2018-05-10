@@ -1747,11 +1747,15 @@ tablename为更新的表，objectId为更新行的objectId，data为服务端返
 | 参数      | 类型   | 必填 | 说明     |
 | --------- | ------ | ---- | -------- |
 | smsCode | string | 是   | 手机短信验证码 |
+| mobilePhoneNumber | string | 是   | 手机号码 |
 
 **请求示例：**
 
     let smsCode = 'smsCode'
-    Bmob.verifySmsCode(smsCode).then(function (response) {
+	let data = {
+      mobilePhoneNumber: 'telephone'
+    }
+    Bmob.verifySmsCode(smsCode, data).then(function (response) {
     	console.log(response);
     })
     .catch(function (error) {

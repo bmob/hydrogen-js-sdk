@@ -78,7 +78,10 @@ console.log(Bmob)
 
 // 验证短信验证码
 // let smsCode = '167899'
-// Bmob.verifySmsCode(smsCode).then(function (response) {
+// let data = {
+//   "mobilePhoneNumber": phoneNum
+// }
+// Bmob.verifySmsCode(smsCode, data).then(function (response) {
 //     console.log(response);
 // })
 // .catch(function (error) {
@@ -220,7 +223,6 @@ console.log(Bmob)
 // }).catch(err => {
 //  console.log(err,'err')
 // });
-
 //
 const query = Bmob.Query('abcd');
 const fileUploadControl = document.getElementById('profilePhotoFileUpload');
