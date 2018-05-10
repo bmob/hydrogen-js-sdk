@@ -26,12 +26,12 @@ const { isObject, isString } = require('./dataType')
 // * @return {Bmob.Promise}
 // */
     const verifySmsCode = (data, options) => {
-        if (!isString(data)) {
+        if (!isObject(data)) {
             //参数异常
             throw new error(415)
         }
-        let route = `${Bmob._config.parameters.VERIFYSMSCODE}/${data}`
-        return request(route,'post')
+        let route = `${Bmob._config.parameters.VERIFYSMSCODE}/${data.smsCode}`
+        return request(route,'post',data)
     }
 
 module.exports = {requestSmsCode,verifySmsCode};

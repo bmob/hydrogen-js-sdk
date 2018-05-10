@@ -1750,8 +1750,11 @@ tablename为更新的表，objectId为更新行的objectId，data为服务端返
 
 **请求示例：**
 
-    let smsCode = 'smsCode'
-    Bmob.verifySmsCode(smsCode).then(function (response) {
+    let smsCodeObj = { 
+	  'mobilePhoneNumber': '13000000000',
+	  'smsCode': '123456'
+	};
+    Bmob.verifySmsCode(smsCodeObj).then(function (response) {
     	console.log(response);
     })
     .catch(function (error) {
