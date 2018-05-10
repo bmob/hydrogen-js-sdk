@@ -11,6 +11,7 @@ if (type == 'h5') {
   // 小程序
   storage = require('./wxstorage')
 } else if (type == 'hap') {
+  storage = require('./hapStorage')
   //快应用功能
 }else if (type == 'nodejs') {
   //快应用功能

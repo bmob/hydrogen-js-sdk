@@ -93,8 +93,21 @@ const user = class user extends query {
 
   }
   current() {
-    const data = storage.fetch('bmob')
-    return typeof data == 'object' ? data : JSON.parse(data)
+    const type = Bmob.utils.getAppType()
+
+    if (Bmob.type != 'hap') {
+      const data = storage.fetch('bmob')
+      return typeof data == 'object' ? data : JSON.parse(data)
+    } else {
+      // 快应用功能
+      return new Promise((resolve, reject) => {
+        return storage.fetch('bmob').then(res => {
+          resolve(res);
+        }).catch(err => {
+          reject(err);
+        })
+      })
+    }
   }
   upInfo(userInfo) {
     return new Promise((resolve, reject) => {
@@ -118,7 +131,7 @@ const user = class user extends query {
           console.log(err)
           reject(err);
         })
-       
+
       }).catch(err => {
         console.log(err)
         reject(err);
@@ -134,7 +147,7 @@ const user = class user extends query {
             that.loginWithWeapp(res.code).then(
               user => {
 
-                if(user.error){
+                if (user.error) {
                   throw new error(415)
                   return
                 }

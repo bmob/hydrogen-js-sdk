@@ -43,7 +43,11 @@ Bmob.initialize("你的Application ID", "你的REST API Key");
 
 [doc.md]: ./doc.md	"doc.md"
 
+#### 版本 v1.2.0
 
+> **Note:**
+>
+> - 增加华为快应用`quick`支持
 
 ####  版本 v1.1.1
 
