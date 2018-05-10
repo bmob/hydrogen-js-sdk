@@ -474,7 +474,7 @@ query.get('objectId').then(res => {
 
  **简介：**
 
-通过主键获取一行记录
+向Query对象设置id字段，直接进行修改和保存
 
  **参数说明：**
 
@@ -488,12 +488,12 @@ query.get('objectId').then(res => {
 
 ```
 const query = Bmob.Query('tableName');
-query.get('objectId').then(res => {
-  console.log(res)
-  res.set('cover','3333')
-  res.save()
+query.set('id',objectId);
+query.set('cover','Bmob记录更新');
+query.save().then(res => {
+  console.log(res);
 }).catch(err => {
-  console.log(err)
+  console.log(err);
 })
 ```
 
