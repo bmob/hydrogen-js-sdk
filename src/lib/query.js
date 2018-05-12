@@ -3,8 +3,8 @@ const request = require('./request')
 const {isObject, isString, isNumber, isUndefined, isArray} = require('./dataType')
 const error = require('./error')
 const query = class query {
-  constructor(parma) {
-    this.tableName = `${Bmob._config.parameters.QUERY}/${parma}`
+  constructor(parmas) {
+    this.tableName = `${Bmob._config.parameters.QUERY}/${parmas}`
     this.init()
     this.addArray = {}
     this.setData = {}
@@ -93,8 +93,13 @@ const query = class query {
       const saveData = Object.assign(unsetData, oneData, incrementData, addArray)
       return request(`${this.tableName}/${ObjectId}`, 'put', saveData)
     }
+
+    const associated = {}
+    if(this.includes != ""){
+      associated.include = this.includes
+    }
     return new Promise((resolve, reject) => {
-      request(`${this.tableName}/${ObjectId}`).then(results => {
+      request(`${this.tableName}/${ObjectId}`,'get',associated).then(results => {
         Object.defineProperty(results, "set", {value: set})
         Object.defineProperty(results, "unset", {value: unset})
         Object.defineProperty(results, "save", {value: save})
@@ -151,14 +156,14 @@ const query = class query {
       "objects": val
     }
   }
-  save(parma = {}) {
-    if (!isObject(parma)) {
+  save(parmas = {}) {
+    if (!isObject(parmas)) {
       throw new error(415)
     }
 
     let method = this.setData.id ? 'PUT' : 'POST';
     let objectId = this.setData.id ? this.setData.id : ''
-    const saveData = Object.assign(parma, this.setData, this.addArray)
+    const saveData = Object.assign(parmas, this.setData, this.addArray)
     return new Promise((resolve, reject) => {
       request(`${this.tableName}/${objectId}`, method, saveData).then((results) => {
         this.addArray = {}
@@ -325,20 +330,20 @@ const query = class query {
       "$and": querys
     }
   }
-  limit(parma) {
-    if (!isNumber(parma)) {
+  limit(parmas) {
+    if (!isNumber(parmas)) {
       throw new error(415)
     }
-    if (parma > 1000) {
-      parma = 1000
+    if (parmas > 1000) {
+      parmas = 1000
     }
-    this.limitNum = parma
+    this.limitNum = parmas
   }
-  skip(parma) {
-    if (!isNumber(parma)) {
+  skip(parmas) {
+    if (!isNumber(parmas)) {
       throw new error(415)
     }
-    this.skipNum = parma
+    this.skipNum = parmas
   }
   order(...key) {
     key.map(item => {
@@ -382,7 +387,6 @@ const query = class query {
     parmas.include = this.includes
     parmas.order = this.orders
     parmas.keys = this.keys
-
     for (const key in parmas) {
       if (parmas.hasOwnProperty(key) && parmas[key] == null || parmas[key] == 0) {
         delete parmas[key]

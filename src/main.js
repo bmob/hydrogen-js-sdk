@@ -1,13 +1,11 @@
 // import Bmob from './lib/bmob'
 var Bmob = require('./lib/app')
 
-
 console.log(Bmob)
-
 
 //
 //  微信小程序模块
-// // 生成二维码 @object
+//  生成二维码 @object
 // let qrData = { path: 'path', width: 430, type: 1 }
 // Bmob.generateCode(qrData).then(function (response) {
 //     console.log(response);
@@ -17,7 +15,7 @@ console.log(Bmob)
 // });
 //
 //
-// // 获取access_token
+//  获取access_token
 // Bmob.getAccessToken().then(function (response) {
 //     console.log(response);
 // })
@@ -25,7 +23,7 @@ console.log(Bmob)
 //     console.log(error);
 // });
 //
-// // 小程序模板消息 @object
+//  小程序模板消息 @object
 // let modelData = {
 //     "touser": "open_Id",
 //     "template_id": "template_id",
@@ -51,7 +49,7 @@ console.log(Bmob)
 // .catch(function (error) {
 //     console.log(error);
 // });
-// // 退款
+//  退款
 // let data = {
 //     order_no: "1cc2592e9903d9994be7f9a8c2cjsapi",
 //     refund_fee: 0.01,
@@ -67,7 +65,7 @@ console.log(Bmob)
 // restful短信服务模块
 // 请求短信验证码
 // let params = {
-//     mobilePhoneNumber: '15692023892' //string
+//     mobilePhoneNumber: '15692023892' string
 // }
 // Bmob.requestSmsCode(params).then(function (response) {
 //     console.log(response);
@@ -143,7 +141,6 @@ console.log(Bmob)
 //   console.log(err)
 // })
 
-
 // 密码重置(短信重置方式)
 // let smsCode= '855828'
 // let param = {
@@ -197,8 +194,7 @@ console.log(Bmob)
 //   console.log(err)
 // })
 
-
-Bmob.initialize("71acb3659ea66abed6b7739f9bd2e914","45ef983f011036c5868e9e9a38c193ec")
+Bmob.initialize("71acb3659ea66abed6b7739f9bd2e914", "45ef983f011036c5868e9e9a38c193ec")
 console.log(Bmob)
 // Bmob.User.login('bbbbbb','bbbbbb').then(res => {
 //   console.log(res,'ok')
@@ -206,50 +202,60 @@ console.log(Bmob)
 //  console.log(err,'err')
 // });
 //
-// const fileUploadControl = document.getElementById('profilePhotoFileUpload');
-// fileUploadControl.onchange = () => {
-//   const pic = fileUploadControl.files
-//   let file
-//   for(let item of pic){
-//      file = Bmob.File(item.name, item);
-//   }
-//   file.save().then(res => {
-//     console.log(res.length);
-//     console.log(res);
-//     const file = res[0]
-//     query.get('jzQMAAAO').then(res => {
-//       res.set('aaa',0)
-//       res.set('buer',true)
-//       res.set('text',"6666")
-//       res.set('file',file)
-//       res.set('arr',['2','4','5'])
-//       res.set('json',{a:11,b:[1],c:{d:"33"}})
-//       res.save().then(res => {
-//         console.log(res);
-//       })
-//     })
-//   })
-// }
-
-const own = {
-  "__type": "Pointer",
-  "className": "_User",
-  "objectId": "72KFIIIi"
+const fileUploadControl = document.getElementById('profilePhotoFileUpload');
+fileUploadControl.onchange = () => {
+  const pic = fileUploadControl.files
+  let file
+  for(let item of pic){
+     file = Bmob.File(item.name, item);
+  }
+  file.save().then(res => {
+    console.log(res.length);
+    console.log(res);
+    const file = res[0]
+    query.get('jzQMAAAO').then(res => {
+      res.set('aaa',0)
+      res.set('buer',true)
+      res.set('text',"6666")
+      res.set('file',file)
+      res.set('arr',['2','4','5'])
+      res.set('json',{a:11,b:[1],c:{d:"33"}})
+      res.save().then(res => {
+        console.log(res);
+      })
+    })
+  })
 }
 
-const own = Bmob.Pointer('_User')
-own.get('72KFIIIi')
+// const own = {
+//   "__type": "Pointer",
+//   "className": "_User",
+//   "objectId": "72KFIIIi"
+// }
+//
+Bmob.User.login('admin','123456').then(res => {
+  console.log(res)
+}).catch(err => {
+ console.log(err)
+});
 
-const query = Bmob.Query('abcd');
-query.get('c02b7b018f').then(res => {
- res.set('own',own)
- res.save().then(res => {
-   console.log(res);
- })
-})
+// const Relation = Bmob.Relation('_User')
+// Relation.field('a312d300eb','two')
+// Relation.find()
+// const id = own.unset('73d4587140')
+// const query = Bmob.Query('abcd');
+// query.get('a312d300eb').then(res => {
+//   res.set('two',id)
+//   res.save()
+// })
+// query.find().then(res => {
+//   console.log(res);
+// })
 
-
-
+// query.get('c02b7b018f').then(res => {
+//   console.log(res);
+// })
+//
 
 //
 // const del = Bmob.File();
@@ -259,14 +265,6 @@ query.get('c02b7b018f').then(res => {
 // }).catch(err => {
 //   console.log(err);
 // })
-
-
-
-query.find().then(res => {
-  console.log(res)
-}).catch(err => {
-  console.log(err)
-})
 
 //  Bmob.User.login('aaaaaa','111111f').then(res => {
 //    console.log(res)
@@ -286,16 +284,13 @@ query.find().then(res => {
 //  console.log(err)
 // });
 
-
 // const query = Bmob.Query('test3');
-// // query.include('hh','ff')
+//  query.include('hh','ff')
 // query.find().then(res => {
 //   console.log(res)
 //
 // })
 //
-
-
 
 // query.find().then(res => {
 //   console.log(res)

@@ -933,22 +933,22 @@ query.find().then(res => {
 
 #### 添加Pointer类型
 
+**参数说明：**
+
 简介：Pointer 类型在数据库是一个json数据类型，单遇到Pointer字段，只需要按照以下操作
 
 ```
-const own = {
-  "__type": "Pointer",
-  "className": "Game",
-  "objectId": "DdUOIIIW"
-}
-const query = Bmob.Query('tableName');
-query.get('objectId').then(res => {
-  console.log(res)
-  res.set('own',own)
-  res.save()
-}).catch(err => {
-  console.log(err)
+const user = Bmob.Pointer('_User')
+const id = user.set('6cca48b103')
+
+const query = Bmob.Query('abcd');
+query.get('1111').then(res => {
+  res.set('own',id)
+  res.save().then(res => {
+    console.log(res);
+  })
 })
+
 ```
 
 

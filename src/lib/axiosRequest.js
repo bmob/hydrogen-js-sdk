@@ -15,7 +15,7 @@ const setHeader = (config) => {
 
 const request = (route, method = 'get', parma = {}) => {
   return new Promise((resolve, reject) => {
-   
+
 
     if(undefined==Bmob.User){
       Bmob = require('./bmob')

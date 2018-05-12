@@ -1,5 +1,6 @@
 const Bmob = require('./bmob')
-
+const pointer = require('./pointer')
+const relation = require('./relation')
 const query = require('./query')
 const user = require('./user')
 const file = require('./file')
@@ -17,9 +18,9 @@ const {
   requestPasswordReset,
   resetPasswordBySmsCode,
   updateUserPassword,
-  push,
+  push
 } = require('./common')
-const {requestSmsCode,verifySmsCode} = require('./sms')
+const {requestSmsCode, verifySmsCode} = require('./sms')
 
 // 生成二维码
 Bmob.generateCode = generateCode
@@ -49,27 +50,33 @@ Bmob.resetPasswordBySmsCode = resetPasswordBySmsCode
 Bmob.updateUserPassword = updateUserPassword
 // APP推送
 Bmob.push = push
-
-
+// 小程序支付
 Bmob.Pay = new pay()
-Bmob.User =  new user()
-Bmob.Socket =  socket
-Bmob.Query = parma => new query(parma)
-
-Bmob.File = (name,object) => new file(name,object)
-Bmob.request = require('./request') 
-
+// 用户对象
+Bmob.User = new user()
+// 通讯
+Bmob.Socket = socket
+// 数据操作
+Bmob.Query = parmas => new query(parmas)
+// 文件操作
+Bmob.File = (name, object) => new file(name, object)
+// 网络请求
+Bmob.request = require('./request')
+// 平台判断
 Bmob.type = Bmob.utils.getAppType()
+// 数据关联(一对一)
+Bmob.Pointer = parmas => new pointer(parmas)
+// 数据关联(一对多，多对多)
+Bmob.Relation = parmas => new relation(parmas)
 
-if(Bmob.type=='wx'){
+if (Bmob.type == 'wx') {
   wx.Bmob = Bmob
-}else if(Bmob.type=='h5'){
+} else if (Bmob.type == 'h5') {
   window.Bmob = Bmob
-}else if(Bmob.type=='hap'){
-// 快应用功能
-}
-else if(Bmob.type=='nodejs'){
-// nodejs
+} else if (Bmob.type == 'hap') {
+  // 快应用功能
+} else if (Bmob.type == 'nodejs') {
+  // nodejs
 }
 
- module.exports = Bmob
+module.exports = Bmob
