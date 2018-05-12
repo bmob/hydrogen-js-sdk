@@ -239,18 +239,13 @@ Bmob.User.login('admin','123456').then(res => {
  console.log(err)
 });
 
-// const Relation = Bmob.Relation('_User')
-// Relation.field('a312d300eb','two')
-// Relation.find()
+const Relation = Bmob.Relation('users')
+Relation.field('abcd','a312d300eb','two')
+Relation.find().then(res => {
+  console.log(res);
+})
 // const id = own.unset('73d4587140')
-// const query = Bmob.Query('abcd');
-// query.get('a312d300eb').then(res => {
-//   res.set('two',id)
-//   res.save()
-// })
-// query.find().then(res => {
-//   console.log(res);
-// })
+
 
 // query.get('c02b7b018f').then(res => {
 //   console.log(res);
