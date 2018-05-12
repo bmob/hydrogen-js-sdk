@@ -196,25 +196,7 @@ console.log(Bmob)
 // }).catch(err => {
 //   console.log(err)
 // })
-let data = {
-  filename: 'hello.txt'
-}
 
-// Bmob.pushfile(data.filename).then(res => {
-//   console.log(res)
-// }).catch(err => {
-//   console.log(err)
-// })
-
-// let params = {
-//   cdn: 'upyun',
-//   url: 'http://bmob-cdn-18237.b0.upaiyun.com/2018/04/27/efa9ccd3406e2a558053eefd57eeba95.txt'
-// }
-// Bmob.deletefile(params.cdn,params.url).then(res => {
-//     console.log(res,'ok')
-// }).catch(err => {
-//     console.log(err)
-// })
 
 Bmob.initialize("71acb3659ea66abed6b7739f9bd2e914","45ef983f011036c5868e9e9a38c193ec")
 console.log(Bmob)
@@ -224,38 +206,51 @@ console.log(Bmob)
 //  console.log(err,'err')
 // });
 //
-const query = Bmob.Query('abcd');
-const fileUploadControl = document.getElementById('profilePhotoFileUpload');
-fileUploadControl.onchange = () => {
-  const pic = fileUploadControl.files
-  let file
-  for(let item of pic){
-     file = Bmob.File(item.name, item);
-  }
-  file.save().then(res => {
-    console.log(res.length);
-    console.log(res);
-    const file = res[0]
-    query.get('jzQMAAAO').then(res => {
-      res.set('aaa',0)
-      res.set('buer',true)
-      res.set('text',"6666")
-      res.set('file',file)
-      res.set('arr',['2','4','5'])
-      res.set('json',{a:11,b:[1],c:{d:"33"}})
-      res.save().then(res => {
-        console.log(res);
-      })
-    })
-  })
+// const fileUploadControl = document.getElementById('profilePhotoFileUpload');
+// fileUploadControl.onchange = () => {
+//   const pic = fileUploadControl.files
+//   let file
+//   for(let item of pic){
+//      file = Bmob.File(item.name, item);
+//   }
+//   file.save().then(res => {
+//     console.log(res.length);
+//     console.log(res);
+//     const file = res[0]
+//     query.get('jzQMAAAO').then(res => {
+//       res.set('aaa',0)
+//       res.set('buer',true)
+//       res.set('text',"6666")
+//       res.set('file',file)
+//       res.set('arr',['2','4','5'])
+//       res.set('json',{a:11,b:[1],c:{d:"33"}})
+//       res.save().then(res => {
+//         console.log(res);
+//       })
+//     })
+//   })
+// }
+
+const own = {
+  "__type": "Pointer",
+  "className": "_User",
+  "objectId": "72KFIIIi"
 }
 
-query.get('jzQMAAAO').then(res => {
-  res.unset('file')
-  res.save().then(res => {
-    console.log(res);
-  })
+const own = Bmob.Pointer('_User')
+own.get('72KFIIIi')
+
+const query = Bmob.Query('abcd');
+query.get('c02b7b018f').then(res => {
+ res.set('own',own)
+ res.save().then(res => {
+   console.log(res);
+ })
 })
+
+
+
+
 //
 // const del = Bmob.File();
 // const val =  ["http://bmob-cdn-15009.b0.upaiyun.com/2018/05/02/aae4998a403e018680a7eff90852905e.jpg"]

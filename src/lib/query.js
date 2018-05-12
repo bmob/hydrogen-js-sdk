@@ -77,15 +77,13 @@ const query = class query {
       if (!isString(key) || isUndefined(val)) {
         throw new error(415)
       }
-      if(isObject(val)){
-        const {filename,cdn,url} = val
-        if(!isUndefined(filename) && !isUndefined(cdn) && !isUndefined(url)){
-          oneData[key] = {
-            "__type": "File",
-            "group": cdn,
-            "filename": filename,
-            "url": url
-          }
+      const {filename,cdn,url} = val
+      if(!isUndefined(filename) && !isUndefined(cdn) && !isUndefined(url)){
+        oneData[key] = {
+          "__type": "File",
+          "group": cdn,
+          "filename": filename,
+          "url": url
         }
       }else{
         oneData[key] = val
@@ -123,15 +121,13 @@ const query = class query {
     if (!isString(key) || isUndefined(val)) {
       throw new error(415)
     }
-    if(isObject(val)){
-      const {filename,cdn,url} = val
-      if(!isUndefined(filename) && !isUndefined(cdn) && !isUndefined(url)){
-        this.setData[key] = {
-          "__type": "File",
-          "group": cdn,
-          "filename": filename,
-          "url": url
-        }
+    const {filename,cdn,url} = val
+    if(!isUndefined(filename) && !isUndefined(cdn) && !isUndefined(url)){
+      this.setData[key] = {
+        "__type": "File",
+        "group": cdn,
+        "filename": filename,
+        "url": url
       }
     }else{
       this.setData[key] = val
