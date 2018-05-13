@@ -933,22 +933,79 @@ query.find().then(res => {
 
 #### 添加Pointer类型
 
-**参数说明：**
-
-简介：Pointer 类型在数据库是一个json数据类型，单遇到Pointer字段，只需要按照以下操作
+简介：Pointer 类型在数据库是一个json数据类型，只需调用Pointer方法创建一个Pointer对象存入到字段中，如下：
 
 ```
-const user = Bmob.Pointer('_User')
-const id = user.set('6cca48b103')
-
-const query = Bmob.Query('abcd');
-query.get('1111').then(res => {
-  res.set('own',id)
-  res.save().then(res => {
-    console.log(res);
-  })
+const pointer = Bmob.Pointer('_User')
+const poiID = pointer.set('QdXD888B')
+const query = Bmob.Query('test')
+query.get('c02b7b018f').then(res => {
+  res.set('own',poiID)
+  res.save()
 })
 
+```
+
+#### 删除Pointer类型
+
+删除Pointer类型非常的简单，和删除普通的字段类型一样，如下：
+
+```
+const query = Bmob.Query('test')
+query.get('c02b7b018f').then(res => {
+  res.unset('own')
+  res.save()
+})
+
+```
+
+###Relation的使用
+
+**简介：**
+
+Relation 一对多，多对多表关联
+
+#### 添加Relation类型
+
+**请求示例：**
+
+```
+const relation = Bmob.Relation('_User') // 需要关联的表
+const relID = relation.add(['5PnCXXX6','QdXD888B']) //关联表中需要关联的objectId, 返回一个Relation对象, add方法接受string和array的类型参数
+const query = Bmob.Query('test')
+query.get('jzQMAAAO').then(res => {
+  res.set('two',relID); // 将Relation对象保存到two字段中，即实现了一对多的关联
+  res.save()
+})
+```
+
+#### 删除Relation类型
+
+**请求示例：**
+
+```
+const relation = Bmob.Relation('_User')
+const relID = relation.remove(['5PnCXXX6','QdXD888B'])
+query.get('jzQMAAAO').then(res => {
+  res.set('two',relID);
+  res.save()
+})
+
+```
+
+#### 查询Relation类型
+
+`field`方法接受两个参数，第一个需要查询的字段名称，第二个需要查询的字段的objectId
+`relation`方法接受一个参数，字段关联的表名称
+查询成功之后，会返回该字段关联的所有数据
+
+**请求示例：**
+```
+const query = Bmob.Query('abcd')
+query.field('two','a312d300eb')
+query.relation('_User').then(res => {
+  console.log(res);
+})
 ```
 
 

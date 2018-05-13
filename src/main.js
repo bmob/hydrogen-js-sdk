@@ -239,13 +239,45 @@ Bmob.User.login('admin','123456').then(res => {
  console.log(err)
 });
 
-const Relation = Bmob.Relation('users')
-Relation.field('abcd','a312d300eb','two')
-Relation.find().then(res => {
-  console.log(res);
-})
+// const Relation = Bmob.Relation('users')
+// Relation.field('abcd','a312d300eb','two')
+// Relation.find().then(res => {
+//   console.log(res);
+// })
 // const id = own.unset('73d4587140')
 
+// Relation的查询
+// query.field('two','a312d300eb')
+// query.relation('_User').then(res => {
+//   console.log(res);
+// })
+//
+// // Relation的添加
+// const relation = Bmob.Relation('_User')
+// const relID = relation.add(['5PnCXXX6','QdXD888B'])
+// query.get('jzQMAAAO').then(res => {
+//   res.set('two',relID);
+//   res.save()
+// })
+// // Relation的删除
+// const relation = Bmob.Relation('_User')
+// const relID = relation.remove(['5PnCXXX6','QdXD888B'])
+// query.get('jzQMAAAO').then(res => {
+//   res.set('two',relID);
+//   res.save()
+// })
+//
+// const pointer = Bmob.Pointer('_User')
+// const poiID = pointer.set('QdXD888B')
+// query.get('c02b7b018f').then(res => {
+//   res.set('own',poiID)
+//   res.save()
+// })
+const query = Bmob.Query('abcd')
+query.equalTo('aaa','<=',123)
+query.count().then(res => {
+  console.log(res);
+})
 
 // query.get('c02b7b018f').then(res => {
 //   console.log(res);

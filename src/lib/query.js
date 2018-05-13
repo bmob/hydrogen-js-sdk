@@ -5,6 +5,7 @@ const error = require('./error')
 const query = class query {
   constructor(parmas) {
     this.tableName = `${Bmob._config.parameters.QUERY}/${parmas}`
+    this.className = parmas
     this.init()
     this.addArray = {}
     this.setData = {}
@@ -16,6 +17,7 @@ const query = class query {
     this.limitNum = 100
     this.skipNum = 0
     this.includes = ""
+    this.queryReilation = {}
     this.orders = null
     this.keys = null
   }
@@ -369,6 +371,36 @@ const query = class query {
     })
     this.keys = key.join(',')
   }
+  field(key,objectId){
+    if(!isString(key) || !isString(objectId)){
+      throw new error(415)
+    }
+    this.queryReilation.where = {
+      "$relatedTo": {
+        "object": {
+          "__type": "Pointer",
+          "className": this.className,
+          "objectId": objectId
+        },
+        "key": key
+      }
+    }
+  }
+  relation(tableName){
+    if(!isString(tableName)){
+      throw new error(415)
+    }
+    if(tableName == '_User'){
+      tableName = 'users'
+    }
+    return new Promise((resolve,reject) => {
+      request(`/1/${tableName}`,'get',this.queryReilation).then(({results}) => {
+        resolve(results)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  }
   find() {
     let oneData = {};
     let parmas = {};
@@ -466,8 +498,19 @@ const query = class query {
     }
   }
   count() {
+    const parmas = {}
+    if (Object.keys(this.queryData).length) {
+      parmas.where = this.queryData
+    }
+    if (Object.keys(this.andData).length) {
+      parmas.where = Object.assign(this.andData, this.queryData)
+    }
+    if (Object.keys(this.orData).length) {
+      parmas.where = Object.assign(this.orData, this.queryData)
+    }
+    parmas.count = 1
     return new Promise((resolve, reject) => {
-      request(`${this.tableName}`, 'get', {count: 1}).then(({count}) => {
+      request(`${this.tableName}`, 'get', parmas).then(({count}) => {
         resolve(count)
       }).catch(err => {
         reject(err)

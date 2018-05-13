@@ -43,6 +43,17 @@ Bmob.initialize("你的Application ID", "你的REST API Key");
 
 [doc.md]: ./doc.md	"doc.md"
 
+#### 版本 v1.3.0
+
+> **Note:**
+>
+> - 增加`Relation`一对多表关联
+> - 增加`Relation`类型关联查询
+> - 优化`Pointer`一对一表关联
+> - 修复`include`查询一对一关联表的bug
+> - 修复条件查询时，`count`方法查询返回所有数据
+
+
 #### 版本 v1.2.0
 
 > **Note:**
@@ -69,9 +80,6 @@ Bmob.initialize("你的Application ID", "你的REST API Key");
 > - 修复`set` 类型只能传字符串类型
 > - 修复H5文件上传返回只返回连接
 > - 增加兼容小程序游戏SDK
-
-
-
 
 ####  版本 v1.0.1
 
@@ -202,7 +210,7 @@ npm run dev
 
 增强功能
 
-- [ ] Relation  
+- [x] Relation  
 - [ ] ACL
 
 
