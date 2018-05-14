@@ -17,7 +17,7 @@
  **简介：**
 
 1. 整个SDK，就dist目录下Bmob.*.js 这个文件即可使用全部功能
-2. 目前支持H5、小程序、weex等常见JavaScript引擎
+2. 目前支持微信小程序、H5、快应用、游戏Cocos、混合App等
 
 
 
@@ -42,6 +42,14 @@ Bmob.initialize("你的Application ID", "你的REST API Key");
 ------
 
 [doc.md]: ./doc.md	"doc.md"
+
+#### 版本 v1.3.1
+
+> **Note:**
+>
+> - 优化`File`对象上传文件必须登录
+> - 修复短信验证未传入手机号问题
+> - 更新文档获取用户列表描述问题
 
 #### 版本 v1.3.0
 

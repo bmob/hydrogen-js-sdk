@@ -11,7 +11,7 @@
  **简介：**
 
 1. 整个SDK，就dist目录下Bmob.*.js 这个文件即可使用全部功能
-2. 目前支持H5、小程序、weex等常见JavaScript引擎
+2. 目前支持微信小程序、H5、快应用、游戏Cocos、混合App等
 
 
 
@@ -172,7 +172,7 @@ Bmob.User.signOrLoginByMobilePhone(phone,smsCode).then(res => {
 
  **简介：**
 
-你可以一次获取多个用户，只要向用户的根URL发送一个GET请求，没有任何URL参数的话，可以简单地列出所有用户。
+你可以一次获取多个用户，只要向用户的根URL发送一个GET请求，没有任何URL参数的话，可以简单地列出100个用户。
 
 所有的对普通对象的查询选项都适用于对用户对象的查询，所以可以查看 查询 部分来获取详细信息。
 
@@ -202,6 +202,42 @@ Bmob.User.users().then(res => {
 	]
 }
 ```
+
+### 获取用户登录信息
+
+**简介：**
+
+此函数获取本地缓存用户信息，登陆后才有值，使用值前请先判断是否为空。
+
+```
+//获取用户当前信息
+let current = Bmob.User.current()
+
+//由于快应用新推出暂时不支持同步获取，如果是快应用请用以下写法
+Bmob.User.current().then(result => {
+      console.log(result)
+    }).catch(err => {
+      console.log(err)
+    })
+```
+
+**返回示例:**
+
+```
+成功：
+{
+    "createdAt":"2018-04-19 17:26:45",
+    "objectId":"X43SIIIH",
+    "sessionToken":"cc4fbcfd40583af980f4e6e52085adbf",
+    "updatedAt":"2018-04-19 17:26:48",
+    "username":"aaaaaa"
+}
+失败：
+{"code":101,"error":"username or password incorrect."}
+
+```
+
+
 
 ### 验证 Email
 
@@ -380,7 +416,7 @@ Bmob.updateUserPassword(objectId,data).then(res => {
     alert: "Hello From Bmob."
       }
     }
-
+    
     Bmob.push(data).then(res => {
       console.log(res)
     }).catch(err => {
@@ -1314,6 +1350,8 @@ Bmob.User.upInfo(e.detail.userInfo).then(result => {
 
 
 
+
+
 ### 生成二维码 ###
 
 **简介：**
@@ -1410,7 +1448,7 @@ Bmob.generateCode 参数列表
     	}
     	,"emphasis_keyword": ""
     }
-
+    
     Bmob.sendWeAppMessage(modelData).then(function (response) {
     	console.log(response);
     }).catch(function (error) {
@@ -1564,7 +1602,7 @@ var openId = wx.getStorageSync('openid');
     		}
       	}
     }
-
+    
     Bmob.notifyMsg(temp).then(function (response) {
     console.log(response);
     })
@@ -1809,7 +1847,7 @@ tablename为更新的表，objectId为更新行的objectId，data为服务端返
 **请求示例：**
 
     let smsCode = 'smsCode'
-	let data = {
+    let data = {
       mobilePhoneNumber: 'telephone'
     }
     Bmob.verifySmsCode(smsCode, data).then(function (response) {

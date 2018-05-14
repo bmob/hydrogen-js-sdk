@@ -48,13 +48,14 @@ class file {
           Bmob = require('./bmob')
         }
 
+        let sessionToken = 'bmob'
         var current = Bmob.User.current()
-        if (!current) {
-          throw new error(418)
+        if (current) {
+          sessionToken=current.sessionToken
         }
 
         const data = []
-        const key = { '_ApplicationId': Bmob._config.applicationId, '_RestKey': Bmob._config.applicationKey, '_SessionToken': current.sessionToken }
+        const key = { '_ApplicationId': Bmob._config.applicationId, '_RestKey': Bmob._config.applicationKey, '_SessionToken':  sessionToken}
         const formData = Object.assign({ '_ContentType': 'text/plain', 'mime_type': 'text/plain', 'category': 'wechatApp', '_ClientVersion': 'js3.6.1', '_InstallationId': 'bmob' }, key)
         for (let item of list) {
           wx.uploadFile({
@@ -88,9 +89,10 @@ class file {
           Bmob = require('./bmob')
         }
 
+        let sessionToken = 'bmob'
         var current = Bmob.User.current()
-        if (!current) {
-          throw new error(418)
+        if (current) {
+          sessionToken=current.sessionToken
         }
 
         const data = []
