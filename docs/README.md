@@ -168,6 +168,62 @@ Bmob.User.signOrLoginByMobilePhone(phone,smsCode).then(res => {
 {"code":207,"error":"code error."}
 ```
 
+
+
+### 更新用户缓存
+
+**简介：**
+
+通过用户名密码登陆，登陆成功后会在本地缓存保存用户的信息
+
+ **参数说明：**
+
+| 参数     | 类型   | 必填 | 说明     |
+| -------- | ------ | ---- | -------- |
+| objectId | string | 是   | objectId |
+
+**请求示例：**
+
+```
+ Bmob.User.updateStorage('objectId').then(res => {
+   console.log(res)
+ }).catch(err => {
+  console.log(err)
+});
+```
+
+**返回示例:**
+
+```
+成功：
+{
+    "createdAt":"2018-04-19 17:26:45",
+    "objectId":"X43SIIIH",
+    "sessionToken":"cc4fbcfd40583af980f4e6e52085adbf",
+    "updatedAt":"2018-04-19 17:26:48",
+    "username":"aaaaaa"
+}
+```
+
+
+
+### 用户表权限
+
+ **简介： **
+
+用户表属于系统表，默认情况下，接口只能查询。如需修改或删除，请登录当前用户，即可修改或删除当前用户资料。
+
+当然了，你也可以直接把`MasterKey`传入到`X-Bmob-Master-Key`中, 这个就可以实现在不需要提供`SessionToken`的情形下更新和删除用户了，但希望只在开发环境下使用，不要把`MasterKey`发布出去。
+
+传入MasterKey方式：
+
+```
+//初始化时，多传入一个参数
+Bmob.initialize("你的Application ID", "你的REST API Key", "你的MasterKey");
+```
+
+
+
 ###查询用户
 
  **简介：**
@@ -523,6 +579,17 @@ query.get('objectId').then(res => {
 **请求示例：**
 
 ```
+ 方式一：
+ const query = Bmob.Query('tableName');
+    query.set('id', 'objectId') //需要修改的objectId
+    query.set('nickName', 'Bmob后端云')
+    query.save().then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
+或者
+方式二：
 const query = Bmob.Query('tableName');
 query.get('objectId').then(res => {
   console.log(res)
@@ -1259,6 +1326,18 @@ del.destroy(val).then(res => {
 
 
 ## 小程序操作 ##
+### 授权操作
+
+如小程序使用微信登陆、生成二维码、支付等需要微信的操作，请在Bmob授权后使用。
+
+登陆Bmob控制台->应用设置->应用配置
+
+> 如小程序只是操作数据库，不关联微信用户，无需授权即可使用。
+
+### 域名配置
+
+登陆Bmob控制台->应用设置->应用配置，把显示的域名填写到微信小程序平台
+
 ### 小程序一键登录
 
 **简介：**

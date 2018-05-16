@@ -1,7 +1,8 @@
 let Bmob = require('./bmob')
 const request = require('./request')
-const {isObject, isString, isNumber, isUndefined, isArray} = require('./dataType')
+const { isObject, isString, isNumber, isUndefined, isArray } = require('./dataType')
 const error = require('./error')
+const storage = require('./storage')
 const query = class query {
   constructor(parmas) {
     this.tableName = `${Bmob._config.parameters.QUERY}/${parmas}`
@@ -79,36 +80,49 @@ const query = class query {
       if (!isString(key) || isUndefined(val)) {
         throw new error(415)
       }
-      const {filename,cdn,url} = val
-      if(!isUndefined(filename) && !isUndefined(cdn) && !isUndefined(url)){
+      const { filename, cdn, url } = val
+      if (!isUndefined(filename) && !isUndefined(cdn) && !isUndefined(url)) {
         oneData[key] = {
           "__type": "File",
           "group": cdn,
           "filename": filename,
           "url": url
         }
-      }else{
+      } else {
         oneData[key] = val
       }
     }
     const save = () => {
       const saveData = Object.assign(unsetData, oneData, incrementData, addArray)
+      if (this.className == '_User') {
+        return new Promise((resolve, reject) => {
+          request(`${this.tableName}/${ObjectId}`, 'put', saveData).then(results => {
+            const current = this.current()
+            let newStorage = Object.assign(current, saveData)
+            storage.save('bmob', newStorage)
+            resolve(results)
+          }).catch(err => {
+            reject(err)
+          })
+        }
+        )
+      }
       return request(`${this.tableName}/${ObjectId}`, 'put', saveData)
     }
 
     const associated = {}
-    if(this.includes != ""){
+    if (this.includes != "") {
       associated.include = this.includes
     }
     return new Promise((resolve, reject) => {
-      request(`${this.tableName}/${ObjectId}`,'get',associated).then(results => {
-        Object.defineProperty(results, "set", {value: set})
-        Object.defineProperty(results, "unset", {value: unset})
-        Object.defineProperty(results, "save", {value: save})
-        Object.defineProperty(results, "increment", {value: increment})
-        Object.defineProperty(results, "add", {value: add})
-        Object.defineProperty(results, "remove", {value: remove})
-        Object.defineProperty(results, "addUnique", {value: addUnique})
+      request(`${this.tableName}/${ObjectId}`, 'get', associated).then(results => {
+        Object.defineProperty(results, "set", { value: set })
+        Object.defineProperty(results, "unset", { value: unset })
+        Object.defineProperty(results, "save", { value: save })
+        Object.defineProperty(results, "increment", { value: increment })
+        Object.defineProperty(results, "add", { value: add })
+        Object.defineProperty(results, "remove", { value: remove })
+        Object.defineProperty(results, "addUnique", { value: addUnique })
         Object.defineProperty(results, "destroy", {
           value: () => this.destroy(ObjectId)
         })
@@ -124,19 +138,19 @@ const query = class query {
     }
     return request(`${this.tableName}/${ObjectId}`, 'delete')
   }
-  set(key,val) {
+  set(key, val) {
     if (!isString(key) || isUndefined(val)) {
       throw new error(415)
     }
-    const {filename,cdn,url} = val
-    if(!isUndefined(filename) && !isUndefined(cdn) && !isUndefined(url)){
+    const { filename, cdn, url } = val
+    if (!isUndefined(filename) && !isUndefined(cdn) && !isUndefined(url)) {
       this.setData[key] = {
         "__type": "File",
         "group": cdn,
         "filename": filename,
         "url": url
       }
-    }else{
+    } else {
       this.setData[key] = val
     }
   }
@@ -158,11 +172,46 @@ const query = class query {
       "objects": val
     }
   }
+  current() {
+    const type = Bmob.utils.getAppType()
+
+    if (Bmob.type != 'hap') {
+      const data = storage.fetch('bmob')
+      return typeof data == 'object' ? data : JSON.parse(data)
+    } else {
+      // 快应用功能
+      return new Promise((resolve, reject) => {
+        return storage.fetch('bmob').then(res => {
+          resolve(res);
+        }).catch(err => {
+          reject(err);
+        })
+      })
+    }
+  }
+  updateStorage(id) {
+    if (!isString(id)) {
+      throw new error(415)
+    }
+    return new Promise((resolve, reject) => {
+      const current = this.current()
+      if (!current) {
+        throw new error(415)
+      }
+      this.get(id).then(res => {
+        let newStorage = Object.assign(current, res)
+        storage.save('bmob', newStorage)
+        resolve(res);
+      }).catch(err => {
+        console.log(err)
+        reject(err);
+      })
+    })
+  }
   save(parmas = {}) {
     if (!isObject(parmas)) {
       throw new error(415)
     }
-
     let method = this.setData.id ? 'PUT' : 'POST';
     let objectId = this.setData.id ? this.setData.id : ''
     const saveData = Object.assign(parmas, this.setData, this.addArray)
@@ -170,8 +219,17 @@ const query = class query {
       request(`${this.tableName}/${objectId}`, method, saveData).then((results) => {
         this.addArray = {}
         this.setData = {}
+
+        if (this.className == '_User') {
+          const current = this.current()
+          let newStorage = Object.assign(current, saveData)
+          // storage.save('bmob', newStorage)
+          this.updateStorage(objectId)
+        }
+
         resolve(results)
       }).catch(err => {
+        console.log("hello8", this.tableName)
         reject(err)
       })
     })
@@ -278,29 +336,29 @@ const query = class query {
 
     return newData
   }
-  containedIn(key,val){
-    if(!isString(key) || !isArray(val)){
+  containedIn(key, val) {
+    if (!isString(key) || !isArray(val)) {
       throw new error(415)
     }
-    return queryData.call(this,key,"$in",val)
+    return queryData.call(this, key, "$in", val)
   }
-  notContainedIn(key,val){
-    if(!isString(key) || !isArray(val)){
+  notContainedIn(key, val) {
+    if (!isString(key) || !isArray(val)) {
       throw new error(415)
     }
-    return queryData.call(this,key,"$nin",val)
+    return queryData.call(this, key, "$nin", val)
   }
-  exists(key){
-    if(!isString(key)){
+  exists(key) {
+    if (!isString(key)) {
       throw new error(415)
     }
-    return queryData.call(this,key,"$exists",true)
+    return queryData.call(this, key, "$exists", true)
   }
-  doesNotExist(key){
-    if(!isString(key)){
+  doesNotExist(key) {
+    if (!isString(key)) {
       throw new error(415)
     }
-    return queryData.call(this,key,"$exists",false)
+    return queryData.call(this, key, "$exists", false)
   }
   or(...querys) {
     querys.map((item, i) => {
@@ -371,8 +429,8 @@ const query = class query {
     })
     this.keys = key.join(',')
   }
-  field(key,objectId){
-    if(!isString(key) || !isString(objectId)){
+  field(key, objectId) {
+    if (!isString(key) || !isString(objectId)) {
       throw new error(415)
     }
     this.queryReilation.where = {
@@ -386,15 +444,15 @@ const query = class query {
       }
     }
   }
-  relation(tableName){
-    if(!isString(tableName)){
+  relation(tableName) {
+    if (!isString(tableName)) {
       throw new error(415)
     }
-    if(tableName == '_User'){
+    if (tableName == '_User') {
       tableName = 'users'
     }
-    return new Promise((resolve,reject) => {
-      request(`/1/${tableName}`,'get',this.queryReilation).then(({results}) => {
+    return new Promise((resolve, reject) => {
+      request(`/1/${tableName}`, 'get', this.queryReilation).then(({ results }) => {
         resolve(results)
       }).catch(err => {
         reject(err)
@@ -475,15 +533,19 @@ const query = class query {
       return request(route, 'POST', params)
     }
     return new Promise((resolve, reject) => {
-      request(`${this.tableName}`, 'get', parmas).then(({results}) => {
+      request(`${this.tableName}`, 'get', parmas).then(({ results }) => {
         this.init()
-        Object.defineProperty(results, "set", {value: set})
-        Object.defineProperty(results, "saveAll", {value: () => {
-          return batch()
-        }})
-        Object.defineProperty(results, "destroyAll", {value: () => {
-          return batch('delete')
-        }})
+        Object.defineProperty(results, "set", { value: set })
+        Object.defineProperty(results, "saveAll", {
+          value: () => {
+            return batch()
+          }
+        })
+        Object.defineProperty(results, "destroyAll", {
+          value: () => {
+            return batch('delete')
+          }
+        })
         items = results
         resolve(results)
       }).catch(err => {
@@ -510,7 +572,7 @@ const query = class query {
     }
     parmas.count = 1
     return new Promise((resolve, reject) => {
-      request(`${this.tableName}`, 'get', parmas).then(({count}) => {
+      request(`${this.tableName}`, 'get', parmas).then(({ count }) => {
         resolve(count)
       }).catch(err => {
         reject(err)
@@ -519,7 +581,7 @@ const query = class query {
   }
 }
 
-function queryData(key,operator,val){
+function queryData(key, operator, val) {
   let parent = {}
   let child = {}
   child[operator] = val

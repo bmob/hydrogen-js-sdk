@@ -2,6 +2,7 @@ const ROOT = require('../../package.json')
 const HOST = 'https://api.bmobcloud.com'
 const APPLICATION_ID = ''
 const APPLICATION_KEY = ''
+const APPLICATION_MASTER_KEY = ''
 // 这行在小程序引入app.js报错
 const VERSION = `v${ROOT.version}`
 // 1.h5 2.小程序 3.快应用 4.nodejs
@@ -36,6 +37,7 @@ module.exports = {
   host: HOST,
   applicationId: APPLICATION_ID,
   applicationKey: APPLICATION_KEY,
+  applicationMasterKey: APPLICATION_MASTER_KEY,
   parameters: PARAMETERS,
   version:VERSION,
   type:TYPE

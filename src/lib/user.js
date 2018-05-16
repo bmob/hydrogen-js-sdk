@@ -92,23 +92,10 @@ const user = class user extends query {
     })
 
   }
-  current() {
-    const type = Bmob.utils.getAppType()
+  update(){
 
-    if (Bmob.type != 'hap') {
-      const data = storage.fetch('bmob')
-      return typeof data == 'object' ? data : JSON.parse(data)
-    } else {
-      // 快应用功能
-      return new Promise((resolve, reject) => {
-        return storage.fetch('bmob').then(res => {
-          resolve(res);
-        }).catch(err => {
-          reject(err);
-        })
-      })
-    }
   }
+  
   upInfo(userInfo) {
     return new Promise((resolve, reject) => {
 

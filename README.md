@@ -43,6 +43,15 @@ Bmob.initialize("你的Application ID", "你的REST API Key");
 
 [doc.md]: ./doc.md	"doc.md"
 
+#### 版本 v1.4.0
+
+> **Note:**
+>
+> - 增加超级权限`MasterKey`功能
+> - 增加后台数据库更新本地缓存也会自动更新函数`Bmob.User.updateStorage`
+> - 增加更新用户表、本地缓存会自动更新功能
+> - 优化请求网络请求对象
+
 #### 版本 v1.3.1
 
 > **Note:**

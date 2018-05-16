@@ -28,6 +28,9 @@ const PARAMETERS = {
   REGISTER:'/1/users',//注册
   REQUEST_EMAIL_VERIFY:'/1/requestEmailVerify',//注册
   USERS: '/1/users',// 查询用户
+  PAY: '/1/pay',// 支付
+  WECHAT_APP: '/1/wechatApp/',// 获取openid
+  BATCH: '/1/batch',// 获取openid
   QUERY: '/1/classes' // 查询数据
 }
 
