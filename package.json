@@ -12,14 +12,14 @@
 
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bmob/bmob-js-sdk-es6"
+    "url": "git+https://github.com/bmob/hydrogen-js-sdk"
   },
   "author": "Bmob",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/bmob/bmob-js-sdk-es6/issues"
+    "url": "https://github.com/bmob/hydrogen-js-sdk/issues"
   },
-  "homepage": "https://github.com/bmob/bmob-js-sdk-es6#readme",
+  "homepage": "https://github.com/bmob/hydrogen-js-sdk#readme",
   "dependencies": {
     "axios": "^0.18.0",
     "node.extend": "^2.0.0",
