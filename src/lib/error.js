@@ -22,6 +22,9 @@ class error {
       case 418:
         // 内容为空
         return 'Log in failure.'
+      case 419:
+        // 内容为空
+        return 'Bmob.GeoPoint location error.'
       default:
         return 'unknown error'
     }

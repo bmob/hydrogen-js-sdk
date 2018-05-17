@@ -158,6 +158,31 @@ const functions = (funName, data) => {
   return request(route,'post',data)
 }
 
+const geoPoint = ({ latitude, longitude }) => {
+  const validate=(latitude, longitude)=> {
+    if (latitude < -90.0) {
+      throw new error(419)
+    }
+    if (latitude > 90.0) {
+      throw new error(419)
+    }
+    if (longitude < -180.0) {
+      throw new error(419)
+    }
+    if (longitude > 180.0) {
+      throw new error(419)
+    }
+    return { latitude, longitude }
+  }
+  validate(latitude, longitude)
+  return {
+    "__type": "GeoPoint",
+    "latitude": latitude,
+    "longitude": longitude
+  }
+}
+
+
 module.exports = {
   generateCode,
   sendMessage,
@@ -170,5 +195,6 @@ module.exports = {
   requestPasswordReset,
   resetPasswordBySmsCode,
   updateUserPassword,
+  geoPoint,
   push
 };

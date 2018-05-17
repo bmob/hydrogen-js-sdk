@@ -6,6 +6,7 @@ const user = require('./user')
 const file = require('./file')
 const pay = require('./pay')
 const socket = require('./socket')
+
 const {
   generateCode,
   sendMessage,
@@ -18,10 +19,13 @@ const {
   requestPasswordReset,
   resetPasswordBySmsCode,
   updateUserPassword,
+  geoPoint,
   push
 } = require('./common')
 const {requestSmsCode, verifySmsCode} = require('./sms')
 
+// 生成二维码
+Bmob.GeoPoint = geoPoint
 // 生成二维码
 Bmob.generateCode = generateCode
 // 发送模板消息
@@ -50,6 +54,7 @@ Bmob.resetPasswordBySmsCode = resetPasswordBySmsCode
 Bmob.updateUserPassword = updateUserPassword
 // APP推送
 Bmob.push = push
+
 // 小程序支付
 Bmob.Pay = new pay()
 // 用户对象
@@ -68,6 +73,7 @@ Bmob.type = Bmob.utils.getAppType()
 Bmob.Pointer = parmas => new pointer(parmas)
 // 数据关联(一对多，多对多)
 Bmob.Relation = parmas => new relation(parmas)
+
 
 if (Bmob.type == 'wx') {
   wx.Bmob = Bmob

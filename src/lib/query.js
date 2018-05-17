@@ -13,6 +13,7 @@ const query = class query {
   }
   init() {
     this.queryData = {}
+    this.location = {}
     this.andData = {}
     this.orData = {}
     this.limitNum = 100
@@ -208,6 +209,7 @@ const query = class query {
       })
     })
   }
+
   save(parmas = {}) {
     if (!isObject(parmas)) {
       throw new error(415)
@@ -273,6 +275,42 @@ const query = class query {
     return request(route, 'POST', params)
 
   }
+
+  withinKilometers(field, { latitude, longitude }, km = 100) {
+    let newData = {}
+    newData[field] = {
+      "$nearSphere": {
+        "__type": "GeoPoint",
+        "latitude": latitude,
+        "longitude": longitude
+      },
+      "$maxDistanceInKilometers": km
+    }
+    this.location = newData
+    return newData
+  }
+  withinGeoBox(field, { latitude, longitude },s) {
+    let newData = {}
+    newData[field] = {
+        "$within": {
+          "$box": [
+            {
+              "__type": "GeoPoint",
+              "latitude": latitude,
+              "longitude": longitude
+            },
+            {
+              "__type": "GeoPoint",
+              "latitude": s.latitude,
+              "longitude": s.longitude
+            }
+          ]
+        }
+    }
+    this.location = newData
+    return newData
+  }
+
   equalTo(key, operator, val) {
     if (!isString(key)) {
       throw new error(415)
@@ -465,6 +503,9 @@ const query = class query {
     let items = {};
     if (Object.keys(this.queryData).length) {
       parmas.where = this.queryData
+    }
+    if (Object.keys(this.location).length) {
+      parmas.where = Object.assign(this.location, this.queryData)
     }
     if (Object.keys(this.andData).length) {
       parmas.where = Object.assign(this.andData, this.queryData)

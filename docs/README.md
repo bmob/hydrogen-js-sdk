@@ -581,13 +581,13 @@ query.get('objectId').then(res => {
 ```
  方式一：
  const query = Bmob.Query('tableName');
-    query.set('id', 'objectId') //需要修改的objectId
-    query.set('nickName', 'Bmob后端云')
-    query.save().then(res => {
-      console.log(res)
-    }).catch(err => {
-      console.log(err)
-    })
+ query.set('id', 'objectId') //需要修改的objectId
+ query.set('nickName', 'Bmob后端云')
+ query.save().then(res => {
+ console.log(res)
+ }).catch(err => {
+ console.log(err)
+ })
 或者
 方式二：
 const query = Bmob.Query('tableName');
@@ -1108,6 +1108,68 @@ const query = Bmob.Query('abcd')
 query.field('two','a312d300eb')
 query.relation('_User').then(res => {
   console.log(res);
+})
+```
+
+## 地理位置
+
+### 创建地理位置对象
+
+```
+const point = Bmob.GeoPoint({ latitude: 23.052033,longitude: 113.405447 })
+```
+
+### 查询地理位置
+
+为了限定搜索的最大距离范围，需要加入 `公里` 参数来限定，如果不加，则默认是100KM的半径。比如要找的半径在10公里内的话
+
+```
+const query = Bmob.Query("tableName");
+query.withinKilometers("字段名", point, 10);  //10指的是公里
+query.find().then(res => {
+	console.log(res)
+});
+```
+
+同样作查询寻找在一个特定的范围里面的对象也是可以的，为了找到在一个矩形区域里的对象，按下面的格式加入一个约束
+
+```
+const point = Bmob.GeoPoint({ latitude: 23.052033,longitude: 113.405447 })
+const point1 = Bmob.GeoPoint({ latitude: 23.052033,longitude: 113.405447 })
+const query = Bmob.Query("tableName");
+query.withinGeoBox("字段名", point, point1);  //制造一个矩形区域
+query.find().then(res => {
+	console.log(res)
+});
+```
+
+
+
+### 添加地理位置
+
+```
+const point = Bmob.GeoPoint({ latitude: 23.052033,longitude: 113.405447 })
+const query = Bmob.Query('tableName');
+query.set("字段名称",point)
+query.save().then(res => {
+  console.log(res)
+}).catch(err => {
+  console.log(err)
+})
+```
+
+
+
+### 修改地理位置
+
+
+
+```
+const point = Bmob.GeoPoint({ latitude: 23.052033,longitude: 113.405447 })
+const query = Bmob.Query('tableName')
+query.get('c02b7b018f').then(res => {
+  res.set('字段名称',point)
+  res.save()
 })
 ```
 
