@@ -43,6 +43,12 @@ Bmob.initialize("你的Application ID", "你的REST API Key");
 
 [doc.md]: ./doc.md	"doc.md"
 
+#### 版本 v1.4.1
+
+> **Note:**
+>
+> - 增加地理位置相关操作
+
 #### 版本 v1.4.0
 
 > **Note:**

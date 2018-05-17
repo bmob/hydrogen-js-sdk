@@ -224,7 +224,7 @@ Bmob.initialize("你的Application ID", "你的REST API Key", "你的MasterKey")
 
 
 
-###查询用户
+### 查询用户
 
  **简介：**
 
@@ -718,7 +718,55 @@ query.find().then(res => {
 
 表中数据
 
-### 条件查询
+
+
+### 字段数组操作
+
+为了帮你存储数组类数据，有三种操作你可以原子性地改动一个数组，这需要一个给定的 key：
+
+- `add`在一个数组的末尾加入一个给定的对象。
+- `addUnique`只会把原本不存在的对象加入数组，所以加入的位置没有保证。
+  比如, 我们想在数组"DiaryType"中加入日记类型：
+
+**添加数组：**
+
+```
+const query = Bmob.Query('tableName')
+query.add("DiaryType", ["public"]);
+query.addUnique("DiaryType", ["secret"]);
+query.save();
+
+
+```
+
+**更新数组：**
+
+```
+const query = Bmob.Query('tableName')
+query.get('ObjectId').then(res => {
+  res.add("DiaryType", ["public"]);
+  res.addUnique("DiaryType", ["secret"]);
+  res.save();
+})
+
+
+```
+
+**删除数组：**
+
+```
+const query = Bmob.Query('tableName')
+query.get('ObjectId').then(res => {
+  res.remove("DiaryType", ["secret"]);
+  res.save();
+})
+
+
+```
+
+## 
+
+## 条件查询
 
  **参数说明：**
 
@@ -764,7 +812,7 @@ query.find().then(res => {
 });
 ```
 
-**或查询**
+### **或查询**
 
 你可以使用`or`方法操作或查询，示例代码如下：
 
@@ -780,7 +828,8 @@ query.find().then(res => {
 });
 ```
 
-**查询指定列**
+### **查询指定列**
+
 ```
 const query = Bmob.Query("tableName");
 // 只返回select的字段值
@@ -791,7 +840,7 @@ query.find().then(res => {
 });
 ```
 
-**复杂查询**
+### **复杂查询**
 
 如果你想查询某一字段值在某一集合中的记录的话，可以使用`containedIn`方法，如获取`"Bmob"、"Codenow"、"JS"`这三位玩家的记录信息，那么示例代码如下
 ```
@@ -809,8 +858,7 @@ query.exists("score");
 query.doesNotExist("score");
 ```
 
-
-**分页查询**
+### **分页查询**
 
 有时，在数据比较多的情况下，你希望查询出的符合要求的所有数据能按照多少条为一页来显示，这时可以使用`limit`方法来限制查询结果的数据条数来进行分页。默认情况下，Limit的值为10，最大有效设置值1000（设置的数值超过1000还是视为1000）。
 ```
@@ -821,9 +869,10 @@ query.limit(10);
 ```
 query.skip(10); // skip the first 10 results
 ```
-**结果排序**
+### **结果排序**
 
 我们可以对返回的结果进行排序（只支持`number`，`date`，`string`类型的排序），示例代码如下：
+
 ```
 // 对score字段升序排列
 query.order("score");
@@ -835,15 +884,17 @@ query.order("-score");
 query.order("-score","name");
 ```
 
-**统计记录数量**
+### **统计记录数量**
 
 如果你只是想统计满足`query`的结果集到底有多条记录，你可以使用`count`方法。如为了获得diary表的记录数量，示例代码如下：
 ```
 const query = Bmob.Query('diary');
 query.count().then(res => {
-  console.log(`公有${res}条记录`)
+  console.log(`共有${res}条记录`)
 });
 ```
+
+## 
 
 ## 数据库批量操作
 
@@ -1062,7 +1113,7 @@ query.get('c02b7b018f').then(res => {
 
 ```
 
-###Relation的使用
+### Relation的使用
 
 **简介：**
 
@@ -1175,42 +1226,6 @@ query.get('c02b7b018f').then(res => {
 
 
 
-## 数组操作
-
-为了帮你存储数组类数据，有三种操作你可以原子性地改动一个数组，这需要一个给定的 key：
-
--  `add`在一个数组的末尾加入一个给定的对象。
-- `addUnique`只会把原本不存在的对象加入数组，所以加入的位置没有保证。
-比如, 我们想在数组"DiaryType"中加入日记类型：
-
-**添加数组：**
-```
-const query = Bmob.Query('tableName')
-query.add("DiaryType", ["public"]);
-query.addUnique("DiaryType", ["secret"]);
-query.save();
-```
-
-**更新数组：**
-```
-const query = Bmob.Query('tableName')
-query.get('ObjectId').then(res => {
-  res.add("DiaryType", ["public"]);
-  res.addUnique("DiaryType", ["secret"]);
-  res.save();
-})
-```
-
-
-**删除数组：**
-```
-const query = Bmob.Query('tableName')
-query.get('ObjectId').then(res => {
-  res.remove("DiaryType", ["secret"]);
-  res.save();
-})
-```
-
 ## 云函数使用
 
 **简介：**
@@ -1265,7 +1280,7 @@ Bmob.functions(params.funcName,params.data).then(function (response) {
 
 ```
 
-##文件
+## 文件
 
 ### WEB文件上传
 
