@@ -1,31 +1,37 @@
 let Bmob = require('./bmob')
 const request = require('./request')
-const { isObject, isString, isNumber, isUndefined, isArray } = require('./dataType')
-const error = require('./error')
+const {
+  isObject,
+  isString,
+  isNumber,
+  isUndefined,
+  isArray
+} = require('./dataType')
+const Error = require('./error')
 const storage = require('./storage')
 const query = class query {
-  constructor(parmas) {
+  constructor (parmas) {
     this.tableName = `${Bmob._config.parameters.QUERY}/${parmas}`
     this.className = parmas
     this.init()
     this.addArray = {}
     this.setData = {}
   }
-  init() {
+  init () {
     this.queryData = {}
     this.location = {}
     this.andData = {}
     this.orData = {}
     this.limitNum = 100
     this.skipNum = 0
-    this.includes = ""
+    this.includes = ''
     this.queryReilation = {}
     this.orders = null
     this.keys = null
   }
-  get(ObjectId) {
+  get (ObjectId) {
     if (!isString(ObjectId)) {
-      throw new error(415)
+      throw new Error(415)
     }
 
     let oneData = {}
@@ -35,327 +41,335 @@ const query = class query {
 
     const add = (key, val) => {
       if (!isString(key) || !isArray(val)) {
-        throw new error(415)
+        throw new Error(415)
       }
       addArray[key] = {
-        "__op": "Add",
-        "objects": val
+        __op: 'Add',
+        objects: val
       }
     }
     const addUnique = (key, val) => {
       if (!isString(key) || !isArray(val)) {
-        throw new error(415)
+        throw new Error(415)
       }
       addArray[key] = {
-        "__op": "AddUnique",
-        "objects": val
+        __op: 'AddUnique',
+        objects: val
       }
     }
     const remove = (key, val) => {
       if (!isString(key) || !isArray(val)) {
-        throw new error(415)
+        throw new Error(415)
       }
       addArray[key] = {
-        "__op": "Remove",
-        "objects": val
+        __op: 'Remove',
+        objects: val
       }
     }
     const increment = (key, val = 1) => {
       if (!isString(key) || !isNumber(val)) {
-        throw new error(415)
+        throw new Error(415)
       }
       incrementData[key] = {
-        "__op": "Increment",
-        "amount": val
+        __op: 'Increment',
+        amount: val
       }
     }
-    const unset = (key) => {
+    const unset = key => {
       if (!isString(ObjectId)) {
-        throw new error(415)
+        throw new Error(415)
       }
       unsetData[key] = {
-        "__op": "Delete"
+        __op: 'Delete'
       }
     }
     const set = (key, val) => {
       if (!isString(key) || isUndefined(val)) {
-        throw new error(415)
+        throw new Error(415)
       }
       const { filename, cdn, url } = val
       if (!isUndefined(filename) && !isUndefined(cdn) && !isUndefined(url)) {
         oneData[key] = {
-          "__type": "File",
-          "group": cdn,
-          "filename": filename,
-          "url": url
+          __type: 'File',
+          group: cdn,
+          filename: filename,
+          url: url
         }
       } else {
         oneData[key] = val
       }
     }
     const save = () => {
-      const saveData = Object.assign(unsetData, oneData, incrementData, addArray)
-      if (this.className == '_User') {
+      const saveData = Object.assign(
+        unsetData,
+        oneData,
+        incrementData,
+        addArray
+      )
+      if (this.className === '_User') {
         return new Promise((resolve, reject) => {
-          request(`${this.tableName}/${ObjectId}`, 'put', saveData).then(results => {
-            const current = this.current()
-            let newStorage = Object.assign(current, saveData)
-            storage.save('bmob', newStorage)
-            resolve(results)
-          }).catch(err => {
-            reject(err)
-          })
-        }
-        )
+          request(`${this.tableName}/${ObjectId}`, 'put', saveData)
+            .then(results => {
+              const current = this.current()
+              let newStorage = Object.assign(current, saveData)
+              storage.save('bmob', newStorage)
+              resolve(results)
+            })
+            .catch(err => {
+              reject(err)
+            })
+        })
       }
       return request(`${this.tableName}/${ObjectId}`, 'put', saveData)
     }
 
     const associated = {}
-    if (this.includes != "") {
+    if (this.includes !== '') {
       associated.include = this.includes
     }
     return new Promise((resolve, reject) => {
-      request(`${this.tableName}/${ObjectId}`, 'get', associated).then(results => {
-        Object.defineProperty(results, "set", { value: set })
-        Object.defineProperty(results, "unset", { value: unset })
-        Object.defineProperty(results, "save", { value: save })
-        Object.defineProperty(results, "increment", { value: increment })
-        Object.defineProperty(results, "add", { value: add })
-        Object.defineProperty(results, "remove", { value: remove })
-        Object.defineProperty(results, "addUnique", { value: addUnique })
-        Object.defineProperty(results, "destroy", {
-          value: () => this.destroy(ObjectId)
+      request(`${this.tableName}/${ObjectId}`, 'get', associated)
+        .then(results => {
+          Object.defineProperty(results, 'set', { value: set })
+          Object.defineProperty(results, 'unset', { value: unset })
+          Object.defineProperty(results, 'save', { value: save })
+          Object.defineProperty(results, 'increment', { value: increment })
+          Object.defineProperty(results, 'add', { value: add })
+          Object.defineProperty(results, 'remove', { value: remove })
+          Object.defineProperty(results, 'addUnique', { value: addUnique })
+          Object.defineProperty(results, 'destroy', {
+            value: () => this.destroy(ObjectId)
+          })
+          resolve(results)
         })
-        resolve(results)
-      }).catch(err => {
-        reject(err)
-      })
+        .catch(err => {
+          reject(err)
+        })
     })
   }
-  destroy(ObjectId) {
+  destroy (ObjectId) {
     if (!isString(ObjectId)) {
-      throw new error(415)
+      throw new Error(415)
     }
     return request(`${this.tableName}/${ObjectId}`, 'delete')
   }
-  set(key, val) {
+  set (key, val) {
     if (!isString(key) || isUndefined(val)) {
-      throw new error(415)
+      throw new Error(415)
     }
     const { filename, cdn, url } = val
     if (!isUndefined(filename) && !isUndefined(cdn) && !isUndefined(url)) {
       this.setData[key] = {
-        "__type": "File",
-        "group": cdn,
-        "filename": filename,
-        "url": url
+        __type: 'File',
+        group: cdn,
+        filename: filename,
+        url: url
       }
     } else {
       this.setData[key] = val
     }
   }
-  add(key, val) {
+  add (key, val) {
     if (!isString(key) || !isArray(val)) {
-      throw new error(415)
+      throw new Error(415)
     }
     this.addArray[key] = {
-      "__op": "Add",
-      "objects": val
+      __op: 'Add',
+      objects: val
     }
   }
-  addUnique(key, val) {
+  addUnique (key, val) {
     if (!isString(key) || !isArray(val)) {
-      throw new error(415)
+      throw new Error(415)
     }
     this.addArray[key] = {
-      "__op": "AddUnique",
-      "objects": val
+      __op: 'AddUnique',
+      objects: val
     }
   }
-  current() {
-    const type = Bmob.utils.getAppType()
-
-    if (Bmob.type != 'hap') {
+  current () {
+    if (Bmob.type !== 'hap') {
       const data = storage.fetch('bmob')
-      return typeof data == 'object' ? data : JSON.parse(data)
+      return typeof data === 'object' ? data : JSON.parse(data)
     } else {
       // 快应用功能
       return new Promise((resolve, reject) => {
-        return storage.fetch('bmob').then(res => {
-          resolve(res);
-        }).catch(err => {
-          reject(err);
-        })
+        return storage
+          .fetch('bmob')
+          .then(res => {
+            resolve(res)
+          })
+          .catch(err => {
+            reject(err)
+          })
       })
     }
   }
-  updateStorage(id) {
+  updateStorage (id) {
     if (!isString(id)) {
-      throw new error(415)
+      throw new Error(415)
     }
     return new Promise((resolve, reject) => {
       const current = this.current()
       if (!current) {
-        throw new error(415)
+        throw new Error(415)
       }
-      this.get(id).then(res => {
-        let newStorage = Object.assign(current, res)
-        storage.save('bmob', newStorage)
-        resolve(res);
-      }).catch(err => {
-        console.log(err)
-        reject(err);
-      })
+      this.get(id)
+        .then(res => {
+          let newStorage = Object.assign(current, res)
+          storage.save('bmob', newStorage)
+          resolve(res)
+        })
+        .catch(err => {
+          console.log(err)
+          reject(err)
+        })
     })
   }
 
-  save(parmas = {}) {
+  save (parmas = {}) {
     if (!isObject(parmas)) {
-      throw new error(415)
+      throw new Error(415)
     }
-    let method = this.setData.id ? 'PUT' : 'POST';
+    let method = this.setData.id ? 'PUT' : 'POST'
     let objectId = this.setData.id ? this.setData.id : ''
     const saveData = Object.assign(parmas, this.setData, this.addArray)
     return new Promise((resolve, reject) => {
-      request(`${this.tableName}/${objectId}`, method, saveData).then((results) => {
-        this.addArray = {}
-        this.setData = {}
+      request(`${this.tableName}/${objectId}`, method, saveData)
+        .then(results => {
+          this.addArray = {}
+          this.setData = {}
 
-        if (this.className == '_User') {
-          const current = this.current()
-          let newStorage = Object.assign(current, saveData)
-          // storage.save('bmob', newStorage)
-          this.updateStorage(objectId)
-        }
+          if (this.className === '_User') {
+            const current = this.current()
+            let newStorage = Object.assign(current, saveData)
+            storage.save('bmob', newStorage)
+          }
 
-        resolve(results)
-      }).catch(err => {
-        console.log("hello8", this.tableName)
-        reject(err)
-      })
+          resolve(results)
+        })
+        .catch(err => {
+          reject(err)
+        })
     })
   }
-  saveAll(items) {
+  saveAll (items) {
     if (!isArray(items)) {
-      throw new error(415)
+      throw new Error(415)
     }
     if (items.length < 1) {
-      throw new error(416)
+      throw new Error(416)
     }
 
-    let id,
-      k,
-      v,
-      p,
-      m = 'put'
-    let key = new Array()
+    let id
+    let p
+    let m = 'put'
+    let key = []
     items.map(item => {
-
       id = `/${item.objectId}`
-      if (id == '/undefined') {
+      if (id === '/undefined') {
         id = ''
         m = 'post'
       }
 
       p = {
-        "method": m,
-        "path": `${this.tableName}${id}`,
-        "body": item.setData
+        method: m,
+        path: `${this.tableName}${id}`,
+        body: item.setData
       }
       key.push(p)
       return item
     })
 
     let params = {
-      "requests": key
+      requests: key
     }
     let route = Bmob._config.parameters.BATCH
     // 批量操作
     return request(route, 'POST', params)
-
   }
 
-  withinKilometers(field, { latitude, longitude }, km = 100) {
+  withinKilometers (field, { latitude, longitude }, km = 100) {
     let newData = {}
     newData[field] = {
-      "$nearSphere": {
-        "__type": "GeoPoint",
-        "latitude": latitude,
-        "longitude": longitude
+      $nearSphere: {
+        __type: 'GeoPoint',
+        latitude: latitude,
+        longitude: longitude
       },
-      "$maxDistanceInKilometers": km
+      $maxDistanceInKilometers: km
     }
     this.location = newData
     return newData
   }
-  withinGeoBox(field, { latitude, longitude },s) {
+  withinGeoBox (field, { latitude, longitude }, s) {
     let newData = {}
     newData[field] = {
-        "$within": {
-          "$box": [
-            {
-              "__type": "GeoPoint",
-              "latitude": latitude,
-              "longitude": longitude
-            },
-            {
-              "__type": "GeoPoint",
-              "latitude": s.latitude,
-              "longitude": s.longitude
-            }
-          ]
-        }
+      $within: {
+        $box: [
+          {
+            __type: 'GeoPoint',
+            latitude: latitude,
+            longitude: longitude
+          },
+          {
+            __type: 'GeoPoint',
+            latitude: s.latitude,
+            longitude: s.longitude
+          }
+        ]
+      }
     }
     this.location = newData
     return newData
   }
 
-  equalTo(key, operator, val) {
+  equalTo (key, operator, val) {
     if (!isString(key)) {
-      throw new error(415)
+      throw new Error(415)
     }
     const judge = (key, operator, val) => {
-      let data = {},
-        value = null
-      if (key == "createdAt" || key == "updateAt") {
+      let data = {}
+      let value = null
+      if (key === 'createdAt' || key === 'updateAt') {
         value = {
-          "__type": "Date",
-          "iso": val
+          __type: 'Date',
+          iso: val
         }
       } else {
         value = val
       }
       switch (operator) {
-        case '==':
+        case '===':
           data[key] = value
-          break;
+          break
         case '!=':
           data[key] = {
-            "$ne": value
+            $ne: value
           }
-          break;
+          break
         case '<':
           data[key] = {
-            "$lt": value
+            $lt: value
           }
-          break;
+          break
         case '<=':
           data[key] = {
-            "$lte": value
+            $lte: value
           }
-          break;
+          break
         case '>':
           data[key] = {
-            "$gt": value
+            $gt: value
           }
+          break
         case '>=':
           data[key] = {
-            "$gte": value
+            $gte: value
           }
-          break;
+          break
         default:
-          throw new error(415)
+          throw new Error(415)
       }
       return data
     }
@@ -365,7 +379,7 @@ const query = class query {
         this.queryData.$and.push(newData)
       } else {
         this.queryData = {
-          "$and": [this.queryData, newData]
+          $and: [this.queryData, newData]
         }
       }
     } else {
@@ -374,133 +388,135 @@ const query = class query {
 
     return newData
   }
-  containedIn(key, val) {
+  containedIn (key, val) {
     if (!isString(key) || !isArray(val)) {
-      throw new error(415)
+      throw new Error(415)
     }
-    return queryData.call(this, key, "$in", val)
+    return queryData.call(this, key, '$in', val)
   }
-  notContainedIn(key, val) {
+  notContainedIn (key, val) {
     if (!isString(key) || !isArray(val)) {
-      throw new error(415)
+      throw new Error(415)
     }
-    return queryData.call(this, key, "$nin", val)
+    return queryData.call(this, key, '$nin', val)
   }
-  exists(key) {
+  exists (key) {
     if (!isString(key)) {
-      throw new error(415)
+      throw new Error(415)
     }
-    return queryData.call(this, key, "$exists", true)
+    return queryData.call(this, key, '$exists', true)
   }
-  doesNotExist(key) {
+  doesNotExist (key) {
     if (!isString(key)) {
-      throw new error(415)
+      throw new Error(415)
     }
-    return queryData.call(this, key, "$exists", false)
+    return queryData.call(this, key, '$exists', false)
   }
-  or(...querys) {
+  or (...querys) {
     querys.map((item, i) => {
       if (!isObject(item)) {
-        throw new error(415)
+        throw new Error(415)
       }
     })
     const queryData = this.queryData.$and
     if (!isUndefined(queryData)) {
       for (let i = 0; i < queryData.length; i++) {
         for (let k = 0; k < querys.length; k++) {
-          if (JSON.stringify(queryData[i]) == JSON.stringify(querys[k])) {
+          if (JSON.stringify(queryData[i]) === JSON.stringify(querys[k])) {
             this.queryData.$and.splice(i, 1)
           }
         }
       }
     }
     this.orData = {
-      "$or": querys
+      $or: querys
     }
   }
-  and(...querys) {
+  and (...querys) {
     querys.map((item, i) => {
       if (!isObject(item)) {
-        throw new error(415)
+        throw new Error(415)
       }
     })
     this.andData = {
-      "$and": querys
+      $and: querys
     }
   }
-  limit(parmas) {
+  limit (parmas) {
     if (!isNumber(parmas)) {
-      throw new error(415)
+      throw new Error(415)
     }
     if (parmas > 1000) {
       parmas = 1000
     }
     this.limitNum = parmas
   }
-  skip(parmas) {
+  skip (parmas) {
     if (!isNumber(parmas)) {
-      throw new error(415)
+      throw new Error(415)
     }
     this.skipNum = parmas
   }
-  order(...key) {
+  order (...key) {
     key.map(item => {
       if (!isString(item)) {
-        throw new error(415)
+        throw new Error(415)
       }
     })
     this.orders = key.join(',')
   }
-  include(...key) {
+  include (...key) {
     key.map(item => {
       if (!isString(item)) {
-        throw new error(415)
+        throw new Error(415)
       }
     })
     this.includes = key.join(',')
   }
-  select(...key) {
+  select (...key) {
     key.map(item => {
       if (!isString(item)) {
-        throw new error(415)
+        throw new Error(415)
       }
     })
     this.keys = key.join(',')
   }
-  field(key, objectId) {
+  field (key, objectId) {
     if (!isString(key) || !isString(objectId)) {
-      throw new error(415)
+      throw new Error(415)
     }
     this.queryReilation.where = {
-      "$relatedTo": {
-        "object": {
-          "__type": "Pointer",
-          "className": this.className,
-          "objectId": objectId
+      $relatedTo: {
+        object: {
+          __type: 'Pointer',
+          className: this.className,
+          objectId: objectId
         },
-        "key": key
+        key: key
       }
     }
   }
-  relation(tableName) {
+  relation (tableName) {
     if (!isString(tableName)) {
-      throw new error(415)
+      throw new Error(415)
     }
-    if (tableName == '_User') {
+    if (tableName === '_User') {
       tableName = 'users'
     }
     return new Promise((resolve, reject) => {
-      request(`/1/${tableName}`, 'get', this.queryReilation).then(({ results }) => {
-        resolve(results)
-      }).catch(err => {
-        reject(err)
-      })
+      request(`/1/${tableName}`, 'get', this.queryReilation)
+        .then(({ results }) => {
+          resolve(results)
+        })
+        .catch(err => {
+          reject(err)
+        })
     })
   }
-  find() {
-    let oneData = {};
-    let parmas = {};
-    let items = {};
+  find () {
+    let oneData = {}
+    let parmas = {}
+    let items = {}
     if (Object.keys(this.queryData).length) {
       parmas.where = this.queryData
     }
@@ -519,13 +535,16 @@ const query = class query {
     parmas.order = this.orders
     parmas.keys = this.keys
     for (const key in parmas) {
-      if (parmas.hasOwnProperty(key) && parmas[key] == null || parmas[key] == 0) {
+      if (
+        (parmas.hasOwnProperty(key) && parmas[key] === null) ||
+        parmas[key] === 0
+      ) {
         delete parmas[key]
       }
     }
     const set = (key, val) => {
       if (!key || isUndefined(val)) {
-        throw new error(415)
+        throw new Error(415)
       }
       oneData[key] = val
     }
@@ -533,74 +552,66 @@ const query = class query {
     const batch = (method = 'updata') => {
       console.log(method)
       if (items.length < 1) {
-        throw new error(416)
+        throw new Error(416)
       }
 
-      let id,
-        k,
-        v,
-        p,
-        m = 'put'
-      let key = new Array()
+      let id
+      let p
+      let m = 'put'
+      let key = []
       items.map(item => {
-
         id = `/${item.objectId}`
-        if (id == '/undefined') {
+        if (id === '/undefined') {
           id = ''
           m = 'post'
         }
 
         p = {
-          "method": m,
-          "path": `${this.tableName}${id}`,
-          "body": oneData
-        };
-        if (method == 'delete') {
+          method: m,
+          path: `${this.tableName}${id}`,
+          body: oneData
+        }
+        if (method === 'delete') {
           p = {
-            "method": 'DELETE',
-            "path": `${this.tableName}${id}`
-          };
+            method: 'DELETE',
+            path: `${this.tableName}${id}`
+          }
         }
         key.push(p)
         return item
-      });
+      })
 
       let params = {
-        "requests": key
-      };
+        requests: key
+      }
       // 批量操作
-      const saveData = Object.assign(oneData)
       let route = Bmob._config.parameters.BATCH
       return request(route, 'POST', params)
     }
     return new Promise((resolve, reject) => {
-      request(`${this.tableName}`, 'get', parmas).then(({ results }) => {
-        this.init()
-        Object.defineProperty(results, "set", { value: set })
-        Object.defineProperty(results, "saveAll", {
-          value: () => {
-            return batch()
-          }
+      request(`${this.tableName}`, 'get', parmas)
+        .then(({ results }) => {
+          this.init()
+          Object.defineProperty(results, 'set', { value: set })
+          Object.defineProperty(results, 'saveAll', {
+            value: () => {
+              return batch()
+            }
+          })
+          Object.defineProperty(results, 'destroyAll', {
+            value: () => {
+              return batch('delete')
+            }
+          })
+          items = results
+          resolve(results)
         })
-        Object.defineProperty(results, "destroyAll", {
-          value: () => {
-            return batch('delete')
-          }
+        .catch(err => {
+          reject(err)
         })
-        items = results
-        resolve(results)
-      }).catch(err => {
-        reject(err)
-      })
     })
-
-    const fetchAll = () => {
-      // 批量获取
-      const saveData = Object.assign(unsetData, oneData, incrementData, addArray)
-      return request(`${this.tableName}/${ObjectId}`, 'put', saveData)
-    }
   }
-  count() {
+  count () {
     const parmas = {}
     if (Object.keys(this.queryData).length) {
       parmas.where = this.queryData
@@ -613,16 +624,18 @@ const query = class query {
     }
     parmas.count = 1
     return new Promise((resolve, reject) => {
-      request(`${this.tableName}`, 'get', parmas).then(({ count }) => {
-        resolve(count)
-      }).catch(err => {
-        reject(err)
-      })
+      request(`${this.tableName}`, 'get', parmas)
+        .then(({ count }) => {
+          resolve(count)
+        })
+        .catch(err => {
+          reject(err)
+        })
     })
   }
 }
 
-function queryData(key, operator, val) {
+function queryData (key, operator, val) {
   let parent = {}
   let child = {}
   child[operator] = val
@@ -633,7 +646,7 @@ function queryData(key, operator, val) {
       this.queryData.$and.push(newData)
     } else {
       this.queryData = {
-        "$and": [this.queryData, newData]
+        $and: [this.queryData, newData]
       }
     }
   } else {
@@ -641,7 +654,5 @@ function queryData(key, operator, val) {
   }
   return newData
 }
-
-
 
 module.exports = query

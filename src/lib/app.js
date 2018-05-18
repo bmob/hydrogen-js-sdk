@@ -74,4 +74,16 @@ Bmob.Pointer = parmas => new Pointer(parmas)
 // 数据关联(一对多，多对多)
 Bmob.Relation = parmas => new Relation(parmas)
 
+if (Bmob.type === 'wx') {
+  wx.Bmob = Bmob
+} else if (Bmob.type === 'h5') {
+  window.Bmob = Bmob
+} else if (Bmob.type === 'hap') {
+  // 快应用功能
+  global.Bmob = Bmob
+} else if (Bmob.type === 'nodejs') {
+  // nodejs
+  global.Bmob = Bmob
+}
+
 module.exports = Bmob

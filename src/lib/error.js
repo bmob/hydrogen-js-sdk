@@ -1,5 +1,5 @@
 class error {
-  constructor(code, msg) {
+  constructor (code, msg) {
     let error = new Error()
 
     error.code = code
@@ -7,8 +7,7 @@ class error {
 
     return error
   }
-
-  errorMsg(code) {
+  errorMsg (code) {
     switch (code) {
       case 415:
         // 参数类型不正确

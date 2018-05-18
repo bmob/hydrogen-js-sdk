@@ -1,9 +1,9 @@
-const { isObject, isString, isNumber } = require('./dataType')
+const { isString } = require('./dataType')
 const storages = "xxrequire('@system.storage')xx"
 const storage = {
-  save(key, value) {
+  save (key, value) {
     if (!isString(key) || !value) {
-      throw new error(415)
+      throw new Error(415)
     }
     storages.set({
       key: key,
@@ -17,26 +17,26 @@ const storage = {
       }
     })
   },
-  fetch(key) {
+  fetch (key) {
     if (!isString(key)) {
-      throw new error(415)
+      throw new Error(415)
     }
     return new Promise((resolve, reject) => {
       return storages.get({
         key: key,
         success: function (data) {
-          resolve(data || null);
+          resolve(data || null)
         },
         fail: function (data, code) {
           console.log(`handling fail, code = ${code}`)
-          reject(data);
+          reject(data)
         }
       })
     })
   },
-  remove(key) {
+  remove (key) {
     if (!isString(key)) {
-      throw new error(415)
+      throw new Error(415)
     }
     storages.delete({
       key: key,
@@ -48,7 +48,7 @@ const storage = {
       }
     })
   },
-  clear() {
+  clear () {
     storages.clear({
       success: function (data) {
         console.log('handling success')
@@ -58,5 +58,5 @@ const storage = {
       }
     })
   }
-};
+}
 module.exports = storage

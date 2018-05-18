@@ -1,24 +1,24 @@
-const { isObject, isString, isNumber } = require('./dataType')
+const { isString } = require('./dataType')
 const storage = {
-  save(key, value) {
+  save (key, value) {
     if (!isString(key) || !value) {
-      throw new error(415)
+      throw new Error(415)
     }
     localStorage.setItem(key, JSON.stringify(value));
   },
-  fetch(key) {
+  fetch (key) {
     if (!isString(key)) {
-      throw new error(415)
+      throw new Error(415)
     }
     return JSON.parse(localStorage.getItem(key)) || null;
   },
-  remove(key) {
+  remove (key) {
     if (!isString(key)) {
-      throw new error(415)
+      throw new Error(415)
     }
     localStorage.removeItem(key);
   },
-  clear() {
+  clear () {
     localStorage.clear();
   }
 };

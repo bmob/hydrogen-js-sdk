@@ -1,44 +1,44 @@
-const {isString, isArray} = require('./dataType')
-const error = require('./error')
-const request = require('./request')
+const { isString, isArray } = require('./dataType')
+const Error = require('./error')
+
 const relation = class Relation {
-  constructor(tableName) {
+  constructor (tableName) {
     if (!isString(tableName)) {
-      throw new error(415)
+      throw new Error(415)
     }
     this.tableName = tableName
   }
-  add(parmas) {
+  add (parmas) {
     return operation.call(this, parmas, 'AddRelation')
   }
-  remove(parmas) {
+  remove (parmas) {
     return operation.call(this, parmas, 'RemoveRelation')
   }
 }
 
-function operation(parmas, op) {
+function operation (parmas, op) {
   if (isString(parmas)) {
     return {
-      "__op": op,
-      "objects": [
+      '__op': op,
+      'objects': [
         {
-          "__type": "Pointer",
-          "className": this.tableName,
-          "objectId": parmas
+          '__type': 'Pointer',
+          'className': this.tableName,
+          'objectId': parmas
         }
       ]
     }
   } else if (isArray(parmas)) {
     const data = []
     parmas.map(item => {
-      if(!isString(item)){
-        throw new error(415)
+      if (!isString(item)) {
+        throw new Error(415)
       }
-      data.push({"__type": "Pointer", "className": this.tableName, "objectId": item})
+      data.push({ '__type': 'Pointer', 'className': this.tableName, 'objectId': item })
     })
-    return {"__op": op, "objects": data}
+    return { '__op': op, 'objects': data }
   } else {
-    throw new error(415)
+    throw new Error(415)
   }
 }
 

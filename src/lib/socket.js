@@ -1,21 +1,21 @@
 const Bmob = require('./bmob')
-const error = require('./error')
+const Error = require('./error')
 const Emitter = {
-  setup(target) {
+  setup (target) {
     let listeners = []
 
     Object.assign(target, {
-      on(type, handle) {
+      on (type, handle) {
         if (typeof handle == 'function') {
           listeners.push([type, handle])
         }
       },
-      emit(type, ...params) {
+      emit (type, ...params) {
         listeners.forEach(
           ([listenType, handle]) => type == listenType && handle(...params)
         )
       },
-      removeAllListeners() {
+      removeAllListeners () {
         listeners = []
       }
     })
@@ -26,9 +26,9 @@ const Emitter = {
  * 基于小程序 WebSocket 接口封装信道
  */
 module.exports = class socket {
-  constructor() {
+  constructor () {
     if (!Bmob._config.applicationId) {
-      throw new error(415)
+      throw new Error(415)
     }
     this.config = {
       host: 'wss.bmobcloud.com'
@@ -37,8 +37,8 @@ module.exports = class socket {
     this.applicationId = Bmob._config.applicationId
     this.initialize()
   }
-  handshake() {
-    function complete(data) {
+  handshake () {
+    function complete (data) {
       if (data instanceof Error) {
         self.connecting = false
         self.onError(data.message)
@@ -76,7 +76,7 @@ module.exports = class socket {
       })
     })
   }
-  initialize() {
+  initialize () {
     this.handshake().then(protocol => {
       try {
         this.connect(
@@ -110,16 +110,16 @@ module.exports = class socket {
         }
       })
 
-      //连接上socket.io服务器后触发的事件
+      // 连接上socket.io服务器后触发的事件
       this.on('client_send_data', resp => {
         this.onInitListen()
       })
     })
   }
 
-  onInitListen() { }
+  onInitListen () { }
 
-  connect(url, header) {
+  connect (url, header) {
     // 小程序 wx.connectSocket() API header 参数无效，把会话信息附加在 URL 上
     const query = Object.keys(header)
       .map(key => `${key}=${encodeURIComponent(header[key])}`)
@@ -160,11 +160,11 @@ module.exports = class socket {
     })
   }
 
-  on(message, handle) {
+  on (message, handle) {
     this.emitter.on(message, handle)
   }
 
-  emit(message, data) {
+  emit (message, data) {
     data = data == undefined ? '5:::' : '2:::'
     message = message ? JSON.stringify(message) : ''
     wx.sendSocketMessage({
@@ -172,12 +172,12 @@ module.exports = class socket {
     })
   }
 
-  emitData(name, data) {
+  emitData (name, data) {
     data = JSON.stringify(data)
     return { name: name, args: [data] }
   }
 
-  updateTable(tablename) {
+  updateTable (tablename) {
     var data = {
       appKey: this.applicationId,
       tableName: tablename,
@@ -189,7 +189,7 @@ module.exports = class socket {
   }
 
   //取消订阅更新数据表的数据
-  unsubUpdateTable(tablename) {
+  unsubUpdateTable (tablename) {
     var data = {
       appKey: this.applicationId,
       tableName: tablename,
@@ -200,8 +200,8 @@ module.exports = class socket {
     this.emit(data)
   }
 
-  //订阅行更新的数据
-  updateRow(tablename, objectId) {
+  // 订阅行更新的数据
+  updateRow (tablename, objectId) {
     var data = {
       appKey: this.applicationId,
       tableName: tablename,
@@ -212,8 +212,8 @@ module.exports = class socket {
     this.emit(data)
   }
 
-  //取消订阅行更新的数据
-  unsubUpdateRow(tablename, objectId) {
+  // 取消订阅行更新的数据
+  unsubUpdateRow (tablename, objectId) {
     var data = {
       appKey: this.applicationId,
       tableName: tablename,
@@ -224,8 +224,8 @@ module.exports = class socket {
     this.emit(data)
   }
 
-  //订阅表删除的数据
-  deleteTable(tablename) {
+  // 订阅表删除的数据
+  deleteTable (tablename) {
     var data = {
       appKey: this.applicationId,
       tableName: tablename,
@@ -236,8 +236,8 @@ module.exports = class socket {
     this.emit(data)
   }
 
-  //取消订阅表删除的数据
-  unsubDeleteTable(tablename) {
+  // 取消订阅表删除的数据
+  unsubDeleteTable (tablename) {
     var data = {
       appKey: this.applicationId,
       tableName: tablename,
@@ -248,8 +248,8 @@ module.exports = class socket {
     this.emit(data)
   }
 
-  //订阅更新数据表的数据
-  deleteRow(tablename, objectId) {
+  // 订阅更新数据表的数据
+  deleteRow (tablename, objectId) {
     var data = {
       appKey: this.applicationId,
       tableName: tablename,
@@ -260,8 +260,8 @@ module.exports = class socket {
     this.emit(data)
   }
 
-  //订阅更新数据表的数据
-  unsubDeleteRow(tablename, objectId) {
+  // 订阅更新数据表的数据
+  unsubDeleteRow (tablename, objectId) {
     var data = {
       appKey: this.applicationId,
       tableName: tablename,
@@ -272,15 +272,15 @@ module.exports = class socket {
     this.emit(data)
   }
 
-  //监听服务器返回的更新数据表的数据，需要用户重写
-  onUpdateTable(tablename, data) { }
+  // 监听服务器返回的更新数据表的数据，需要用户重写
+  onUpdateTable (tablename, data) { }
 
-  //监听服务器返回的更新数据表的数据，需要用户重写
-  onUpdateRow(tablename, objectId, data) { }
+  // 监听服务器返回的更新数据表的数据，需要用户重写
+  onUpdateRow (tablename, objectId, data) { }
 
-  //监听服务器返回的更新数据表的数据，需要用户重写
-  onDeleteTable(tablename, data) { }
+  // 监听服务器返回的更新数据表的数据，需要用户重写
+  onDeleteTable (tablename, data) { }
 
-  //监听服务器返回的更新数据表的数据，需要用户重写
-  onDeleteRow(tablename, objectId, data) { }
+  // 监听服务器返回的更新数据表的数据，需要用户重写
+  onDeleteRow (tablename, objectId, data) { }
 }

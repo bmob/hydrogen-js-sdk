@@ -1,5 +1,4 @@
 let Bmob = require('./bmob')
-const utils = require('./utils')
 const fetch = "xxrequire('@system.fetch')xx"
 
 const setHeader = (config) => {
@@ -9,17 +8,17 @@ const setHeader = (config) => {
     'X-Bmob-Application-Id': config.applicationId,
     'X-Bmob-REST-API-Key': config.applicationKey
   }
-  if(config.applicationMasterKey){
-    header['X-Bmob-Master-Key']=config.applicationMasterKey
+  if (config.applicationMasterKey) {
+    header['X-Bmob-Master-Key'] = config.applicationMasterKey
   }
   return header
 }
 
-const request = (route, method = "get", parma = {}) => {
+const request = (route, method = 'get', parma = {}) => {
   return new Promise((resolve, reject) => {
     const header = setHeader(Bmob._config)
 
-    if (undefined == Bmob.User) {
+    if (undefined === Bmob.User) {
       Bmob = require('./bmob')
     }
     var current = Bmob.User.current()
@@ -27,25 +26,23 @@ const request = (route, method = "get", parma = {}) => {
       header['X-Bmob-Session-Token'] = current.sessionToken
     }
 
-
     fetch.fetch({
       url: Bmob._config.host + route,
       header: header,
       method: method,
       data: parma,
       success: function (res) {
-        const data =JSON.parse(res.data)
-        if(data.code){
-          reject(data);
+        const data = JSON.parse(res.data)
+        if (data.code) {
+          reject(data)
         }
-        resolve(data);
+        resolve(data)
       },
       fail: function (data, code) {
         console.log(`handling fail, code = ${code}`)
-        reject(data);
+        reject(data)
       }
     })
   })
 }
-
 module.exports = request

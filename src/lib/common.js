@@ -1,6 +1,6 @@
 const request = require('./request')
 const Bmob = require('./bmob')
-const error = require('./error')
+const Error = require('./error')
 const { isObject, isString } = require('./dataType')
 
 // --------------小程序SDK-------------------
@@ -11,11 +11,11 @@ const { isObject, isString } = require('./dataType')
  */
 const generateCode = (data) => {
   if (!isObject(data)) {
-    //参数异常
-    throw new error(415)
+    // 参数异常
+    throw new Error(415)
   }
   let route = Bmob._config.parameters.GENERATECODE
-  return request(route,'post',data)
+  return request(route, 'post', data)
 }
 
 /**
@@ -24,7 +24,7 @@ const generateCode = (data) => {
  */
 const getAccessToken = (data) => {
   let route = Bmob._config.parameters.GETACCESSTOKEN
-  return request(route,'get')
+  return request(route, 'get')
 }
 
 /**
@@ -32,12 +32,12 @@ const getAccessToken = (data) => {
  * @return {Object}
  */
 const sendWeAppMessage = (data) => {
-    if (!isObject(data)) {
-      //参数异常
-      throw new error(415)
-    }
-    let route = Bmob._config.parameters.SENDWEAPPMESSAGE
-    return request(route,'post',data)
+  if (!isObject(data)) {
+    // 参数异常
+    throw new Error(415)
+  }
+  let route = Bmob._config.parameters.SENDWEAPPMESSAGE
+  return request(route, 'post', data)
 }
 
 const sendMessage = (data) => {
@@ -50,95 +50,91 @@ const sendMessage = (data) => {
  * @return {Object}
  */
 
- /**
+/**
  * 微信退款
  * @return {Object}
  */
 const refund = (data) => {
   if (!isObject(data)) {
-    //参数异常
-    throw new error(415)
+    // 参数异常
+    throw new Error(415)
   }
   let route = Bmob._config.parameters.REFUND
-  return request(route,'post',data)
+  return request(route, 'post', data)
 }
 
- /**
+/**
  * 微信主人通知(主人信息推送)
  * @return {Object}
  */
 const notifyMsg = (data) => {
   if (!isObject(data)) {
-    //参数异常
-    throw new error(415)
+    // 参数异常
+    throw new Error(415)
   }
   let route = Bmob._config.parameters.NOTIFYMSG
-  return request(route,'post',data)
+  return request(route, 'post', data)
 }
-
 
 // --------------RESTful SDK-------------------
 
-
- /**
+/**
  * 密码重置
  * @return {Object}
  */
 
-//Email 重置
+// Email 重置
 const requestPasswordReset = (data) => {
   if (!isObject(data)) {
-    //参数异常
-    throw new error(415)
+    // 参数异常
+    throw new Error(415)
   }
   let route = Bmob._config.parameters.REQUESTPASSWORDRESET
-  return request(route,'post',data)
+  return request(route, 'post', data)
 }
 
-
 // 短信验证码重置
-const resetPasswordBySmsCode = (smsCode,data) => {
+const resetPasswordBySmsCode = (smsCode, data) => {
   if (!isString(smsCode)) {
-    //参数异常
-    throw new error(415)
+    // 参数异常
+    throw new Error(415)
   }
   let route = `${Bmob._config.parameters.RESETPASSWORDBYSMSCODE}/${smsCode}`
-  return request(route,'put',data)
+  return request(route, 'put', data)
 }
 
 // 提供旧密码方式安全修改用户密码
-const updateUserPassword = (objectId,data) => {
+const updateUserPassword = (objectId, data) => {
   if (!isObject(data) || !isString(objectId)) {
-    //参数异常
-    throw new error(415)
+    // 参数异常
+    throw new Error(415)
   }
   let route = `${Bmob._config.parameters.UPDATEUSERPASSWORD}/${objectId}`
-  return request(route,'put',data)
+  return request(route, 'put', data)
 }
 
- /**
+/**
  * 获取服务器时间
  * @return {Object}
  */
 
- const timestamp = () => {
-   let route = Bmob._config.parameters.TIMESTAMP
-   return request(route,'get')
- }
+const timestamp = () => {
+  let route = Bmob._config.parameters.TIMESTAMP
+  return request(route, 'get')
+}
 
- /**
+/**
  * 推送消息
  * @return {Object}
  */
 const push = (data) => {
   if (!isObject(data)) {
-    //参数异常
-    throw new error(415)
+    // 参数异常
+    throw new Error(415)
   }
   let route = Bmob._config.parameters.PUSH
-  return request(route,'post',data)
+  return request(route, 'post', data)
 }
-
 
 // ---------------云函数------------------------
 /**
@@ -151,37 +147,36 @@ const functions = (funName, data) => {
     data = {}
   }
   if (!isString(funName)) {
-    //参数异常
-    throw new error(415)
+    // 参数异常
+    throw new Error(415)
   }
   let route = `${Bmob._config.parameters.FUNCTIONS}/${funName}`
-  return request(route,'post',data)
+  return request(route, 'post', data)
 }
 
 const geoPoint = ({ latitude, longitude }) => {
-  const validate=(latitude, longitude)=> {
+  const validate = (latitude, longitude) => {
     if (latitude < -90.0) {
-      throw new error(419)
+      throw new Error(419)
     }
     if (latitude > 90.0) {
-      throw new error(419)
+      throw new Error(419)
     }
     if (longitude < -180.0) {
-      throw new error(419)
+      throw new Error(419)
     }
     if (longitude > 180.0) {
-      throw new error(419)
+      throw new Error(419)
     }
     return { latitude, longitude }
   }
   validate(latitude, longitude)
   return {
-    "__type": "GeoPoint",
-    "latitude": latitude,
-    "longitude": longitude
+    '__type': 'GeoPoint',
+    'latitude': latitude,
+    'longitude': longitude
   }
 }
-
 
 module.exports = {
   generateCode,
@@ -197,4 +192,4 @@ module.exports = {
   updateUserPassword,
   geoPoint,
   push
-};
+}

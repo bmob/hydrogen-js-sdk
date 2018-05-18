@@ -1,26 +1,26 @@
-const { isObject, isString, isNumber } = require('./dataType')
+const { isString } = require('./dataType')
 
 const storage = {
-  save(key, value) {
+  save (key, value) {
     if (!isString(key) || !value) {
-      throw new error(415)
+      throw new Error(415)
     }
     return wx.setStorageSync(key, JSON.stringify(value))
   },
-  fetch(key) {
+  fetch (key) {
     if (!isString(key)) {
-      throw new error(415)
+      throw new Error(415)
     }
     return wx.getStorageSync(key) || null
   },
-  remove(key) {
+  remove (key) {
     if (!isString(key)) {
-      throw new error(415)
+      throw new Error(415)
     }
     return wx.removeStorageSync(key)
   },
-  clear() {
+  clear () {
     return wx.clearStorageSync()
   }
-};
+}
 module.exports = storage

@@ -1,17 +1,17 @@
-const {isString} = require('./dataType')
-const error = require('./error')
+const { isString } = require('./dataType')
+const Error = require('./error')
 const pointer = class Pointer {
-  constructor(tableName) {
+  constructor (tableName) {
     if (!isString(tableName)) {
-      throw new error(415)
+      throw new Error(415)
     }
     this.tableName = tableName
   }
-  set(objectId) {
+  set (objectId) {
     if (!isString(objectId)) {
-      throw new error(415)
+      throw new Error(415)
     }
-    return {"__type": "Pointer", "className": this.tableName, "objectId": objectId}
+    return { '__type': 'Pointer', 'className': this.tableName, 'objectId': objectId }
   }
 }
 
