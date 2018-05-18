@@ -1,10 +1,10 @@
 const Bmob = require('./bmob')
-const pointer = require('./pointer')
-const relation = require('./relation')
-const query = require('./query')
-const user = require('./user')
-const file = require('./file')
-const pay = require('./pay')
+const Pointer = require('./pointer')
+const Relation = require('./relation')
+const Query = require('./query')
+const User = require('./user')
+const File = require('./file')
+const Pay = require('./pay')
 const socket = require('./socket')
 
 const {
@@ -38,7 +38,7 @@ Bmob.sendWeAppMessage = sendWeAppMessage
 Bmob.refund = refund
 // 微信主人通知
 Bmob.notifyMsg = notifyMsg
-//请求短信验证码
+// 请求短信验证码
 Bmob.requestSmsCode = requestSmsCode
 // 验证短信验证码
 Bmob.verifySmsCode = verifySmsCode
@@ -56,33 +56,22 @@ Bmob.updateUserPassword = updateUserPassword
 Bmob.push = push
 
 // 小程序支付
-Bmob.Pay = new pay()
+Bmob.Pay = new Pay()
 // 用户对象
-Bmob.User = new user()
+Bmob.User = new User()
 // 通讯
 Bmob.Socket = socket
 // 数据操作
-Bmob.Query = parmas => new query(parmas)
+Bmob.Query = parmas => new Query(parmas)
 // 文件操作
-Bmob.File = (name, object) => new file(name, object)
+Bmob.File = (name, object) => new File(name, object)
 // 网络请求
 Bmob.request = require('./request')
 // 平台判断
 Bmob.type = Bmob.utils.getAppType()
 // 数据关联(一对一)
-Bmob.Pointer = parmas => new pointer(parmas)
+Bmob.Pointer = parmas => new Pointer(parmas)
 // 数据关联(一对多，多对多)
-Bmob.Relation = parmas => new relation(parmas)
-
-
-if (Bmob.type == 'wx') {
-  wx.Bmob = Bmob
-} else if (Bmob.type == 'h5') {
-  window.Bmob = Bmob
-} else if (Bmob.type == 'hap') {
-  // 快应用功能
-} else if (Bmob.type == 'nodejs') {
-  // nodejs
-}
+Bmob.Relation = parmas => new Relation(parmas)
 
 module.exports = Bmob

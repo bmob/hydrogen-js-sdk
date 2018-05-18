@@ -15,9 +15,22 @@ module.exports = {
     library: 'Bmob',
     libraryTarget: "umd"
   },
+  module: {
+    rules: [
+                {
+                    test: /\.js$/,
+                    exclude: /node_modules/,
+                    loader: "eslint-loader",
+                    options: {
+                        // eslint options (if necessary) 
+                        // fix : true
+                    }
+                },
+            ],
+  },
   plugins: [
     new CleanWebpackPlugin(['dist']),
-    new HtmlWebpackPlugin({filename: 'index.html', template: 'src/index.html'}),
+    new HtmlWebpackPlugin({filename: 'index.html', template: 'src/index.html'})
   ],
   devServer: {
     contentBase: config.staticPath,
