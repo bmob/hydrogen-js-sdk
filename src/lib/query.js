@@ -340,7 +340,7 @@ const query = class query {
         value = val
       }
       switch (operator) {
-        case '===':
+        case '==':
           data[key] = value
           break
         case '!=':
