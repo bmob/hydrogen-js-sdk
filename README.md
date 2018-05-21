@@ -45,6 +45,13 @@ https://bmob.github.io/hydrogen-js-sdk/#/?id=登陆
 
 [doc.md]: ./doc.md	"doc.md"
 
+#### 版本 v1.4.2
+
+> **Note:**
+>
+> - 修复所有语法支持`eslint `
+> - 修复查询`==` bug
+
 #### 版本 v1.4.1
 
 > **Note:**
