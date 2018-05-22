@@ -1,10 +1,10 @@
-const isObject = targe => Object.prototype.toString.call(targe) === '[object Object]' ? true : false
-const isNumber = targe => Object.prototype.toString.call(targe) === '[object Number]' ? true : false
-const isString = targe => Object.prototype.toString.call(targe) === '[object String]' ? true : false
-const isUndefined = targe => Object.prototype.toString.call(targe) === '[object Undefined]' ? true : false
-const isBoolean = targe => Object.prototype.toString.call(targe) === '[object Boolean]' ? true : false
-const isArray = targe => Object.prototype.toString.call(targe) === '[object Array]' ? true : false
-const isFunction = targe => Object.prototype.toString.call(targe) === '[object Function]' ? true : false
+const isObject = targe => Object.prototype.toString.call(targe) === '[object Object]'
+const isNumber = targe => Object.prototype.toString.call(targe) === '[object Number]'
+const isString = targe => Object.prototype.toString.call(targe) === '[object String]'
+const isUndefined = targe => Object.prototype.toString.call(targe) === '[object Undefined]'
+const isBoolean = targe => Object.prototype.toString.call(targe) === '[object Boolean]'
+const isArray = targe => Object.prototype.toString.call(targe) === '[object Array]'
+const isFunction = targe => Object.prototype.toString.call(targe) === '[object Function]'
 
 module.exports = {
   isObject,

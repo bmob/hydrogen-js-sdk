@@ -31,9 +31,9 @@ const request = (route, method = 'get', parma = {}) => {
       header: header,
       success: res => {
         if (res.data.code) {
-          reject(res.data);
+          reject(res.data)
         }
-        resolve(res.data);
+        resolve(res.data)
       },
       fail: err => {
         console.log(err)

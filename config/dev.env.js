@@ -17,16 +17,13 @@ module.exports = {
   },
   module: {
     rules: [
-                {
-                    test: /\.js$/,
-                    exclude: /node_modules/,
-                    loader: "eslint-loader",
-                    options: {
-                        // eslint options (if necessary) 
-                        // fix : true
-                    }
-                },
-            ],
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "eslint-loader",
+        options: {}
+      }
+    ]
   },
   plugins: [
     new CleanWebpackPlugin(['dist']),

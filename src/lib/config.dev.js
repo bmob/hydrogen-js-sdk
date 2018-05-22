@@ -18,19 +18,19 @@ const PARAMETERS = {
   VERIFYSMSCODE: '/1/verifySmsCode', // 验证短信验证码
   FUNCTIONS: '/1/functions', // 云函数
   REQUESTPASSWORDRESET: '/1/requestPasswordReset', // 重置密码(email)
-  RESETPASSWORDBYSMSCODE: '/1/resetPasswordBySmsCode',// 重置密码(短信)
-  UPDATEUSERPASSWORD: '/1/updateUserPassword',// 重置密码(登录状态下旧密码换新密码)
-  PUSH: '/1/push', //APP推送
+  RESETPASSWORDBYSMSCODE: '/1/resetPasswordBySmsCode', // 重置密码(短信)
+  UPDATEUSERPASSWORD: '/1/updateUserPassword', // 重置密码(登录状态下旧密码换新密码)
+  PUSH: '/1/push', // APP推送
   FILES: '/2/files', // 单个文件上传/删除
   DELFILES: '/2/cdnBatchDelete', // 批量删除
   TIMESTAMP: '/1/timestamp', // 获取服务器时间
-  LOGIN:'/1/login',//登陆
-  REGISTER:'/1/users',//注册
-  REQUEST_EMAIL_VERIFY:'/1/requestEmailVerify',//注册
-  USERS: '/1/users',// 查询用户
-  PAY: '/1/pay',// 支付
-  WECHAT_APP: '/1/wechatApp/',// 获取openid
-  BATCH: '/1/batch',// 获取openid
+  LOGIN: '/1/login', // 登陆
+  REGISTER: '/1/users', // 注册
+  REQUEST_EMAIL_VERIFY: '/1/requestEmailVerify', // 注册
+  USERS: '/1/users', // 查询用户
+  PAY: '/1/pay', // 支付
+  WECHAT_APP: '/1/wechatApp/', // 获取openid
+  BATCH: '/1/batch', // 获取openid
   QUERY: '/1/classes' // 查询数据
 }
 
@@ -39,6 +39,6 @@ module.exports = {
   applicationId: APPLICATION_ID,
   applicationKey: APPLICATION_KEY,
   parameters: PARAMETERS,
-  version:VERSION,
-  type:TYPE
+  version: VERSION,
+  type: TYPE
 }

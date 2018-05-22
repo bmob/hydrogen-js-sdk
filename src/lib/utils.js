@@ -20,7 +20,7 @@ const getAppType = () => {
   if (typeof wx !== 'undefined') {
     // 小程序
     type = 'wx'
-  } else if (typeof window != 'undefined') {
+  } else if (typeof window !== 'undefined') {
     type = 'h5'
   } else if (config.type === 3) {
     // 快应用功能
