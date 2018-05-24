@@ -20,6 +20,7 @@ const {
   resetPasswordBySmsCode,
   updateUserPassword,
   geoPoint,
+  checkMsg,
   push
 } = require('./common')
 const {requestSmsCode, verifySmsCode} = require('./sms')
@@ -36,6 +37,8 @@ Bmob.getAccessToken = getAccessToken
 Bmob.sendWeAppMessage = sendWeAppMessage
 // 微信退款
 Bmob.refund = refund
+// 检测文本
+Bmob.checkMsg = checkMsg
 // 微信主人通知
 Bmob.notifyMsg = notifyMsg
 // 请求短信验证码

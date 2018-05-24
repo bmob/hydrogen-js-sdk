@@ -45,6 +45,13 @@ https://bmob.github.io/hydrogen-js-sdk/#/?id=登陆
 
 [doc.md]: ./doc.md	"doc.md"
 
+#### 版本 v1.4.3
+
+> **Note:**
+>
+> - 增加小程序检测违规内容方法`Bmob.checkMsg`
+> - 增加查询`===` 支持
+
 #### 版本 v1.4.2
 
 > **Note:**
