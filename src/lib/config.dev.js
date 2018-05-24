@@ -40,6 +40,6 @@ module.exports = {
   applicationId: APPLICATION_ID,
   applicationKey: APPLICATION_KEY,
   parameters: PARAMETERS,
-  version:VERSION,
-  type:TYPE
+  version: VERSION,
+  type: TYPE
 }

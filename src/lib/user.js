@@ -12,7 +12,7 @@ const user = class user extends query {
   }
   set (key, val = '') {
     if (isString(key)) {
-      this.setData[key] = val;
+      this.setData[key] = val
     }
   }
   requestEmailVerify (email) {

@@ -6,13 +6,13 @@ const Emitter = {
 
     Object.assign(target, {
       on (type, handle) {
-        if (typeof handle == 'function') {
+        if (typeof handle === 'function') {
           listeners.push([type, handle])
         }
       },
       emit (type, ...params) {
         listeners.forEach(
-          ([listenType, handle]) => type == listenType && handle(...params)
+          ([listenType, handle]) => type === listenType && handle(...params)
         )
       },
       removeAllListeners () {
@@ -64,7 +64,7 @@ module.exports = class socket {
         success: function (res) {
           if (res.data && res.data.statusCode) {
             return resolve('request error', e)
-          } else if (res.statusCode != 200) {
+          } else if (res.statusCode !== 200) {
             return resolve('request error', e)
           } else {
             return resolve(complete(res.data))
@@ -139,13 +139,13 @@ module.exports = class socket {
           let str = packet.data
           let startStr = str.slice(0, 4)
           // 检测心跳
-          if ('2:::' === startStr) {
+          if (startStr === '2:::') {
             this.emit(false, true)
           }
           str = str.slice(4)
 
           // 截取后不能为空
-          if (str == null || str == '') {
+          if (str === null || str === '') {
             return
           }
           const { name, args } = filter(str)
@@ -165,7 +165,7 @@ module.exports = class socket {
   }
 
   emit (message, data) {
-    data = data == undefined ? '5:::' : '2:::'
+    data = data === undefined ? '5:::' : '2:::'
     message = message ? JSON.stringify(message) : ''
     wx.sendSocketMessage({
       data: data + message
@@ -188,7 +188,7 @@ module.exports = class socket {
     this.emit(data)
   }
 
-  //取消订阅更新数据表的数据
+  // 取消订阅更新数据表的数据
   unsubUpdateTable (tablename) {
     var data = {
       appKey: this.applicationId,

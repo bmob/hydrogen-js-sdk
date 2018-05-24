@@ -117,13 +117,6 @@ console.log(Bmob)
 //     console.log(error);
 // });
 
-// 云函数
-// let params =　{
-//   funcName: 'hello',
-//   data: {
-//     name : 'bmob'
-//   }
-// }
 // Bmob.functions(params.funcName,params.data).then(function (response) {
 //     console.log(response);
 // })
@@ -194,7 +187,7 @@ console.log(Bmob)
 //   console.log(err)
 // })
 
-Bmob.initialize("71acb3659ea66abed6b7739f9bd2e914", "45ef983f011036c5868e9e9a38c193ec")
+Bmob.initialize('71acb3659ea66abed6b7739f9bd2e914', '45ef983f011036c5868e9e9a38c193ec')
 console.log(Bmob)
 // Bmob.User.login('bbbbbb','bbbbbb').then(res => {
 //   console.log(res,'ok')
@@ -202,26 +195,26 @@ console.log(Bmob)
 //  console.log(err,'err')
 // });
 //
-const fileUploadControl = document.getElementById('profilePhotoFileUpload');
+const fileUploadControl = document.getElementById('profilePhotoFileUpload')
 fileUploadControl.onchange = () => {
   const pic = fileUploadControl.files
   let file
-  for(let item of pic){
-     file = Bmob.File(item.name, item);
+  for (let item of pic) {
+    file = Bmob.File(item.name, item)
   }
   file.save().then(res => {
-    console.log(res.length);
-    console.log(res);
+    console.log(res.length)
+    console.log(res)
     const file = res[0]
     query.get('jzQMAAAO').then(res => {
-      res.set('aaa',0)
-      res.set('buer',true)
-      res.set('text',"6666")
-      res.set('file',file)
-      res.set('arr',['2','4','5'])
-      res.set('json',{a:11,b:[1],c:{d:"33"}})
+      res.set('aaa', 0)
+      res.set('buer', true)
+      res.set('text', '6666')
+      res.set('file', file)
+      res.set('arr', ['2', '4', '5'])
+      res.set('json', {a: 11, b: [1], c: {d: '33'}})
       res.save().then(res => {
-        console.log(res);
+        console.log(res)
       })
     })
   })
@@ -233,11 +226,11 @@ fileUploadControl.onchange = () => {
 //   "objectId": "72KFIIIi"
 // }
 //
-Bmob.User.login('admin','123456').then(res => {
+Bmob.User.login('admin', '123456').then(res => {
   console.log(res)
 }).catch(err => {
- console.log(err)
-});
+  console.log(err)
+})
 
 // const Relation = Bmob.Relation('users')
 // Relation.field('abcd','a312d300eb','two')
@@ -274,9 +267,9 @@ Bmob.User.login('admin','123456').then(res => {
 //   res.save()
 // })
 const query = Bmob.Query('abcd')
-query.equalTo('aaa','<=',123)
+query.equalTo('aaa', '<=', 123)
 query.count().then(res => {
-  console.log(res);
+  console.log(res)
 })
 
 // query.get('c02b7b018f').then(res => {

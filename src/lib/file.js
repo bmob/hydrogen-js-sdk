@@ -33,7 +33,6 @@ class file {
               list = []
               resolve(data)
               reject(data)
-
             }
           }).catch(err => {
             data.push(err)
@@ -43,7 +42,6 @@ class file {
     } else if (type === 'wx') {
       // 小程序
       fileObj = new Promise((resolve, reject) => {
-
         if (undefined === Bmob.User) {
           Bmob = require('./bmob')
         }
@@ -59,7 +57,7 @@ class file {
         const formData = Object.assign({ '_ContentType': 'text/plain', 'mime_type': 'text/plain', 'category': 'wechatApp', '_ClientVersion': 'js3.6.1', '_InstallationId': 'bmob' }, key)
         for (let item of list) {
           wx.uploadFile({
-            url: Bmob._config.host + item.route, //仅为示例，非真实的接口地址
+            url: Bmob._config.host + item.route, // 仅为示例，非真实的接口地址
             filePath: item.data,
             name: 'file',
             header: {
@@ -82,18 +80,13 @@ class file {
         }
       })
     } else if (type === 'hap') {
-      //快应用功能
+      // 快应用功能
       fileObj = new Promise((resolve, reject) => {
-
         if (undefined === Bmob.User) {
           Bmob = require('./bmob')
         }
 
-        let sessionToken = 'bmob'
         var current = Bmob.User.current()
-        if (current) {
-          sessionToken = current.sessionToken
-        }
 
         const data = []
         const key = { '_ApplicationId': Bmob._config.applicationId, '_RestKey': Bmob._config.applicationKey, '_SessionToken': current.sessionToken }
