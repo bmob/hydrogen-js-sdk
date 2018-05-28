@@ -1,25 +1,33 @@
 const { isString } = require('./dataType')
+
+let lt
+if (typeof cc !== 'undefined') {
+  lt = cc.sys.localStorage
+} else {
+  lt = localStorage
+}
+console.log(lt)
 const storage = {
   save (key, value) {
     if (!isString(key) || !value) {
       throw new Error(415)
     }
-    localStorage.setItem(key, JSON.stringify(value))
+    lt.setItem(key, JSON.stringify(value))
   },
   fetch (key) {
     if (!isString(key)) {
       throw new Error(415)
     }
-    return JSON.parse(localStorage.getItem(key)) || null
+    return JSON.parse(lt.getItem(key)) || null
   },
   remove (key) {
     if (!isString(key)) {
       throw new Error(415)
     }
-    localStorage.removeItem(key)
+    lt.removeItem(key)
   },
   clear () {
-    localStorage.clear()
+    lt.clear()
   }
 }
 module.exports = storage

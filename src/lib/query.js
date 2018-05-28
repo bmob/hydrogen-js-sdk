@@ -10,7 +10,7 @@ const {
 const Error = require('./error')
 const storage = require('./storage')
 const query = class query {
-  constructor(parmas) {
+  constructor (parmas) {
     this.tableName = `${Bmob._config.parameters.QUERY}/${parmas}`
     this.className = parmas
     this.init()
