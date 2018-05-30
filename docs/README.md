@@ -1616,7 +1616,17 @@ Bmob.checkMsg(content).then(res => {
 
 **参数说明：**
 
-参数在模版信息中传入
+| 参数        | 类型   | 必填 |参数说明                                                     |
+| ----------- | ------ | ------------------------------------------------------------ |
+| touser      | string | 是 | 当前用户的`openid`                                           |
+| template_id | string | 是 |模板Id，登陆微信后台获取                                     |
+| page        | string | 是 |点击模板卡片后的跳转页面，仅限本小程序内的页面。支持带参数,（示例index?foo=bar）。该字段不填则模板无跳转。 |
+| form_id     | string | 是 |表单提交场景下，为 submit 事件带上的 [formId](https://developers.weixin.qq.com/miniprogram/dev/component/form.html)； 通过设置表单` report-submit` 属性 |
+| data        | json   | 是 |对应微信后台当前模板的格式编写                               |
+
+**定时发送：**
+
+有时我们需要手动发送，或者定时发送，这时可以通过云函数的定时任务来实现，代码在控制台云函数模板。
 
 **请求示例：**
 
