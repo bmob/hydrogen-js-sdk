@@ -143,7 +143,7 @@ const user = class user extends query {
       wx.checkSession({
         success: function () {
           console.log('用户目前在线中')
-          var currentUser = this.current()
+          var currentUser = that.current()
           resolve(currentUser)
           login()
         },

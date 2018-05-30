@@ -51,6 +51,7 @@ https://bmob.github.io/hydrogen-js-sdk/#/?id=登陆
 
 -  `Cocos Creator` 开发工具在原有支持浏览器调试模式，增加模拟器模式
 - 增加小程序登陆`auth` 函数登陆后，第二次调用，返回登陆信息
+- 修复修改表数据第二种方式会自动增加一个id字段bug
 
 #### 版本 v1.4.3
 

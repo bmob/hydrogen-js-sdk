@@ -233,7 +233,8 @@ const query = class query {
     }
     let method = this.setData.id ? 'PUT' : 'POST'
     let objectId = this.setData.id ? this.setData.id : ''
-    const saveData = Object.assign(parmas, this.setData, this.addArray)
+    delete this.setData.id
+    let saveData = Object.assign(parmas, this.setData, this.addArray)
     return new Promise((resolve, reject) => {
       request(`${this.tableName}/${objectId}`, method, saveData)
         .then(results => {

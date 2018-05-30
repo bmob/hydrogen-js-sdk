@@ -266,10 +266,20 @@ Bmob.User.login('admin', '123456').then(res => {
 //   res.set('own',poiID)
 //   res.save()
 // })
+
 const query = Bmob.Query('abcd')
-query.equalTo('aaa', '<=', 123)
+query.equalTo('aaa', '==', 99999)
 query.count().then(res => {
   console.log(res)
+})
+
+// const query = Bmob.Query('abcd');
+query.set('id', 'eh3WJJJ1') // 需要修改的objectId
+query.set('aaa', 99999)
+query.save().then(res => {
+  console.log(res)
+}).catch(err => {
+  console.log(err)
 })
 
 // query.get('c02b7b018f').then(res => {
