@@ -142,9 +142,13 @@ const user = class user extends query {
       }
       wx.checkSession({
         success: function () {
-          console.log('用户目前在线中')
-          var currentUser = that.current()
-          resolve(currentUser)
+          let c = that.current()
+
+          if (c === null) {
+            const e = '登陆错误，请在Bmob后台填写小程序AppSecret。'
+            reject(e)
+          }
+          resolve(c)
           login()
         },
         fail: () => {

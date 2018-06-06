@@ -1,11 +1,12 @@
-const { isString } = require('./dataType')
+const { isString, isObject } = require('./dataType')
 
 const storage = {
   save (key, value) {
     if (!isString(key) || !value) {
       throw new Error(415)
     }
-    return wx.setStorageSync(key, JSON.stringify(value))
+    value = !isObject(value) ? value : JSON.stringify(value)
+    return wx.setStorageSync(key, value)
   },
   fetch (key) {
     if (!isString(key)) {
