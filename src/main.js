@@ -226,11 +226,11 @@ fileUploadControl.onchange = () => {
 //   "objectId": "72KFIIIi"
 // }
 //
-Bmob.User.login('admin', '123456').then(res => {
-  console.log(res)
-}).catch(err => {
-  console.log(err)
-})
+// Bmob.User.login('admin', '123456').then(res => {
+//   console.log(res)
+// }).catch(err => {
+//   console.log(err)
+// })
 
 // const Relation = Bmob.Relation('users')
 // Relation.field('abcd','a312d300eb','two')
@@ -268,10 +268,8 @@ Bmob.User.login('admin', '123456').then(res => {
 // })
 
 const query = Bmob.Query('abcd')
-
-const query1 = query.equalTo('aaa', '==', 99999)
-const query2 = query.equalTo('aaa', '==', 666)
-
+const query1 = query.equalTo('aaa', '==', 123)
+const query2 = query.equalTo('aaa', '==', 3)
 query.or(query1, query2)
 // query.equalTo('aaa', '==', 7777)
 query.count().then(res => {

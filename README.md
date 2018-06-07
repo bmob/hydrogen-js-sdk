@@ -45,6 +45,13 @@ https://bmob.github.io/hydrogen-js-sdk/#/?id=登陆
 
 [doc.md]: ./doc.md	"doc.md"
 
+#### 版本 v1.5.1
+
+**Note:**
+
+> - 修复`or`查询失败的问题
+>   
+
 #### 版本 v1.5.0
 
 **Note:**
