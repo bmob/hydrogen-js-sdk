@@ -212,7 +212,7 @@ fileUploadControl.onchange = () => {
       res.set('text', '6666')
       res.set('file', file)
       res.set('arr', ['2', '4', '5'])
-      res.set('json', {a: 11, b: [1], c: {d: '33'}})
+      res.set('json', { a: 11, b: [1], c: { d: '33' } })
       res.save().then(res => {
         console.log(res)
       })
@@ -268,19 +268,26 @@ Bmob.User.login('admin', '123456').then(res => {
 // })
 
 const query = Bmob.Query('abcd')
-query.equalTo('aaa', '==', 99999)
-query.count().then(res => {
-  console.log(res)
-})
 
-// const query = Bmob.Query('abcd');
-query.set('id', 'eh3WJJJ1') // 需要修改的objectId
-query.set('aaa', 99999)
-query.save().then(res => {
+const query1 = query.equalTo('aaa', '==', 99999)
+const query2 = query.equalTo('aaa', '==', 666)
+
+query.or(query1, query2)
+// query.equalTo('aaa', '==', 7777)
+query.count().then(res => {
   console.log(res)
 }).catch(err => {
   console.log(err)
 })
+
+// const query = Bmob.Query('abcd');
+// query.set('id', 'eh3WJJJ1') // 需要修改的objectId
+// query.set('aaa', 99999)
+// query.save().then(res => {
+//   console.log(res)
+// }).catch(err => {
+//   console.log(err)
+// })
 
 // query.get('c02b7b018f').then(res => {
 //   console.log(res);
