@@ -22,6 +22,7 @@ const query = class query {
     this.location = {}
     this.andData = {}
     this.orData = {}
+    this.stat = {}
     this.limitNum = 100
     this.skipNum = 0
     this.includes = ''
@@ -324,7 +325,13 @@ const query = class query {
     this.location = newData
     return newData
   }
-
+  statTo (key, val) {
+    if (!isString(key)) {
+      throw new Error(415)
+    }
+    this.stat[key] = val
+    return this.stat
+  }
   equalTo (key, operator, val) {
     if (!isString(key)) {
       throw new Error(415)
@@ -538,10 +545,11 @@ const query = class query {
     parmas.include = this.includes
     parmas.order = this.orders
     parmas.keys = this.keys
+    parmas = this.stat
     for (const key in parmas) {
       if (
         (parmas.hasOwnProperty(key) && parmas[key] === null) ||
-        parmas[key] === 0
+        parmas[key] === 0 || parmas[key] === ''
       ) {
         delete parmas[key]
       }

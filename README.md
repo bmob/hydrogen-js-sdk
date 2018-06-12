@@ -45,6 +45,13 @@ https://bmob.github.io/hydrogen-js-sdk/#/?id=登陆
 
 [doc.md]: ./doc.md	"doc.md"
 
+#### 版本 v1.5.2
+
+**Note:**
+
+> - 优化网络请求，去掉多余的为空参数
+> - 增加统计相关的查询功能
+
 #### 版本 v1.5.0
 
 **Note:**
