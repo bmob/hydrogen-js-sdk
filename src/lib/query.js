@@ -549,7 +549,9 @@ const query = class query {
     parmas.include = this.includes
     parmas.order = this.orders
     parmas.keys = this.keys
-    parmas = this.stat
+    if (Object.keys(this.stat).length) {
+      parmas = this.stat
+    }
     for (const key in parmas) {
       if (
         (parmas.hasOwnProperty(key) && parmas[key] === null) ||

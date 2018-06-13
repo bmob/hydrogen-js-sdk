@@ -896,6 +896,36 @@ query.count().then(res => {
 
 ## 
 
+## 复杂子查询
+
+在查询当中，我们可以对字符串、数组、数字等进行约束，比如查询Post表时，我们可以指定只返回title以“a”开头的Post对象。那么Pointer 连表查询能不能也进行约束呢？如下：
+
+
+
+例如我需要查询Post（帖子表，字段own 类型Pointer 关联用户表）表，发帖用户是*hello*的用户。代码如下
+
+```
+const query = Bmob.Query("Post");
+query.statTo("where", '{"own":{"$inQuery":{"where":{"username":"Hello"},"className":"_User"}}}');
+query.find().then(res => {
+  console.log(res)
+});
+```
+
+
+
+反之亦然，如果需求是不匹配查询条件的可以使用*$notInQuery*，参考下面写法
+
+```
+const query = Bmob.Query("Post");
+query.statTo("where", '{"own":{"$notInQuery":{"where":{"username":"Hello"},"className":"_User"}}}');
+query.find().then(res => {
+  console.log(res)
+});
+```
+
+
+
 ## 数据库批量操作
 
 **温馨提示： ** 为保障数据安全，此处所有批量操作数据库，单次最多为50条。
@@ -1034,6 +1064,8 @@ query.find().then(todos => {
 
 
 
+
+
 ## 数据关联
 
 ### Pointer的使用
@@ -1085,7 +1117,7 @@ query.find().then(res => {
 
 ```
 
-#### 查询 Pointer 字段类型相关数据
+#### 约束Pointer值查询
 
 简介：Pointer 类型在数据库是一个json数据类型，只需调用Pointer方法创建一个Pointer对象存入到字段中，如下：
 

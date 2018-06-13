@@ -45,6 +45,13 @@ https://bmob.github.io/hydrogen-js-sdk/#/?id=登陆
 
 [doc.md]: ./doc.md	"doc.md"
 
+#### 版本 v1.6.0
+
+**Note:**
+
+> - 修复上一个版本，增加分组查询导致普通查询失效bug
+> - 增加子查询使用文档
+
 #### 版本 v1.5.2
 
 **Note:**
