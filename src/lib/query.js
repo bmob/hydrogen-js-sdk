@@ -517,6 +517,8 @@ const query = class query {
     }
     if (tableName === '_User') {
       tableName = 'users'
+    } else {
+      tableName = `classes/${tableName}`
     }
     return new Promise((resolve, reject) => {
       request(`/1/${tableName}`, 'get', this.queryReilation)

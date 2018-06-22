@@ -30,7 +30,7 @@ const request = (route, method = 'get', parma = {}) => {
       data: parma,
       header: header,
       success: res => {
-        if (res.data.code || res.data.error) {
+        if ((res.data.code && res.data.error) || res.data.error) {
           reject(res.data)
         }
         resolve(res.data)

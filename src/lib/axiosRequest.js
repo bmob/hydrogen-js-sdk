@@ -44,7 +44,7 @@ const request = (route, method = 'get', parma = {}) => {
       serverData.data = parma
     }
     server(serverData).then(({data}) => {
-      if (data.code || data.error) {
+      if ((data.code && data.error) || data.error) {
         reject(data)
       }
       resolve(data)
