@@ -764,9 +764,35 @@ query.get('ObjectId').then(res => {
 
 ```
 
-## 
 
-## 条件查询
+
+##原子计数器
+
+许多应用都需要维持一些计数器数据，譬如用来跟踪心情被点赞数目等等。Bmob提供了便捷的方式来对任何数字字段进行原子性的增加或者减少：
+
+ **参数说明：**
+
+| 参数      | 类型   | 必填 | 说明     |
+| --------- | ------ | ---- | -------- |
+| tableName | string | 是   | 数据表名 |
+| objectId  | string | 是   | 记录 ID  |
+| field     | string | 是   | 字段名称 |
+
+**请求示例：**
+
+```
+const query = Bmob.Query('tableName')
+query.get('objectId').then(res => {
+    res.increment('field')
+    res.save()
+}).catch(err => {
+	console.log(err)
+})
+```
+
+ 你可以同样传入第二个参数,支持正负数，到`increment`方法来指定增加或减少多少，`1`是默认值。
+
+##条件查询
 
  **参数说明：**
 
