@@ -520,8 +520,11 @@ const query = class query {
     } else {
       tableName = `classes/${tableName}`
     }
+    this.queryReilation.count = 1
+    let parmas = Object.assign(this.getParams(), this.queryReilation)
+
     return new Promise((resolve, reject) => {
-      request(`/1/${tableName}`, 'get', this.queryReilation)
+      request(`/1/${tableName}`, 'get', parmas)
         .then(({ results }) => {
           resolve(results)
         })
@@ -530,10 +533,8 @@ const query = class query {
         })
     })
   }
-  find () {
-    let oneData = {}
+  getParams () {
     let parmas = {}
-    let items = {}
     if (Object.keys(this.queryData).length) {
       parmas.where = this.queryData
     }
@@ -562,6 +563,12 @@ const query = class query {
         delete parmas[key]
       }
     }
+    return parmas
+  }
+  find () {
+    let oneData = {}
+    let items = {}
+    const parmas = this.getParams()
     const set = (key, val) => {
       if (!key || isUndefined(val)) {
         throw new Error(415)
@@ -631,7 +638,7 @@ const query = class query {
         })
     })
   }
-  count () {
+  count (limit = 0) {
     const parmas = {}
     if (Object.keys(this.queryData).length) {
       parmas.where = this.queryData
@@ -643,6 +650,7 @@ const query = class query {
       parmas.where = Object.assign(this.orData, this.queryData)
     }
     parmas.count = 1
+    parmas.limit = limit
     return new Promise((resolve, reject) => {
       request(`${this.tableName}`, 'get', parmas)
         .then(({ count }) => {

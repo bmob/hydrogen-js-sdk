@@ -6,7 +6,7 @@ const Error = require('./error')
 const { isObject, isString, isNumber } = require('./dataType')
 
 const user = class user extends query {
-  constructor () {
+  constructor() {
     const tableName = '_User'
     super(tableName)
   }
@@ -143,7 +143,6 @@ const user = class user extends query {
       wx.checkSession({
         success: function () {
           let c = that.current()
-
           if (c === null) {
             const e = '登陆错误，请在Bmob后台填写小程序AppSecret。'
             reject(e)
