@@ -525,8 +525,8 @@ const query = class query {
 
     return new Promise((resolve, reject) => {
       request(`/1/${tableName}`, 'get', parmas)
-        .then(({ results }) => {
-          resolve(results)
+        .then((res) => {
+          resolve(res)
         })
         .catch(err => {
           reject(err)
