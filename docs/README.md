@@ -18,7 +18,7 @@
 **引入：**
 
 ```
-var Bmob = require('../dist/Bmob-1.0.1.min.js');
+var Bmob = require('../dist/Bmob-x.x.x.min.js');
 ```
 
 
@@ -36,6 +36,24 @@ Bmob.initialize("你的Application ID", "你的REST API Key");
 ```
 var Bmob = require('./src/lib/app.js');
 ```
+
+
+
+或者包引入方式
+
+安装
+
+```
+npm install hydrogen-js-sdk
+```
+
+引入
+
+```
+import Bmob from "hydrogen-js-sdk";
+```
+
+使用ES6前端相关框架，建议使用此方式引入。快应用由于网络包不支持npm，暂时不支持npm
 
 
 

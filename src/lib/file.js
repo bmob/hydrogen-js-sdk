@@ -65,7 +65,7 @@ class file {
             },
             formData: formData,
             success: function (res) {
-              var url = res.data
+              var url = JSON.parse(res.data)
               data.push(url)
               if (data.length === list.length) {
                 list = []

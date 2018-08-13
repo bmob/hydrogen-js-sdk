@@ -187,7 +187,9 @@ console.log(Bmob)
 //   console.log(err)
 // })
 
-Bmob.initialize('71acb3659ea66abed6b7739f9bd2e914', '45ef983f011036c5868e9e9a38c193ec')
+// Bmob.initialize('71acb3659ea66abed6b7739f9bd2e914', '45ef983f011036c5868e9e9a38c193ec')
+Bmob.initialize('bb20359e8e7eb634fff2c76089ce0d80', '0dcb80eb0cf198b9facccbf3f0b29b89')
+
 console.log(Bmob)
 // Bmob.User.login('bbbbbb','bbbbbb').then(res => {
 //   console.log(res,'ok')
@@ -202,21 +204,23 @@ fileUploadControl.onchange = () => {
   for (let item of pic) {
     file = Bmob.File(item.name, item)
   }
+  console.log(file)
   file.save().then(res => {
     console.log(res.length)
     console.log(res)
     const file = res[0]
-    query.get('jzQMAAAO').then(res => {
-      res.set('aaa', 0)
-      res.set('buer', true)
-      res.set('text', '6666')
-      res.set('file', file)
-      res.set('arr', ['2', '4', '5'])
-      res.set('json', { a: 11, b: [1], c: { d: '33' } })
-      res.save().then(res => {
-        console.log(res)
-      })
-    })
+    console.log(file.url)
+    // query.get('jzQMAAAO').then(res => {
+    //   res.set('aaa', 0)
+    //   res.set('buer', true)
+    //   res.set('text', '6666')
+    //   res.set('file', file)
+    //   res.set('arr', ['2', '4', '5'])
+    //   res.set('json', { a: 11, b: [1], c: { d: '33' } })
+    //   res.save().then(res => {
+    //     console.log(res)
+    //   })
+    // })
   })
 }
 
@@ -280,7 +284,9 @@ query.count().then(res => {
 
 // const query = Bmob.Query('abcd');
 // query.set('id', 'eh3WJJJ1') // 需要修改的objectId
-// query.set('aaa', 99999)
+// query.set(3333, 99999)
+// query.set(34343, 99999)
+// query.set('kk', 99999)
 // query.save().then(res => {
 //   console.log(res)
 // }).catch(err => {

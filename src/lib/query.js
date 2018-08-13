@@ -156,7 +156,7 @@ const query = class query {
   }
   set (key, val) {
     if (!isString(key) || isUndefined(val)) {
-      throw new Error(415)
+      throw new Error(415, `${key}字段参数,类型不正确`)
     }
     const { filename, cdn, url } = val
     if (!isUndefined(filename) && !isUndefined(cdn) && !isUndefined(url)) {
@@ -617,7 +617,11 @@ const query = class query {
     }
     return new Promise((resolve, reject) => {
       request(`${this.tableName}`, 'get', parmas)
-        .then(({ results }) => {
+        .then((res) => {
+          let results = res.results
+          if (parmas.hasOwnProperty('count')) {
+            results = res
+          }
           this.init()
           Object.defineProperty(results, 'set', { value: set })
           Object.defineProperty(results, 'saveAll', {

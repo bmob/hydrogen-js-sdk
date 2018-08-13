@@ -1,7 +1,6 @@
 class error {
   constructor (code, msg) {
     let error = new Error()
-
     error.code = code
     error.message = msg ? `Bmob.Error:{code:${code}, message:${msg}}` : `Bmob.Error:{code:${code}, message:${this.errorMsg(code)}}`
 

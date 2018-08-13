@@ -6,7 +6,7 @@ const Error = require('./error')
 const { isObject, isString, isNumber } = require('./dataType')
 
 const user = class user extends query {
-  constructor() {
+  constructor () {
     const tableName = '_User'
     super(tableName)
   }
@@ -31,8 +31,7 @@ const user = class user extends query {
       // 异常
       throw new Error(415)
     }
-    this.setData = Object.assign(this.setData, parma)
-    console.log(this.setData)
+    this.setData = Object.assign({}, parma)
     let route = Bmob._config.parameters.REGISTER
     return request(route, 'post', this.setData)
   }
@@ -49,10 +48,12 @@ const user = class user extends query {
         storage.save('bmob', res)
         resolve(res)
       }).catch(err => {
-        console.log('登陆失败')
         reject(err)
       })
     })
+  }
+  logout () {
+    storage.clear()
   }
   users () {
     let route = Bmob._config.parameters.USERS
