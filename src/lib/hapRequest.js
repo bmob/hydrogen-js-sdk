@@ -26,6 +26,10 @@ const request = (route, method = 'get', parma = {}) => {
       header['X-Bmob-Session-Token'] = current.sessionToken
     }
 
+    if(typeof parma === 'object'){
+      parma=JSON.stringify(parma)
+    }
+
     fetch.fetch({
       url: Bmob._config.host + route,
       header: header,

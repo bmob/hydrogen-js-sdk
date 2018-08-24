@@ -240,6 +240,18 @@ Bmob.User.signOrLoginByMobilePhone(phone,smsCode).then(res => {
 Bmob.initialize("你的Application ID", "你的REST API Key", "你的MasterKey");
 ```
 
+### 退出登录
+
+ **简介：**
+
+执行退出函数，会退出登录状态，并清理本地全部缓存
+
+**请求示例：**
+
+```
+Bmob.User.logout()
+```
+
 
 
 ### 查询用户
@@ -327,7 +339,7 @@ emailVerified 字段有 3 种状态可以考虑：
 
 **missing** : 用户(User)对象已经被创建，但应用设置并没有开启邮件验证功能； 或者用户(User)对象没有email邮箱。
 
-发送到用户邮箱验证的邮件会在一周内失效
+发送到用户邮箱验证的邮件会在一周内失效，此功能由于邮件滥发，目前已是收费服务，如需验证，请工单联系
 
  **参数说明：**
 

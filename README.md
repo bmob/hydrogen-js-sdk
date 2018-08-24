@@ -41,6 +41,14 @@ Bmob.initialize("你的Application ID", "你的REST API Key");
 
 https://bmob.github.io/hydrogen-js-sdk/#/?id=登陆
 
+#### 版本 v1.6.3
+
+**Note:**
+
+> - 修复快应用注册函数在特殊情况下，参数错乱问题
+> - 修复小程序文件上传路径返回字符串类型
+> - 增加登陆退出功能
+
 #### 版本 v1.6.2
 
 **Note:**
