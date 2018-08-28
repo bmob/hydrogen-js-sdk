@@ -17,24 +17,23 @@
 
 **引入：**
 
+压缩包引入
+
 ```
 var Bmob = require('../dist/Bmob-x.x.x.min.js');
 ```
-
-
-
-### **初始化**
-
-```
-Bmob.initialize("你的Application ID", "你的REST API Key");
-```
-
-
->
->  `nodejs`请使用源码引入 app.js ，初始化与其他一样
+或者源码引入（nodejs必须源码引入）
 
 ```
 var Bmob = require('./src/lib/app.js');
+```
+
+
+
+### 初始化
+
+```
+Bmob.initialize("你的Application ID", "你的REST API Key");
 ```
 
 
@@ -1720,6 +1719,44 @@ query.save().then(res => {
 })
 ```
 
+### 图片缩略图
+
+图片文件服务由第三方厂商又拍云提供 ， 只需要在文件上传成功返回的url后面拼接特定参数即可实现缩放，缩略图，加水印等效果，[如图](http://bmob-cdn-9200.b0.upaiyun.com/2017/04/25/f24b9ef540f1aeb680ebe01ba8543d9f.png!/scale/80/watermark/text/5rC05Y2wCg==)，具体可参考[这里](http://docs.upyun.com/cloud/image/) 。
+
+### 视频缩略图
+
+有时候视频需要动态截取缩略图，可以使用以下接口
+
+** 请求参数 **
+
+| 参数              		| 类型   	| 必选	| 说明                                    			|
+|-----------------------|-----------|-------|---------------------------------------------------|
+| source 				| string 	| 是  | 视频的存储地址					|
+| save_as 				| string 	| 是  | 截图保存地址					|
+| point   				| string 	| 是  | 截图时间点，格式为 `HH:MM:SS`					|
+
+```
+curl -X POST \
+  http://api2.bmob.cn/2/cdnVedioSnapshot \
+  -H 'content-type: application/json' \
+  -H 'x-bmob-application-id: xxx' \
+  -H 'x-bmob-rest-api-key: xxx' \
+  -d '{"source": "https://bmob-cdn-80.b0.upaiyun.com/2018/08/17/f4ca5b26305348c88ae70818982c1168.mp4", "save_as": "https://bmob-cdn-80.b0.upaiyun.com/f4ca5b26305348c88ae70818982c1161.jpg", "point": "00:00:05"}'
+  
+//{"source": "<视频的存储地址>", "point": "<时间点>", "save_as": "<截图保存地址>"}
+```
+
+**响应**
+
+| 参数        		| 说明         	|
+|:------------------|---------------|
+| status_code   	| 状态码        	|
+| message       	| 返回信息      	|
+| content_type  	| 截图类型       |
+| content_length	| 截图大小      	|
+| save_as       	| 截图保存地址   	|
+
+
 ### 文件删除
 
 
@@ -2004,7 +2041,7 @@ Bmob.checkMsg(content).then(res => {
     });
 ****
 
-###  小程序付款到零钱##
+###  小程序付款到零钱
 
 **简介：**
 
@@ -2238,6 +2275,8 @@ var openId = wx.getStorageSync('openid');
 ### 小程序下载域名
 
 由于最近微信封了~~*.upaiyun.com~~ 域名，如果你没做文件下载功能，只是显示图片，可以不填写。如果你需要做下载功能，在应用设置里面，可以开启独立域名， 开启后，填写到微信平台就好了，当然有时候你想用自己的域名，也是可以的，可以工单联系我们。
+
+
 
 ### 小程序客服消息
 
