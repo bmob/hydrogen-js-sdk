@@ -46,7 +46,7 @@ Bmob.requestSmsCode = requestSmsCode
 // 验证短信验证码
 Bmob.verifySmsCode = verifySmsCode
 // 云函数
-Bmob.functions = functions
+Bmob.run = Bmob.functions = functions
 // 获取服务器时间
 Bmob.timestamp = timestamp
 // 密码重置(Email)

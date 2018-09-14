@@ -161,8 +161,20 @@ const functions = (funName, data) => {
     // 参数异常
     throw new Error(415)
   }
-  let route = `${Bmob._config.parameters.FUNCTIONS}/${funName}`
-  return request(route, 'post', data)
+  const route = `${Bmob._config.parameters.FUNCTIONS}/${funName}`
+  return new Promise((resolve, reject) => {
+    request(route, 'post', data)
+      .then(({result}) => {
+        try {
+          resolve(JSON.parse(result))
+        } catch (error) {
+          resolve(result)
+        }
+      })
+      .catch(err => {
+        reject(err)
+      })
+  })
 }
 
 const geoPoint = ({ latitude, longitude }) => {

@@ -23,7 +23,7 @@ const user = class user extends query {
 
     this.setData = Object.assign({}, { email })
     console.log(this.setData)
-    let route = Bmob._config.parameters.REQUEST_EMAIL_VERIFY
+    const route = Bmob._config.parameters.REQUEST_EMAIL_VERIFY
     return request(route, 'post', this.setData)
   }
   register (parma) {
@@ -32,7 +32,7 @@ const user = class user extends query {
       throw new Error(415)
     }
     this.setData = Object.assign({}, parma)
-    let route = Bmob._config.parameters.REGISTER
+    const route = Bmob._config.parameters.REGISTER
     return request(route, 'post', this.setData)
   }
 
@@ -42,7 +42,7 @@ const user = class user extends query {
       throw new Error(415)
     }
     this.setData = Object.assign({}, { username, password })
-    let route = Bmob._config.parameters.LOGIN
+    const route = Bmob._config.parameters.LOGIN
     return new Promise((resolve, reject) => {
       request(route, 'get', this.setData).then(res => {
         storage.save('bmob', res)
@@ -56,8 +56,32 @@ const user = class user extends query {
     storage.clear()
   }
   users () {
-    let route = Bmob._config.parameters.USERS
+    const route = Bmob._config.parameters.USERS
     return request(route, 'get')
+  }
+  decryption (e) {
+    let self = this
+    return new Promise((resolve, reject) => {
+      const i = e.iv ? e.iv : e.detail.iv
+      const d = e.encryptedData ? e.encryptedData : e.detail.encryptedData
+
+      // 调用云函数解密
+      const current = self.current()
+      const s = current.authData.weapp.session_key
+      const data = {
+        'sessionKey': s,
+        'encryptedData': d,
+        'iv': i
+      }
+      const route = Bmob._config.parameters.DECRYPTION
+      request(route, 'POST', data)
+        .then((res) => {
+          resolve(res)
+        })
+        .catch(err => {
+          reject(err)
+        })
+    })
   }
   signOrLoginByMobilePhone (mobilePhoneNumber, smsCode) {
     // 手机号登陆
@@ -66,17 +90,17 @@ const user = class user extends query {
       throw new Error(415)
     }
     this.setData = Object.assign({}, { mobilePhoneNumber, smsCode })
-    let route = Bmob._config.parameters.LOGIN
+    const route = Bmob._config.parameters.LOGIN
     return request(route, 'get', this.setData)
   }
   requestOpenId (code) {
-    let route = Bmob._config.parameters.WECHAT_APP
+    const route = Bmob._config.parameters.WECHAT_APP
     return request(route + code, 'POST', {})
   }
   linkWith (data) {
     // 第三方登陆
     let authData = { 'authData': data }
-    let route = Bmob._config.parameters.USERS
+    const route = Bmob._config.parameters.USERS
     return request(route, 'POST', authData)
   }
   loginWithWeapp (code) {

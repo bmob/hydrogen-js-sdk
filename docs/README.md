@@ -13,7 +13,9 @@
 1. 整个SDK，就dist目录下Bmob.*.js 这个文件即可使用全部功能
 2. 目前支持微信小程序、H5、快应用、游戏Cocos、混合App等
 
+**ps：这不只是微信小程序SDK，是跨平台SDK，相关平台都是引入**`Bmob-x.x.x.min.js`
 
+---
 
 **引入：**
 
@@ -1727,7 +1729,7 @@ query.save().then(res => {
 
 有时候视频需要动态截取缩略图，可以使用以下接口
 
-** 请求参数 **
+**请求参数**
 
 | 参数              		| 类型   	| 必选	| 说明                                    			|
 |-----------------------|-----------|-------|---------------------------------------------------|
@@ -1886,6 +1888,98 @@ Bmob.User.upInfo(e.detail.userInfo).then(result => {
 
 ```
 {"updatedAt":"2018-05-02 14:43:26"}
+```
+
+
+
+### 小程序加密数据解密
+
+在小程序的开发过程中，获取一些隐私信息，需要解密处理，例如：运动步数、分享转发群Id，获取用户手机号，为了大家更方便的拿到这些信息，SDK封装了解密方法。
+
+
+
+**请求示例：**
+
+1.获取手机号
+
+```
+//wxml
+<button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">获取手机号 </button>
+
+//js
+ getPhoneNumber: function (res) {
+    wx.Bmob.User.decryption(res).then(res => {
+      console.log(res, 444)
+  })
+    
+ // 解密后返回数据格式如下
+ // { "phoneNumber":"137xxxx6579", "purePhoneNumber":"137xxxx6579", "countryCode":"86", "watermark":{ "timestamp":1516762168, "appid":"wx094edexxxxx" } }
+  }
+```
+
+2.获取分享群ID
+
+```
+
+//获取分享群ID
+onShareAppMessage: function (res) {
+    wx.showShareMenu({
+      withShareTicket: true
+    })
+    var that = this;
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target)
+    }
+    return {
+      title: 'Bmob 示例',
+      path: 'pages/index/index',
+      success: function (res) {
+        wx.getShareInfo({
+          shareTicket: res.shareTickets,
+          success(res) {
+            // 调用解密
+            wx.Bmob.User.decryption(res).then(res => {
+              console.log(res, 444)
+            })
+          }
+        })
+      },
+      fail: function (res) {
+        // 转发失败
+      }
+    }
+  }
+  
+//解密后返回数据格式如下
+{
+ "openGId": "OPENGID"
+}
+```
+
+3.解密运动步数
+
+```
+wx.getWeRunData({
+      success(res) {
+        wx.Bmob.User.decryption(res).then(res => {
+          console.log(res)
+        })
+      }
+    })
+//解密后返回数据格式如下
+{
+  "stepInfoList": [
+    {
+      "timestamp": 1445866601,
+      "step": 100
+    },
+    {
+      "timestamp": 1445876601,
+      "step": 120
+    }
+  ]
+}
 ```
 
 

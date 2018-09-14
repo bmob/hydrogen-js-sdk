@@ -1,5 +1,6 @@
 // const ROOT = require('../../package.json')
 const HOST = 'https://api.bmobcloud.com'
+// const HOST = 'https://apitest.bmob.cn'
 const APPLICATION_ID = ''
 const APPLICATION_KEY = ''
 // const VERSION = `v${ROOT.version}`
@@ -32,6 +33,7 @@ const PARAMETERS = {
   WECHAT_APP: '/1/wechatApp/', // 获取openid
   BATCH: '/1/batch', // 获取openid
   CHECK_MSG: '/1/wechatApp/checkMsg', // 检测文本内容
+  DECRYPTION: '/1/wechatApp/decryption', // 检测文本内容
   QUERY: '/1/classes' // 查询数据
 }
 

@@ -41,6 +41,14 @@ Bmob.initialize("你的Application ID", "你的REST API Key");
 
 https://bmob.github.io/hydrogen-js-sdk/#/?id=登陆
 
+#### 版本 v1.6.4
+
+**Note:**
+
+> - 增加小视频视频截图功能
+> - 增加解密小程序数据接口
+> - 调用云函数增加支持Bmob.run方法
+
 #### 版本 v1.6.3
 
 **Note:**
@@ -63,7 +71,6 @@ https://bmob.github.io/hydrogen-js-sdk/#/?id=登陆
 
 > - 修复relation只能关联用户表bug
 >
->   
 
 #### 版本 v1.6.0
 
@@ -94,7 +101,6 @@ https://bmob.github.io/hydrogen-js-sdk/#/?id=登陆
 >
 > - 修复openid多出双引号问题
 >
->   
 
 #### 版本 v1.4.4
 
