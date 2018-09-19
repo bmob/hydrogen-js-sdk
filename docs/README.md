@@ -1894,7 +1894,7 @@ Bmob.User.upInfo(e.detail.userInfo).then(result => {
 
 ### 小程序加密数据解密
 
-在小程序的开发过程中，获取一些隐私信息，需要解密处理，例如：运动步数、分享转发群Id，获取用户手机号，为了大家更方便的拿到这些信息，SDK封装了解密方法。
+在小程序的开发过程中，获取一些隐私信息，需要解密处理，例如：获取手机号、运动步数、分享转发群Id，获取uuid等，为了大家更方便的拿到这些信息，SDK封装了解密方法。
 
 
 
@@ -1909,7 +1909,7 @@ Bmob.User.upInfo(e.detail.userInfo).then(result => {
 //js
  getPhoneNumber: function (res) {
     wx.Bmob.User.decryption(res).then(res => {
-      console.log(res, 444)
+      console.log(res)
   })
     
  // 解密后返回数据格式如下
@@ -1940,7 +1940,7 @@ onShareAppMessage: function (res) {
           success(res) {
             // 调用解密
             wx.Bmob.User.decryption(res).then(res => {
-              console.log(res, 444)
+              console.log(res)
             })
           }
         })
@@ -2031,7 +2031,7 @@ Bmob.generateCode 参数列表
 
 **简介：**
 
-微信小程序检测违规内容
+微信小程序检测用户输入的内容是否违规，建议用户留言，评论，发布内容，调用此接口。
 
 **参数说明：**
 
