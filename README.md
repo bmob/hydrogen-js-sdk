@@ -40,6 +40,12 @@ Bmob.initialize("你的Application ID", "你的REST API Key");
 ### 开发文档
 
 https://bmob.github.io/hydrogen-js-sdk/#/?id=登陆
+#### 版本 v1.6.5
+
+**Note:**
+
+> - 修复分组查询替换排序结果
+
 
 #### 版本 v1.6.4
 

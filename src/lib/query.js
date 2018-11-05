@@ -553,7 +553,7 @@ const query = class query {
     parmas.order = this.orders
     parmas.keys = this.keys
     if (Object.keys(this.stat).length) {
-      parmas = this.stat
+      parmas = Object.assign(parmas, this.stat)
     }
     for (const key in parmas) {
       if (
