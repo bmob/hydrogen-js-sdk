@@ -1,4 +1,4 @@
-const axios = require('../../node_modules/axios/index')
+const axios = require('./axios.min')
 let Bmob = require('./bmob')
 
 const setHeader = (config) => {
