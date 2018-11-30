@@ -54,7 +54,35 @@ npm install hydrogen-js-sdk
 import Bmob from "hydrogen-js-sdk";
 ```
 
-使用ES6前端相关框架，建议使用此方式引入。快应用由于网络包不支持npm，暂时不支持npm
+使用ES6前端相关框架，建议使用此方式引入。快应用由于网络包不支持npm，暂时不支持npm，头条小程序可以跟小程序一样使用。
+
+
+
+Vue示例
+
+```
+// 安装
+npm install hydrogen-js-sdk
+
+// 打开 main.js
+import Bmob from "hydrogen-js-sdk";
+
+// 初始化
+Bmob.initialize("你的Application ID", "你的REST API Key");
+
+// 挂载到全局使用
+Vue.prototype.Bmob = Bmob
+
+// 项目其他页面使用跟小程序一样使用Bmob对象即可，例如：
+Bmob.User.login('username','password').then(res => {
+   console.log(res)
+ }).catch(err => {
+  console.log(err)
+});
+
+```
+
+
 
 
 
@@ -2262,7 +2290,98 @@ var openId = wx.getStorageSync('openid');
     	error: "content is empty."
     }
 
+### 小程序解密
+
+#### 1.获取手机号
+
+```
+//wxml
+<button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">获取手机号 </button>
+
+//js
+ getPhoneNumber: function (res) {
+    wx.Bmob.User.decryption(res).then(res => {
+      console.log(res)
+  })
+    
+ // 解密后返回数据格式如下
+ // { "phoneNumber":"137xxxx6579", "purePhoneNumber":"137xxxx6579", "countryCode":"86", "watermark":{ "timestamp":1516762168, "appid":"wx094edexxxxx" } }
+  }
+
+```
+
+#### 2.获取分享群ID
+
+```
+//获取分享群ID
+onShareAppMessage: function (res) {
+    wx.showShareMenu({
+      withShareTicket: true
+    })
+    var that = this;
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target)
+    }
+    return {
+      title: 'Bmob 示例',
+      path: 'pages/index/index',
+      success: function (res) {
+        wx.getShareInfo({
+          shareTicket: res.shareTickets,
+          success(res) {
+            // 调用解密
+            wx.Bmob.User.decryption(res).then(res => {
+              console.log(res)
+            })
+          }
+        })
+      },
+      fail: function (res) {
+        // 转发失败
+      }
+    }
+  }
+  
+//解密后返回数据格式如下
+{
+ "openGId": "OPENGID"
+}
+
+```
+
+#### 3.解密运动步数
+
+```
+wx.getWeRunData({
+      success(res) {
+        wx.Bmob.User.decryption(res).then(res => {
+          console.log(res)
+        })
+      }
+    })
+//解密后返回数据格式如下
+{
+  "stepInfoList": [
+    {
+      "timestamp": 1445866601,
+      "step": 100
+    },
+    {
+      "timestamp": 1445876601,
+      "step": 120
+    }
+  ]
+}
+
+```
+
+
+
+
+
 ### 微信主人通知 ###
+
 **简介：**
 
 微信主动推送通知，业务场景：比如你有APP，有人下单了，或者有人留言了。你可以收到微信推送通知。每日限制50条，如需更多，请工单联系客服
