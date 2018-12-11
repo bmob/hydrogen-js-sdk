@@ -1,4 +1,5 @@
-const axios = require('./axios.min')
+/* eslint-disable */
+const axios = require('./axios/lib/axios')
 let Bmob = require('./bmob')
 
 const setHeader = (config) => {

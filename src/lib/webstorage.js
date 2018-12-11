@@ -6,7 +6,6 @@ if (typeof cc !== 'undefined') {
 } else {
   lt = localStorage
 }
-console.log(lt)
 const storage = {
   save (key, value) {
     if (!isString(key) || !value) {

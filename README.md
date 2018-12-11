@@ -41,6 +41,12 @@ Bmob.initialize("你的Application ID", "你的REST API Key");
 
 https://bmob.github.io/hydrogen-js-sdk/#/?id=登陆
 
+#### 版本 v1.6.7
+
+**Note:**
+
+> - 修复nodejs `XMLHttpRequest is not defined`的问题
+
 #### 版本 v1.6.6
 
 **Note:**

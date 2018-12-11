@@ -5,7 +5,7 @@ const Query = require('./query')
 const User = require('./user')
 const File = require('./file')
 const Pay = require('./pay')
-const socket = require('./socket')
+const Socket = require('./socket')
 
 const {
   generateCode,
@@ -57,13 +57,12 @@ Bmob.resetPasswordBySmsCode = resetPasswordBySmsCode
 Bmob.updateUserPassword = updateUserPassword
 // APP推送
 Bmob.push = push
-
 // 小程序支付
 Bmob.Pay = new Pay()
 // 用户对象
 Bmob.User = new User()
 // 通讯
-Bmob.Socket = socket
+Bmob.Socket = () => new Socket()
 // 数据操作
 Bmob.Query = parmas => new Query(parmas)
 // 文件操作

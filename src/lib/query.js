@@ -430,7 +430,6 @@ const query = class query {
       }
     })
     const queryData = this.queryData.$and
-    console.log(queryData.length)
     if (!isUndefined(queryData)) {
       for (let i = 0; i < queryData.length; i++) {
         for (let k = 0; k < querys.length; k++) {
