@@ -736,7 +736,7 @@ or
     query.get('objectId').then(res => {
       res.destroy().then(res => {
     console.log(res)
-      }).ctach(err => {
+      }).catch(err => {
     console.log(err)
       })
     }).catch(err => {
