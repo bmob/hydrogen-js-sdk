@@ -41,6 +41,16 @@ Bmob.initialize("你的Application ID", "你的REST API Key");
 
 https://bmob.github.io/hydrogen-js-sdk/#/?id=登陆
 
+
+#### 版本 v1.7.0
+
+**Note:**
+
+> - 支持今日头条小程序一键登陆
+> - 支持今日头条小程序access_token 获取
+> - 支持今日头条小程序文件上传等
+
+
 #### 版本 v1.6.7
 
 **Note:**
