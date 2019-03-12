@@ -77,7 +77,11 @@ Bmob.Pointer = parmas => new Pointer(parmas)
 Bmob.Relation = parmas => new Relation(parmas)
 
 if (Bmob.type === 'wx') {
+  if (typeof (tt) !== 'undefined') {
+    tt.Bmob = Bmob
+  }
   wx.Bmob = Bmob
+  
 } else if (Bmob.type === 'h5') {
   window.Bmob = Bmob
 } else if (Bmob.type === 'hap') {

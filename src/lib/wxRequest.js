@@ -1,9 +1,14 @@
 let Bmob = require('./bmob')
 
+let sdkType = 'wechatApp'
+if (typeof (tt) !== 'undefined') {
+  sdkType = 'toutiao'
+}
+
 const setHeader = (config) => {
   let header = {
     'content-type': 'application/json',
-    'X-Bmob-SDK-Type': 'wechatApp',
+    'X-Bmob-SDK-Type': sdkType,
     'X-Bmob-Application-Id': config.applicationId,
     'X-Bmob-REST-API-Key': config.applicationKey
   }
