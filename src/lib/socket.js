@@ -47,11 +47,11 @@ module.exports = class socket {
       }
     }
 
-    var url = 'https://' + this.config.host + '/socket.io/1/?t=' + new Date().getTime()
-    var dataObject = {}
-    var data = JSON.stringify(dataObject)
+    let url = 'https://' + this.config.host + '/socket.io/1/?t=' + new Date().getTime()
+    let dataObject = {}
+    let data = JSON.stringify(dataObject)
 
-    var method = 'GET'
+    let method = 'GET'
 
     return new Promise((resolve, reject) => {
       wx.request({
@@ -178,7 +178,7 @@ module.exports = class socket {
   }
 
   updateTable (tablename) {
-    var data = {
+    let data = {
       appKey: this.applicationId,
       tableName: tablename,
       objectId: '',
@@ -190,7 +190,7 @@ module.exports = class socket {
 
   // 取消订阅更新数据表的数据
   unsubUpdateTable (tablename) {
-    var data = {
+    let data = {
       appKey: this.applicationId,
       tableName: tablename,
       objectId: '',
@@ -202,7 +202,7 @@ module.exports = class socket {
 
   // 订阅行更新的数据
   updateRow (tablename, objectId) {
-    var data = {
+    let data = {
       appKey: this.applicationId,
       tableName: tablename,
       objectId: objectId,
@@ -214,7 +214,7 @@ module.exports = class socket {
 
   // 取消订阅行更新的数据
   unsubUpdateRow (tablename, objectId) {
-    var data = {
+    let data = {
       appKey: this.applicationId,
       tableName: tablename,
       objectId: objectId,
@@ -226,7 +226,7 @@ module.exports = class socket {
 
   // 订阅表删除的数据
   deleteTable (tablename) {
-    var data = {
+    let data = {
       appKey: this.applicationId,
       tableName: tablename,
       objectId: '',
@@ -238,7 +238,7 @@ module.exports = class socket {
 
   // 取消订阅表删除的数据
   unsubDeleteTable (tablename) {
-    var data = {
+    let data = {
       appKey: this.applicationId,
       tableName: tablename,
       objectId: '',
@@ -250,7 +250,7 @@ module.exports = class socket {
 
   // 订阅更新数据表的数据
   deleteRow (tablename, objectId) {
-    var data = {
+    let data = {
       appKey: this.applicationId,
       tableName: tablename,
       objectId: objectId,
@@ -262,7 +262,7 @@ module.exports = class socket {
 
   // 订阅更新数据表的数据
   unsubDeleteRow (tablename, objectId) {
-    var data = {
+    let data = {
       appKey: this.applicationId,
       tableName: tablename,
       objectId: objectId,

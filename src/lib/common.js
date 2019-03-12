@@ -41,7 +41,7 @@ const sendWeAppMessage = (data) => {
 }
 
 const sendMessage = (data) => {
-  //       var request = Bmob._request("wechatApp/SendWeAppMessage", null, null, 'POST', Bmob._encode(data, null, true));
+  //       let request = Bmob._request("wechatApp/SendWeAppMessage", null, null, 'POST', Bmob._encode(data, null, true));
   return 1
 }
 

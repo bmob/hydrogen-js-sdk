@@ -47,7 +47,7 @@ class file {
         }
 
         let sessionToken = 'bmob'
-        var current = Bmob.User.current()
+        let current = Bmob.User.current()
         if (current) {
           sessionToken = current.sessionToken
         }
@@ -65,7 +65,7 @@ class file {
             },
             formData: formData,
             success: function (res) {
-              var url = JSON.parse(res.data)
+              let url = JSON.parse(res.data)
               data.push(url)
               if (data.length === list.length) {
                 list = []
@@ -86,7 +86,7 @@ class file {
           Bmob = require('./bmob')
         }
 
-        var current = Bmob.User.current()
+        let current = Bmob.User.current()
 
         const data = []
         const key = { '_ApplicationId': Bmob._config.applicationId, '_RestKey': Bmob._config.applicationKey, '_SessionToken': current.sessionToken }
@@ -107,7 +107,7 @@ class file {
             data: formData,
             success: function (res) {
               console.log('handling success' + data)
-              var url = res.data
+              let url = res.data
               data.push(url)
               if (data.length === list.length) {
                 list = []

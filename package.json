@@ -1,6 +1,6 @@
 {
   "name": "hydrogen-js-sdk",
-  "version": "1.6.7",
+  "version": "1.7.0",
   "description": "Bmob SDK",
   "main": "./src/lib/app.js",
   "scripts": {
