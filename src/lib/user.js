@@ -69,7 +69,7 @@ const user = class user extends query {
       const current = self.current()
       let s
       if (typeof (tt) !== 'undefined') {
-        s = current.authData.toutiao.session_key 
+        s = current.authData.toutiao.session_key
       } else {
         s = current.authData.weapp.session_key
       }
@@ -158,12 +158,10 @@ const user = class user extends query {
           success: res => {
             console.log(res)
             let anonymousCode = ''
-
-
             if (typeof (tt) !== 'undefined') {
               anonymousCode = res.anonymousCode
             }
-            that.loginWithWeapp(res.code,anonymousCode).then(
+            that.loginWithWeapp(res.code, anonymousCode).then(
               user => {
                 if (user.error) {
                   throw new Error(415)
