@@ -1,4 +1,3 @@
-const path = require('path')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HapAmendAsyncPlugin = require('./hap.amend')
@@ -24,6 +23,6 @@ module.exports = {
   plugins: [
     new HapAmendAsyncPlugin(),
     new CleanWebpackPlugin(['dist']),
-    new UglifyJsPlugin(),
+    new UglifyJsPlugin()
   ]
 }
