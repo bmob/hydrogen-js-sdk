@@ -47,7 +47,7 @@ https://bmob.github.io/hydrogen-js-sdk/#/?id=登陆
 **Note:**
 
 > - 编译后的的语法修改为es5
-> - bmob.min.*.js 增加版本信息，修改日期
+> - bmob.min.*.js文件增加版本信息、更新日期
 
 **Note:**
 
