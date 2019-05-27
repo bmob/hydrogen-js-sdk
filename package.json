@@ -1,6 +1,6 @@
 {
   "name": "hydrogen-js-sdk",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "Bmob SDK",
   "main": "./src/lib/app.js",
   "scripts": {
@@ -24,6 +24,9 @@
     "webpack": "^3.12.0"
   },
   "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-es2015": "^6.24.1",
     "clean-webpack-plugin": "^0.1.19",
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
