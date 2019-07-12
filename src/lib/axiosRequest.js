@@ -1,17 +1,26 @@
 /* eslint-disable */
 const axios = require('./axios/lib/axios')
 let Bmob = require('./bmob')
+let md5 = require('./md5')
 
-const setHeader = (config) => {
+const setHeader = (config,route) => {
   let type = 'wechatApp'
   if (Bmob.type === 'nodejs') {
     type = 'cloudcode'
   }
+  const t=Math.round(new Date().getTime()/1000);
+  
+  const rand =  Bmob.utils.randomString()
+  console.log('rand', rand)
+  
+  const sign =md5.hexMD5(route+t+config.securityCode+rand)
   let header = {
     'content-type': 'application/json',
     'X-Bmob-SDK-Type': type,
-    'X-Bmob-Application-Id': config.applicationId,
-    'X-Bmob-REST-API-Key': config.applicationKey
+    'X-Bmob-Safe-Sign':sign,
+    'X-Bmob-Safe-Timestamp': t,
+    'X-Bmob-Noncestr-Key': rand,
+    'X-Bmob-Secret-Key': config.secretKey
   }
   if (config.applicationMasterKey) {
     header['X-Bmob-Master-Key'] = config.applicationMasterKey
@@ -26,7 +35,7 @@ const request = (route, method = 'get', parma = {}) => {
       Bmob = require('./bmob')
     }
 
-    const header = setHeader(Bmob._config)
+    const header = setHeader(Bmob._config,route)
 
     var current = Bmob.User.current()
     if (current) {
@@ -47,6 +56,10 @@ const request = (route, method = 'get', parma = {}) => {
       serverData.params = parma
     } else {
       serverData.data = parma
+    }
+    if(Bmob._config.deBug===true){
+      console.log('host:',Bmob._config.host)
+      console.log('parma:',parma)
     }
     server(serverData).then(({ data }) => {
       if ((data.code && data.error) || data.error) {

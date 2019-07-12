@@ -1,10 +1,20 @@
-const ROOT = require('../../package.json')
-const HOST = 'https://api.bmobcloud.com'
-const APPLICATION_ID = ''
-const APPLICATION_KEY = ''
-const APPLICATION_MASTER_KEY = ''
+let ROOT
+let VERSION
+try {
+  ROOT = require('../../package.json')
+  // 这行在小程序引入app.js报错
+  VERSION = `v${ROOT.version}`
+} catch (e) {
 // 这行在小程序引入app.js报错
-const VERSION = `v${ROOT.version}`
+  VERSION = `v1.0.0`
+}
+
+const HOST = 'https://api.bmobcloud.com'
+
+const SECRET_KEY = ''
+const SECURITY_CODE = ''
+const APPLICATION_MASTER_KEY = ''
+
 // 1.h5 2.小程序 3.快应用 4.nodejs
 const TYPE = 3
 
@@ -37,10 +47,11 @@ const PARAMETERS = {
 }
 module.exports = {
   host: HOST,
-  applicationId: APPLICATION_ID,
-  applicationKey: APPLICATION_KEY,
+  secretKey: SECRET_KEY,
+  securityCode: SECURITY_CODE,
   applicationMasterKey: APPLICATION_MASTER_KEY,
   parameters: PARAMETERS,
   version: VERSION,
+  deBug: false,
   type: TYPE
 }

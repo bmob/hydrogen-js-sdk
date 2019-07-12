@@ -1,7 +1,7 @@
 // const ROOT = require('../../package.json')
-const HOST = 'https://api.bmobcloud.com'
+// const HOST = 'https://api.bmobcloud.com'
 // const HOST = 'http://127.0.0.1:8080'
-// const HOST = 'https://apitest.bmob.cn'
+const HOST = 'https://apitest.bmob.cn'
 const APPLICATION_ID = ''
 const APPLICATION_KEY = ''
 // const VERSION = `v${ROOT.version}`
@@ -44,5 +44,6 @@ module.exports = {
   applicationKey: APPLICATION_KEY,
   parameters: PARAMETERS,
   version: VERSION,
+  deBug: false,
   type: TYPE
 }
