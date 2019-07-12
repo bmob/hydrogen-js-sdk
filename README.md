@@ -41,6 +41,14 @@ Bmob.initialize("你的Application ID", "你的REST API Key");
 
 https://bmob.github.io/hydrogen-js-sdk/#/?id=登陆
 
+#### 版本 v2.0.0
+
+**Note:**
+
+> - SDK初始化变动，推出全新加密机制
+> - 增加debug调试模式 bmob.debug(tue) 可以打印请求相关信息
+> - 修复config文件在小程序下引入异常问题
+
 
 #### 版本 v1.7.1
 
