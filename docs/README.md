@@ -34,6 +34,18 @@ var Bmob = require('./src/lib/app.js');
 
 ### 初始化
 
+为了您的前端应用安全，SDK 2.0版本启用新的初始化key，新SDK请使用以下方式初始化，其他方法未变动
+
+```
+Bmob.initialize("你的Secret Key", "你的API 安全码");
+```
+
+**API 安全码**: 在应用功能设置，安全验证，API安全码自己设置
+
+
+
+SDK版本 **2.0.0** 以下保留之前的初始化方法
+
 ```
 Bmob.initialize("你的Application ID", "你的REST API Key");
 ```
@@ -67,8 +79,12 @@ npm install hydrogen-js-sdk
 // 打开 main.js
 import Bmob from "hydrogen-js-sdk";
 
-// 初始化
+
+// 初始化 SDK版本 2.0.0 以下保留之前的初始化方法
 Bmob.initialize("你的Application ID", "你的REST API Key");
+或者--------
+// 初始化 SDK版本 2.0.0 以及之后版本
+Bmob.initialize("你的Secret Key", "你的API 安全码");
 
 // 挂载到全局使用
 Vue.prototype.Bmob = Bmob
