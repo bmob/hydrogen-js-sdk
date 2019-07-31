@@ -108,7 +108,7 @@ const user = class user extends query {
     const route = Bmob._config.parameters.USERS
     return request(route, 'POST', authData)
   }
-  loginWithWeapp (code, a = '') {
+  loginWithWeapp (code, a = '', str) {
     return new Promise((resolve, reject) => {
       this.requestOpenId(code, a).then(res => {
         let w = { 'weapp': res }
@@ -116,8 +116,12 @@ const user = class user extends query {
           delete res.error
           w = { 'toutiao': res }
         }
-        const result = this.linkWith(w)
-        resolve(result)
+        if (str === 'openid') {
+          resolve(res)
+        } else {
+          const result = this.linkWith(w)
+          resolve(result)
+        }
       }).catch(err => {
         reject(err)
       })
@@ -150,7 +154,11 @@ const user = class user extends query {
       })
     })
   }
-  auth () {
+  openId () {
+    console.log('fff')
+    this.auth('openid')
+  }
+  auth (str = '') {
     let that = this
     return new Promise((resolve, reject) => {
       const login = () => {
@@ -161,7 +169,7 @@ const user = class user extends query {
             if (typeof (tt) !== 'undefined') {
               anonymousCode = res.anonymousCode
             }
-            that.loginWithWeapp(res.code, anonymousCode).then(
+            that.loginWithWeapp(res.code, anonymousCode, str).then(
               user => {
                 if (user.error) {
                   throw new Error(415)

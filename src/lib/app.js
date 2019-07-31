@@ -62,7 +62,7 @@ Bmob.Pay = new Pay()
 // 用户对象
 Bmob.User = new User()
 // 通讯
-Bmob.Socket = () => new Socket()
+Bmob.Socket = (id) => new Socket(id)
 // 数据操作
 Bmob.Query = parmas => new Query(parmas)
 // 文件操作

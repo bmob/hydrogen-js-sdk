@@ -11,8 +11,6 @@ const setHeader = (config,route) => {
   const t=Math.round(new Date().getTime()/1000);
   
   const rand =  Bmob.utils.randomString()
-  console.log('rand', rand)
-  
   const sign =md5.hexMD5(route+t+config.securityCode+rand)
   let header = {
     'content-type': 'application/json',

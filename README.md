@@ -53,6 +53,14 @@ Bmob.initialize("你的Application ID", "你的REST API Key");
 
 https://bmob.github.io/hydrogen-js-sdk/#/?id=登陆
 
+#### 版本 v2.1.0
+
+**Note:**
+
+> - 修复初始变动导致SDK文件上传失败
+> - 增加获取openid新方法 `Bmob.User.openId()` 
+> - webSocket 请求改为 `let BmobSocketIo =new Bmob.Socket('appkey')` 初始化
+
 #### 版本 v2.0.0
 
 **Note:**

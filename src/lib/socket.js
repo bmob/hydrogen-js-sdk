@@ -1,4 +1,4 @@
-const Bmob = require('./bmob')
+// const Bmob = require('./bmob')
 const Error = require('./error')
 const Emitter = {
   setup (target) {
@@ -26,15 +26,17 @@ const Emitter = {
  * 基于小程序 WebSocket 接口封装信道
  */
 module.exports = class socket {
-  constructor () {
-    if (!Bmob._config.applicationId) {
+  constructor (id = '') {
+    console.log('id', id)
+
+    if (id === '') {
       throw new Error(415)
     }
     this.config = {
       host: 'wss.bmobcloud.com'
     }
     Emitter.setup((this.emitter = {}))
-    this.applicationId = Bmob._config.applicationId
+    this.applicationId = id
     this.initialize()
   }
   handshake () {

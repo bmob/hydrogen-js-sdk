@@ -2,6 +2,7 @@ const request = require('./request')
 let Bmob = require('./bmob')
 const Error = require('./error')
 const utils = require('./utils')
+let md5 = require('./md5')
 const requestHap = "xxrequire('@system.request')xx"
 const { isString, isArray } = require('./dataType')
 let list = []
@@ -12,7 +13,8 @@ class file {
       if (!isString(name)) {
         throw new Error(415)
       }
-      list.push({ name: name, route: `${Bmob._config.parameters.FILES}/${name}`, data: parma })
+      let ext = name.substring(name.lastIndexOf('.') + 1)
+      list.push({ name: name, route: `${Bmob._config.parameters.FILES}/${Bmob._config.secretKey}.${ext}`, data: parma })
     }
   }
   save () {
@@ -22,6 +24,7 @@ class file {
     let fileObj
     // //获取当前应用类型
     const type = utils.getAppType()
+
     // h5
     if (type === 'h5' || type === 'nodejs') {
       fileObj = new Promise((resolve, reject) => {
@@ -53,16 +56,29 @@ class file {
         }
 
         const data = []
-        const key = { '_ApplicationId': Bmob._config.applicationId, '_RestKey': Bmob._config.applicationKey, '_SessionToken': sessionToken }
+
+        const t = Math.round(new Date().getTime() / 1000)
+        const rand = Bmob.utils.randomString()
+        const route = list[0].route
+        console.log('rand', rand, Bmob, route)
+
+        const sign = md5.hexMD5(route + t + Bmob._config.securityCode + rand)
+        const key = {
+          'content-type': 'application/json',
+          'X-Bmob-SDK-Type': 'wechatApp',
+          'X-Bmob-Safe-Sign': sign,
+          'X-Bmob-Safe-Timestamp': t,
+          'X-Bmob-Noncestr-Key': rand,
+          'X-Bmob-Session-Token': sessionToken,
+          'X-Bmob-Secret-Key': Bmob._config.secretKey
+        }
         const formData = Object.assign({ '_ContentType': 'text/plain', 'mime_type': 'text/plain', 'category': 'wechatApp', '_ClientVersion': 'js3.6.1', '_InstallationId': 'bmob' }, key)
         for (let item of list) {
           wx.uploadFile({
             url: Bmob._config.host + item.route, // 仅为示例，非真实的接口地址
             filePath: item.data,
             name: 'file',
-            header: {
-              'X-Bmob-SDK-Type': 'wechatApp'
-            },
+            header: key,
             formData: formData,
             success: function (res) {
               let url = JSON.parse(res.data)
@@ -85,11 +101,28 @@ class file {
         if (undefined === Bmob.User) {
           Bmob = require('./bmob')
         }
-
+        let sessionToken = 'bmob'
         let current = Bmob.User.current()
+        if (current) {
+          sessionToken = current.sessionToken
+        }
 
         const data = []
-        const key = { '_ApplicationId': Bmob._config.applicationId, '_RestKey': Bmob._config.applicationKey, '_SessionToken': current.sessionToken }
+        const t = Math.round(new Date().getTime() / 1000)
+        const rand = Bmob.utils.randomString()
+        const route = list[0].route
+        console.log('rand', rand, Bmob, route)
+
+        const sign = md5.hexMD5(route + t + Bmob._config.securityCode + rand)
+        const key = {
+          'content-type': 'application/json',
+          'X-Bmob-SDK-Type': 'wechatApp',
+          'X-Bmob-Safe-Sign': sign,
+          'X-Bmob-Safe-Timestamp': t,
+          'X-Bmob-Noncestr-Key': rand,
+          'X-Bmob-Session-Token': sessionToken,
+          'X-Bmob-Secret-Key': Bmob._config.secretKey
+        }
         const formData = Object.assign({ '_ContentType': 'text/plain', 'mime_type': 'text/plain', 'category': 'wechatApp', '_ClientVersion': 'js3.6.1', '_InstallationId': 'bmob' }, key)
         for (let item of list) {
           requestHap.upload({
