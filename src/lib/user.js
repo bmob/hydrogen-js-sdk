@@ -70,6 +70,8 @@ const user = class user extends query {
       let s
       if (typeof (tt) !== 'undefined') {
         s = current.authData.toutiao.session_key
+      } else if (typeof (qq) !== 'undefined') {
+        s = current.authData.qqapp.session_key
       } else {
         s = current.authData.weapp.session_key
       }
@@ -115,6 +117,11 @@ const user = class user extends query {
         if (typeof (tt) !== 'undefined') {
           delete res.error
           w = { 'toutiao': res }
+        }
+        if (typeof (qq) !== 'undefined') {
+          delete res.errcode
+          delete res.errmsg
+          w = { 'qqapp': res }
         }
         if (str === 'openid') {
           resolve(res)
@@ -164,7 +171,6 @@ const user = class user extends query {
       const login = () => {
         wx.login({
           success: res => {
-            console.log(res)
             let anonymousCode = ''
             if (typeof (tt) !== 'undefined') {
               anonymousCode = res.anonymousCode
@@ -177,6 +183,8 @@ const user = class user extends query {
                 let openid
                 if (typeof (tt) !== 'undefined') {
                   openid = user.authData.toutiao.openid
+                } else if (typeof (qq) !== 'undefined') {
+                  openid = user.authData.qqapp.openid
                 } else {
                   openid = user.authData.weapp.openid
                 }

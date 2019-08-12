@@ -3,6 +3,8 @@ let md5 = require('./md5')
 let sdkType = 'wechatApp'
 if (typeof (tt) !== 'undefined') {
   sdkType = 'toutiao'
+} else if (typeof (qq) !== 'undefined') {
+  sdkType = 'qqApp'
 }
 
 const setHeader = (config, route) => {

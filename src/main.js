@@ -6,7 +6,7 @@ var Bmob = require('./lib/app')
 // Bmob.initialize('91cccd44cafd370aa5b89669d993b619', 'd56f4b86e5cd56e84f705b6f530e4806');
 // Bmob.initialize('4df53b03a0b3a8ef', '123456');
 Bmob.initialize('ad1ef6c1eac9b6e7', '123456'); //内网
-Bmob.debug(true);
+// Bmob.debug(true);
 
 // const BmobSocketIo = Bmob.Socket()
 
