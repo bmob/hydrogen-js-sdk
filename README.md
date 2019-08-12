@@ -53,6 +53,14 @@ Bmob.initialize("你的Application ID", "你的REST API Key");
 
 https://bmob.github.io/hydrogen-js-sdk/#/?id=登陆
 
+#### 版本 v2.2.0
+
+**Note:**
+
+> - 全面支持QQ小程序，小程序代码复用，替换最新bmob.js即可
+
+
+
 #### 版本 v2.1.0
 
 **Note:**
