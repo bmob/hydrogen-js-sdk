@@ -12,26 +12,32 @@ const getConfig = (d = false) => {
   }
   return config
 }
+
 // 获取SDK类型
 const getAppType = () => {
   const config = getConfig()
   let type
-  // h5
+  
+  // 小程序
   if (typeof wx !== 'undefined') {
-    // 小程序
     type = 'wx'
-  } else if (typeof window !== 'undefined') {
-    type = 'h5'
-  } else if (process === global.process) {
-    // 快应用功能
-    type = 'nodejs'
-  } else if (config.type === 3) {
-    // 快应用功能
-    type = 'hap'
-  } else {
-    // 默认H5
+  }
+
+  // html5
+  if (typeof window !== 'undefined' && typeof type !== 'string') {
     type = 'h5'
   }
+
+  // node
+  if (typeof process !== 'undefined' && typeof type !== 'string') {
+    type = 'nodejs'
+  }
+
+  // 快应用
+  if (config.type === 3 && typeof type !== 'string') {
+    type = 'hap'
+  }
+
   return type
 }
 

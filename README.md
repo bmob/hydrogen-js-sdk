@@ -2,43 +2,98 @@
 
 ### SDK介绍
 
-本SDK基于es6开发，致力打造基于前端混合开发需求，支持微信小程序、H5、快应用、游戏Cocos、混合App等平台
+本SDK基于es6开发，致力打造基于前端混合开发需求，支持微信小程序、H5、快应用、游戏Cocos、混合App等平台, 整个SDK，就dist目录下Bmob.*.js 这个文件即可使用全部功能，请使用最新版本。
 
 
 
 ## 安装使用
 
-### 下载
+### **在小程序中使用** 【微信小程序】【QQ小程序】【支付宝小程序】【头条小程序】
 
-> https://github.com/bmob/hydrogen-js-sdk/
-
-### 安装使用
-
- **简介：**
-
-1. 整个SDK，就dist目录下Bmob.*.js 这个文件即可使用全部功能
-2. 目前支持微信小程序、H5、快应用、游戏Cocos、混合App等
-
-
-
-**引入：**
-
+下载dist目录中的最新版本Bmob.*.js 然后在项目中引入
 ```
-var Bmob = require('../dist/Bmob-1.0.1.min.js');
+const Bmob = require('../dist/Bmob-1.0.1.min.js');
 ```
 
+### **在WEB端和Node中使用** 
+npm包管理下载
+```
+npm install hydrogen-js-sdk 
+```
+或
+```
+yarn add hydrogen-js-sdk 
+```
+推荐使用 yarn 下载速度快
+
+**在Node中使用**
+```
+// 引入
+import Bmob from 'hydrogen-js-sdk'
+
+// 初始化
+Bmob.initialize("你的Secret Key", "你的API 安全码");
+```
+
+**在Vue中使用**
+```
+import Vue from 'vue'
+import App from './App.vue'
+
+// 引入
+import Bmob from 'hydrogen-js-sdk'
+
+Vue.config.productionTip = false
+
+// 初始化
+Bmob.initialize("你的Secret Key", "你的API 安全码");
+
+new Vue({
+  render: h => h(App),
+}).$mount('#app')
+
+```
+
+**在React中使用**
+```
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import * as serviceWorker from './serviceWorker';
+
+// 引入
+import Bmob from 'hydrogen-js-sdk'
+
+// 初始化
+Bmob.initialize("你的Secret Key", "你的API 安全码");
+
+ReactDOM.render(<App />, document.getElementById('root'));
+
+serviceWorker.unregister();
+```
+
+**在HTML中使用**
+
+下载dist目录中的最新版本Bmob.*.js 然后在html中引入
+```
+<script src="Bmob-2.2.0.min.js"></script>
+<script>
+// 初始化
+Bmob.initialize("你的Secret Key", "你的API 安全码");
+</script>
+```
 
 
 ### **初始化**
 
-为了您的前端应用安全，SDK 2.0版本启用新的初始化key，新SDK请使用以下方式初始化，其他方法未变动
+为了您的前端应用安全，SDK 2.0以上版本启用新的初始化key，新SDK请使用以下方式初始化，其他方法未变动
 
 ```
 Bmob.initialize("你的Secret Key", "你的API 安全码");
 ```
 
 **API 安全码**: 在应用功能设置，安全验证，API安全码自己设置
-
 
 
 SDK版本 **2.0.0** 以下保留之前的初始化方法
@@ -52,6 +107,15 @@ Bmob.initialize("你的Application ID", "你的REST API Key");
 ### 开发文档
 
 https://bmob.github.io/hydrogen-js-sdk/#/?id=登陆
+
+
+
+#### 版本 v2.2.1
+
+**Note:**
+
+> - 修复sdk在node环境下的一些问题
+
 
 #### 版本 v2.2.0
 
@@ -84,6 +148,8 @@ https://bmob.github.io/hydrogen-js-sdk/#/?id=登陆
 
 > - 编译后的的语法修改为es5
 > - bmob.min.*.js文件增加版本信息、更新日期
+
+#### 版本 v1.7.0
 
 **Note:**
 
