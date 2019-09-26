@@ -654,15 +654,7 @@ const query = class query {
     }
     parmas.count = 1
     parmas.limit = limit
-    return new Promise((resolve, reject) => {
-      request(`${this.tableName}`, 'get', parmas)
-        .then(({ count }) => {
-          resolve(count)
-        })
-        .catch(err => {
-          reject(err)
-        })
-    })
+    return request(this.tableName, 'get', parmas)
   }
 }
 
