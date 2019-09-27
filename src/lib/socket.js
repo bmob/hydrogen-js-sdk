@@ -27,7 +27,6 @@ const Emitter = {
  */
 module.exports = class socket {
   constructor (id = '') {
-    console.log('id', id)
 
     if (id === '') {
       throw new Error(415)

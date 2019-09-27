@@ -22,7 +22,7 @@ const generateCode = (data) => {
  * 获取access_token
  * @return {Object}
  */
-const getAccessToken = (data) => {
+const getAccessToken = () => {
   let route = Bmob._config.parameters.GETACCESSTOKEN
   return request(route, 'get')
 }
@@ -38,11 +38,6 @@ const sendWeAppMessage = (data) => {
   }
   let route = Bmob._config.parameters.SENDWEAPPMESSAGE
   return request(route, 'post', data)
-}
-
-const sendMessage = (data) => {
-  //       let request = Bmob._request("wechatApp/SendWeAppMessage", null, null, 'POST', Bmob._encode(data, null, true));
-  return 1
 }
 
 /**

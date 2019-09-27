@@ -136,6 +136,9 @@ const user = class user extends query {
   }
 
   upInfo (userInfo) {
+    if (!isObject(userInfo)) {
+      throw new Error(415)
+    }
     return new Promise((resolve, reject) => {
       let nickName = userInfo.nickName
       let avatarUrl = userInfo.avatarUrl
@@ -162,7 +165,6 @@ const user = class user extends query {
     })
   }
   openId () {
-    console.log('fff')
     this.auth('openid')
   }
   auth (str = '') {
