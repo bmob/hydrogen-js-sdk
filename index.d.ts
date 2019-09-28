@@ -1,5 +1,3 @@
-import { Pay } from "./src/lib/app";
-
 export interface BmobPromise<T = any> extends Promise<BmobPromise<T>> {
 }
 
