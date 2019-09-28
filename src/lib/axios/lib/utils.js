@@ -1,7 +1,7 @@
 'use strict';
 
 var bind = require('./helpers/bind');
-var isBuffer = require('is-buffer');
+var isBuffer = require('../modules/is-buffer');
 
 /*global toString:true*/
 

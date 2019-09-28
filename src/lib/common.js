@@ -198,7 +198,6 @@ const geoPoint = ({ latitude, longitude }) => {
 
 module.exports = {
   generateCode,
-  sendMessage,
   getAccessToken,
   sendWeAppMessage,
   refund,
