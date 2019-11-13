@@ -17,6 +17,73 @@ class file {
       list.push({ name: name, route: `${Bmob._config.parameters.FILES}/${Bmob._config.secretKey}.${ext}`, data: parma })
     }
   }
+  fileUpload (p = '') {
+    return new Promise((resolve, reject) => {
+      if (undefined === Bmob.User) {
+        Bmob = require('./bmob')
+      }
+
+      let sessionToken = 'bmob'
+      let current = Bmob.User.current()
+      if (current) {
+        sessionToken = current.sessionToken
+      }
+
+      const data = []
+
+      const t = Math.round(new Date().getTime() / 1000)
+      const rand = Bmob.utils.randomString()
+      let route = list[0].route
+      if (p === 'wxc') {
+        route = route.replace(Bmob._config.parameters.FILES, Bmob._config.parameters.FILESCHECK)
+      }
+      const sign = md5.hexMD5(route + t + Bmob._config.securityCode + rand)
+      const key = {
+        'content-type': 'application/json',
+        'X-Bmob-SDK-Type': 'wechatApp',
+        'X-Bmob-Safe-Sign': sign,
+        'X-Bmob-Safe-Timestamp': t,
+        'X-Bmob-Noncestr-Key': rand,
+        'X-Bmob-Session-Token': sessionToken,
+        'X-Bmob-Secret-Key': Bmob._config.secretKey
+      }
+      const formData = Object.assign({ '_ContentType': 'text/plain', 'mime_type': 'text/plain', 'category': 'wechatApp', '_ClientVersion': 'js3.6.1', '_InstallationId': 'bmob' }, key)
+      for (let item of list) {
+        let ro = item.route
+        if (p === 'wxc') {
+          ro = item.route.replace(Bmob._config.parameters.FILES, Bmob._config.parameters.FILESCHECK)
+        }
+
+        console.log(item.route, Bmob._config.parameters.FILESCHECK, 'ror')
+        wx.uploadFile({
+          url: Bmob._config.host + ro, // 仅为示例，非真实的接口地址
+          filePath: item.data,
+          name: 'file',
+          header: key,
+          formData: formData,
+          success: function (res) {
+            let url = JSON.parse(res.data)
+            data.push(url)
+            if (data.length === list.length) {
+              list = []
+              resolve(data)
+              reject(data)
+            }
+          },
+          fail: function (err) {
+            data.push(err)
+          }
+        })
+      }
+    })
+  }
+  imgSecCheck () {
+    if (!list.length) {
+      throw new Error(417)
+    }
+
+    return this.fileUpload('wxc')
+  }
   save () {
     if (!list.length) {
       throw new Error(417)
@@ -43,58 +110,11 @@ class file {
         }
       })
     } else if (type === 'wx') {
-      // 小程序
-      fileObj = new Promise((resolve, reject) => {
-        if (undefined === Bmob.User) {
-          Bmob = require('./bmob')
-        }
+      if (!list.length) {
+        throw new Error(417)
+      }
 
-        let sessionToken = 'bmob'
-        let current = Bmob.User.current()
-        if (current) {
-          sessionToken = current.sessionToken
-        }
-
-        const data = []
-
-        const t = Math.round(new Date().getTime() / 1000)
-        const rand = Bmob.utils.randomString()
-        const route = list[0].route
-        console.log('rand', rand, Bmob, route)
-
-        const sign = md5.hexMD5(route + t + Bmob._config.securityCode + rand)
-        const key = {
-          'content-type': 'application/json',
-          'X-Bmob-SDK-Type': 'wechatApp',
-          'X-Bmob-Safe-Sign': sign,
-          'X-Bmob-Safe-Timestamp': t,
-          'X-Bmob-Noncestr-Key': rand,
-          'X-Bmob-Session-Token': sessionToken,
-          'X-Bmob-Secret-Key': Bmob._config.secretKey
-        }
-        const formData = Object.assign({ '_ContentType': 'text/plain', 'mime_type': 'text/plain', 'category': 'wechatApp', '_ClientVersion': 'js3.6.1', '_InstallationId': 'bmob' }, key)
-        for (let item of list) {
-          wx.uploadFile({
-            url: Bmob._config.host + item.route, // 仅为示例，非真实的接口地址
-            filePath: item.data,
-            name: 'file',
-            header: key,
-            formData: formData,
-            success: function (res) {
-              let url = JSON.parse(res.data)
-              data.push(url)
-              if (data.length === list.length) {
-                list = []
-                resolve(data)
-                reject(data)
-              }
-            },
-            fail: function (err) {
-              data.push(err)
-            }
-          })
-        }
-      })
+      return this.fileUpload('wx')
     } else if (type === 'hap') {
       // 快应用功能
       fileObj = new Promise((resolve, reject) => {

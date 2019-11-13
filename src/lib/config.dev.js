@@ -1,7 +1,8 @@
 // const ROOT = require('../../package.json')
-// const HOST = 'https://api.bmobcloud.com'
+const HOST = 'https://api.bmobcloud.com'
 // const HOST = 'http://127.0.0.1:8080'
-const HOST = 'https://apitest.bmob.cn'
+// const HOST = 'https://apitest.bmob.cn'
+// const HOST = 'http://apis.feipin-ge.com'
 const APPLICATION_ID = ''
 const APPLICATION_KEY = ''
 // const VERSION = `v${ROOT.version}`
@@ -24,6 +25,7 @@ const PARAMETERS = {
   UPDATEUSERPASSWORD: '/1/updateUserPassword', // 重置密码(登录状态下旧密码换新密码)
   PUSH: '/1/push', // APP推送
   FILES: '/2/files', // 单个文件上传/删除
+  FILESCHECK: '/1/wechatApp/checkImg', // 单个文件上传/删除
   DELFILES: '/2/cdnBatchDelete', // 批量删除
   TIMESTAMP: '/1/timestamp', // 获取服务器时间
   LOGIN: '/1/login', // 登陆

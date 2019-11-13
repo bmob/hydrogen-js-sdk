@@ -108,7 +108,11 @@ Bmob.initialize("你的Application ID", "你的REST API Key");
 
 https://bmob.github.io/hydrogen-js-sdk/#/?id=登陆
 
+#### 版本 v2.2.2
 
+**Note:**
+
+> - 微信小程序增加校验一张图片是否含有违法违规内容（支持批量效验）
 
 #### 版本 v2.2.1
 

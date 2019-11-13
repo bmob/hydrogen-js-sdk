@@ -2073,6 +2073,8 @@ Bmob.generateCode 参数列表
 
 ### 检测违规内容
 
+#### 文字检测:
+
 **简介：**
 
 微信小程序检测用户输入的内容是否违规，建议用户留言，评论，发布内容，调用此接口。
@@ -2103,7 +2105,61 @@ Bmob.checkMsg(content).then(res => {
 {"code":10007,"error":"CheckMsg errcode:87014, err:risky content hint: [zLf1lA01758931]"}
 ```
 
-### 
+#### 图片检测：
+
+**简介：**
+
+校验一张图片是否含有违法违规内容，支持批量检测。
+
+应用场景举例：
+
+1. 图片智能鉴黄：涉及拍照的工具类应用(如美拍，识图类应用)用户拍照上传检测；电商类商品上架图片检测；媒体类用户文章里的图片检测等；
+2. 敏感人脸识别：用户头像；媒体类用户文章里的图片检测；社交类用户上传的图片检测等。 *频率限制：单个 appId 调用上限为 2000 次/分钟，200,000 次/天**（**图片大小限制：1M**）
+
+**参数说明：**
+
+
+
+| 参数     | 类型   | 必填 | 说明                   |
+| -------- | ------ | ---- | ---------------------- |
+| fileName | string | 是   | 文件名(带后缀)         |
+| file     | Object | 是   | 相应的文本或者二进制流 |
+
+
+
+**请求示例：**
+
+```
+upload:function(){
+    wx.chooseImage({
+      success: function (res) {
+        console.log(res)
+        var tempFilePaths = res.tempFilePaths
+        var file;
+        for (let item of tempFilePaths) {
+          console.log('itemn',item)
+          file = Bmob.File('abc.jpg', item);
+        }
+        file.save().then(res => {
+          console.log(res.length);
+          console.log(res);
+        })
+
+      }
+    })
+  }
+```
+
+**返回示例:**
+
+```
+正常：
+{"msg":"ok"}
+违规：
+{"code":10007,"error":"CheckMsg errcode:图片违规"}
+```
+
+###  
 
 ### 获取access_token ###
 
