@@ -1,6 +1,6 @@
 {
   "name": "hydrogen-js-sdk",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Bmob SDK",
   "main": "./index.js",
   "typings": "./index.d.ts",
