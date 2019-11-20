@@ -27,7 +27,6 @@ const Emitter = {
  */
 module.exports = class socket {
   constructor (id = '') {
-
     if (id === '') {
       throw new Error(415)
     }
@@ -78,12 +77,17 @@ module.exports = class socket {
     })
   }
   initialize () {
+    this.emitter.removeAllListeners()
     this.handshake().then(protocol => {
       try {
-        this.connect(
+        let connectObj = this.connect(
           `wss://${this.config.host}/socket.io/1/websocket/` + protocol,
           {}
         )
+        console.log(connectObj, 'connectObj')
+        connectObj.then(res => {
+          console.log(res, 'res-res')
+        })
       } catch (connectError) {
         console.error({ connectError })
         throw connectError
@@ -91,6 +95,7 @@ module.exports = class socket {
     })
     this.on('close', () => {
       console.log('连接已中断')
+      setTimeout(() => this.initialize(), 5000)
     })
 
     return new Promise((resolve, reject) => {
