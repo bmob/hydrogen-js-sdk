@@ -1,7 +1,15 @@
+/*
+ * @Author: your name
+ * @Date: 2019-03-27 10:02:03
+ * @LastEditTime: 2020-03-12 16:06:36
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /bmob-js-sdk-es6/src/lib/config.dev.js
+ */
 // const ROOT = require('../../package.json')
-const HOST = 'https://api.bmobcloud.com'
+// const HOST = 'https://api.bmobcloud.com'
 // const HOST = 'http://127.0.0.1:8080'
-// const HOST = 'https://apitest.bmob.cn'
+const HOST = 'https://apitest.bmob.cn'
 // const HOST = 'http://apis.feipin-ge.com'
 const APPLICATION_ID = ''
 const APPLICATION_KEY = ''
@@ -46,6 +54,7 @@ module.exports = {
   applicationKey: APPLICATION_KEY,
   parameters: PARAMETERS,
   version: VERSION,
+  serverVersion: 10,
   deBug: false,
   type: TYPE
 }

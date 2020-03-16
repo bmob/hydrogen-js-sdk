@@ -1,5 +1,13 @@
+/*
+ * @Author: magic
+ * @Date: 2019-03-27 10:02:03
+ * @LastEditTime: 2020-03-13 14:52:05
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /bmob-js-sdk-es6/src/lib/wxRequest.js
+ */
 let Bmob = require('./bmob')
-let md5 = require('./md5')
+let md5 = require('./utf8md5')
 let sdkType = 'wechatApp'
 if (typeof (tt) !== 'undefined') {
   sdkType = 'toutiao'
@@ -7,16 +15,23 @@ if (typeof (tt) !== 'undefined') {
   sdkType = 'qqApp'
 }
 
-const setHeader = (config, route) => {
+const setHeader = (config, route, method, parma) => {
+
+
+
   const t = Math.round(new Date().getTime() / 1000)
   const rand = Bmob.utils.randomString()
-  const sign = md5.hexMD5(route + t + config.securityCode + rand)
+  let body = (method === 'get' || method === 'delete') ? '' : JSON.stringify(parma)
+
+  const sign = md5.utf8MD5(route + t + config.securityCode + rand + body + config.serverVersion)
+  // const sign = md5.utf8md5(route + t + config.securityCode + rand)
   let header = {
     'content-type': 'application/json',
     'X-Bmob-SDK-Type': sdkType,
     'X-Bmob-Safe-Sign': sign,
     'X-Bmob-Safe-Timestamp': t,
     'X-Bmob-Noncestr-Key': rand,
+    'X-Bmob-SDK-Version': config.serverVersion,
     'X-Bmob-Secret-Key': config.secretKey
   }
   if (config.applicationMasterKey) {
@@ -27,7 +42,9 @@ const setHeader = (config, route) => {
 
 const request = (route, method = 'get', parma = {}) => {
   return new Promise((resolve, reject) => {
-    const header = setHeader(Bmob._config, route)
+
+
+    const header = setHeader(Bmob._config, route, method, parma)
 
     if (undefined === Bmob.User) {
       Bmob = require('./bmob')

@@ -1,23 +1,34 @@
+/*
+ * @Author: magic
+ * @Date: 2018-12-11 16:07:08
+ * @LastEditTime: 2020-03-13 14:50:58
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /bmob-js-sdk-es6/src/lib/axiosRequest.js
+ */
 /* eslint-disable */
 const axios = require('./axios/lib/axios')
 let Bmob = require('./bmob')
-let md5 = require('./md5')
+let md5 = require('./utf8md5')
 
-const setHeader = (config,route) => {
+const setHeader = (config, route, method, parma) => {
   let type = 'wechatApp'
   if (Bmob.type === 'nodejs') {
     type = 'cloudcode'
   }
-  const t=Math.round(new Date().getTime()/1000);
-  
-  const rand =  Bmob.utils.randomString()
-  const sign =md5.hexMD5(route+t+config.securityCode+rand)
+  const t = Math.round(new Date().getTime() / 1000);
+
+  let body = (method === 'get' || method === 'delete') ? '' : JSON.stringify(parma)
+
+  const rand = Bmob.utils.randomString()
+  const sign = md5.utf8MD5(route + t + config.securityCode + rand + body + config.serverVersion)
   let header = {
     'content-type': 'application/json',
     'X-Bmob-SDK-Type': type,
-    'X-Bmob-Safe-Sign':sign,
+    'X-Bmob-Safe-Sign': sign,
     'X-Bmob-Safe-Timestamp': t,
     'X-Bmob-Noncestr-Key': rand,
+    'X-Bmob-SDK-Version': config.serverVersion,
     'X-Bmob-Secret-Key': config.secretKey
   }
   if (config.applicationMasterKey) {
@@ -33,7 +44,7 @@ const request = (route, method = 'get', parma = {}) => {
       Bmob = require('./bmob')
     }
 
-    const header = setHeader(Bmob._config,route)
+    const header = setHeader(Bmob._config, route, method, parma)
 
     var current = Bmob.User.current()
     if (current) {
@@ -55,9 +66,9 @@ const request = (route, method = 'get', parma = {}) => {
     } else {
       serverData.data = parma
     }
-    if(Bmob._config.deBug===true){
-      console.log('host:',Bmob._config.host)
-      console.log('parma:',parma)
+    if (Bmob._config.deBug === true) {
+      console.log('host:', Bmob._config.host)
+      console.log('parma:', parma)
     }
     server(serverData).then(({ data }) => {
       if ((data.code && data.error) || data.error) {

@@ -2,13 +2,13 @@ const request = require('./request')
 let Bmob = require('./bmob')
 const Error = require('./error')
 const utils = require('./utils')
-let md5 = require('./md5')
+let md5 = require('./utf8md5')
 const requestHap = "xxrequire('@system.request')xx"
 const { isString, isArray } = require('./dataType')
 let list = []
 
 class file {
-  constructor (name, parma) {
+  constructor(name, parma) {
     if (name && parma) {
       if (!isString(name)) {
         throw new Error(415)
@@ -18,6 +18,7 @@ class file {
     }
   }
   fileUpload (p = '') {
+    let that = this
     return new Promise((resolve, reject) => {
       if (undefined === Bmob.User) {
         Bmob = require('./bmob')
@@ -37,7 +38,7 @@ class file {
       if (p === 'wxc') {
         route = route.replace(Bmob._config.parameters.FILES, Bmob._config.parameters.FILESCHECK)
       }
-      const sign = md5.hexMD5(route + t + Bmob._config.securityCode + rand)
+      const sign = md5.utf8md5(route + t + Bmob._config.securityCode + rand)
       const key = {
         'content-type': 'application/json',
         'X-Bmob-SDK-Type': 'wechatApp',
@@ -63,11 +64,19 @@ class file {
           formData: formData,
           success: function (res) {
             let url = JSON.parse(res.data)
-            data.push(url)
-            if (data.length === list.length) {
-              list = []
-              resolve(data)
-              reject(data)
+            if (p === 'wxc') {
+              if (url.msg === 'ok') {
+                resolve(that.fileUpload())
+              } else {
+                reject(url)
+              }
+            } else {
+              data.push(url)
+              if (data.length === list.length) {
+                list = []
+                resolve(data)
+                reject(data)
+              }
             }
           },
           fail: function (err) {
@@ -133,7 +142,7 @@ class file {
         const route = list[0].route
         console.log('rand', rand, Bmob, route)
 
-        const sign = md5.hexMD5(route + t + Bmob._config.securityCode + rand)
+        const sign = md5.utf8md5(route + t + Bmob._config.securityCode + rand)
         const key = {
           'content-type': 'application/json',
           'X-Bmob-SDK-Type': 'wechatApp',
