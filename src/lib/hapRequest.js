@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-03-27 10:02:03
- * @LastEditTime: 2020-03-13 14:51:22
+ * @LastEditTime: 2020-04-01 15:30:57
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /bmob-js-sdk-es6/src/lib/hapRequest.js
@@ -14,7 +14,7 @@ const setHeader = (config, route,method, parma) => {
   const t = Math.round(new Date().getTime() / 1000)
   const rand = Bmob.utils.randomString()
   let body = (method === 'get' || method === 'delete') ? '' : JSON.stringify(parma)
-  const sign = md5.utf8md5(route + t + config.securityCode + rand + body + config.serverVersion)
+  const sign = md5.utf8MD5(route + t + config.securityCode + rand + body + config.serverVersion)
   let header = {
     'content-type': 'application/json',
     'X-Bmob-SDK-Type': 'wechatApp',

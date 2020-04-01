@@ -38,7 +38,7 @@ class file {
       if (p === 'wxc') {
         route = route.replace(Bmob._config.parameters.FILES, Bmob._config.parameters.FILESCHECK)
       }
-      const sign = md5.utf8md5(route + t + Bmob._config.securityCode + rand)
+      const sign = md5.utf8MD5(route + t + Bmob._config.securityCode + rand)
       const key = {
         'content-type': 'application/json',
         'X-Bmob-SDK-Type': 'wechatApp',
@@ -142,7 +142,7 @@ class file {
         const route = list[0].route
         console.log('rand', rand, Bmob, route)
 
-        const sign = md5.utf8md5(route + t + Bmob._config.securityCode + rand)
+        const sign = md5.utf8MD5(route + t + Bmob._config.securityCode + rand)
         const key = {
           'content-type': 'application/json',
           'X-Bmob-SDK-Type': 'wechatApp',

@@ -1,7 +1,7 @@
 /*
  * @Author: magic
  * @Date: 2019-03-27 10:02:03
- * @LastEditTime: 2020-03-13 14:52:05
+ * @LastEditTime: 2020-04-01 15:31:17
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /bmob-js-sdk-es6/src/lib/wxRequest.js
@@ -24,7 +24,7 @@ const setHeader = (config, route, method, parma) => {
   let body = (method === 'get' || method === 'delete') ? '' : JSON.stringify(parma)
 
   const sign = md5.utf8MD5(route + t + config.securityCode + rand + body + config.serverVersion)
-  // const sign = md5.utf8md5(route + t + config.securityCode + rand)
+  // const sign = md5.utf8MD5(route + t + config.securityCode + rand)
   let header = {
     'content-type': 'application/json',
     'X-Bmob-SDK-Type': sdkType,
