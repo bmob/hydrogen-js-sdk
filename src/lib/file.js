@@ -8,7 +8,7 @@ const { isString, isArray } = require('./dataType')
 let list = []
 
 class file {
-  constructor(name, parma) {
+  constructor (name, parma) {
     if (name && parma) {
       if (!isString(name)) {
         throw new Error(415)

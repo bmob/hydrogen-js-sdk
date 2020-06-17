@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2019-11-12 15:51:09
+ * @LastEditTime: 2020-06-17 18:26:11
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /bmob-js-sdk-es6/src/lib/utils.js
+ */
 let config
 
 config = require('./config')
@@ -17,7 +25,6 @@ const getConfig = (d = false) => {
 const getAppType = () => {
   const config = getConfig()
   let type
-  
   // 小程序
   if (typeof wx !== 'undefined') {
     type = 'wx'

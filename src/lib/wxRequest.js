@@ -1,7 +1,7 @@
 /*
  * @Author: magic
  * @Date: 2019-03-27 10:02:03
- * @LastEditTime: 2020-04-01 15:31:17
+ * @LastEditTime: 2020-06-17 18:26:23
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /bmob-js-sdk-es6/src/lib/wxRequest.js
@@ -16,9 +16,6 @@ if (typeof (tt) !== 'undefined') {
 }
 
 const setHeader = (config, route, method, parma) => {
-
-
-
   const t = Math.round(new Date().getTime() / 1000)
   const rand = Bmob.utils.randomString()
   let body = (method === 'get' || method === 'delete') ? '' : JSON.stringify(parma)
@@ -42,8 +39,6 @@ const setHeader = (config, route, method, parma) => {
 
 const request = (route, method = 'get', parma = {}) => {
   return new Promise((resolve, reject) => {
-
-
     const header = setHeader(Bmob._config, route, method, parma)
 
     if (undefined === Bmob.User) {

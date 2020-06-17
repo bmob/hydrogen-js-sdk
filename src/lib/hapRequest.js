@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-03-27 10:02:03
- * @LastEditTime: 2020-04-01 15:30:57
+ * @LastEditTime: 2020-06-17 18:00:12
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /bmob-js-sdk-es6/src/lib/hapRequest.js
@@ -10,7 +10,7 @@ let Bmob = require('./bmob')
 let md5 = require('./utf8md5')
 const fetch = "xxrequire('@system.fetch')xx"
 
-const setHeader = (config, route,method, parma) => {
+const setHeader = (config, route, method, parma) => {
   const t = Math.round(new Date().getTime() / 1000)
   const rand = Bmob.utils.randomString()
   let body = (method === 'get' || method === 'delete') ? '' : JSON.stringify(parma)
