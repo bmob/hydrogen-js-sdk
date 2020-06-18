@@ -1,0 +1,10 @@
+declare const Bmob: any;
+declare const Pointer: any;
+declare const Relation: any;
+declare const Query: any;
+declare const User: any;
+declare const File: any;
+declare const Pay: any;
+declare const Socket: any;
+declare const generateCode: any, getAccessToken: any, sendWeAppMessage: any, refund: any, notifyMsg: any, functions: any, timestamp: any, requestPasswordReset: any, resetPasswordBySmsCode: any, updateUserPassword: any, geoPoint: any, checkMsg: any, push: any;
+declare const requestSmsCode: any, verifySmsCode: any;

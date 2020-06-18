@@ -1,0 +1,14 @@
+declare function safeAdd(x: any, y: any): number;
+declare function rol(num: any, cnt: any): number;
+declare function cmn(q: any, a: any, b: any, x: any, s: any, t: any): number;
+declare function ff(a: any, b: any, c: any, d: any, x: any, s: any, t: any): number;
+declare function gg(a: any, b: any, c: any, d: any, x: any, s: any, t: any): number;
+declare function hh(a: any, b: any, c: any, d: any, x: any, s: any, t: any): number;
+declare function ii(a: any, b: any, c: any, d: any, x: any, s: any, t: any): number;
+declare function coreMD5(x: any): number[];
+declare function binl2hex(binarray: any): string;
+declare function str2binl(str: any): any[];
+declare function stringToUint(s: any): Uint8Array;
+declare function buf2binl(buffer: any): any[];
+declare function utf8MD5(str: any): string;
+declare function hexMD5(str: any): string;
