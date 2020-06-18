@@ -163,9 +163,9 @@ function str2binl(str) {
   for (var ir = 0; ir < nblk * 16; ir++) blks[ir] = 0
   for (var i = 0; i < str.length; i++) {
     blks[i >> 2] |= (str.charCodeAt(i) & 0xff) << ((i % 4) * 8)
-    blks[i >> 2] |= 0x80 << ((i % 4) * 8)
-    blks[nblk * 16 - 2] = str.length * 8
   }
+  blks[i >> 2] |= 0x80 << ((i % 4) * 8)
+  blks[nblk * 16 - 2] = str.length * 8
   return blks
 }
 
@@ -180,14 +180,12 @@ function buf2binl(buffer) {
   if (typeof buffer === 'string') buffer = stringToUint(buffer)
   var nblk = ((buffer.length + 8) >> 6) + 1 // number of 16-word blocks
   var blks = new Array(nblk * 16)
-  for (var i = 0; i < nblk * 16; i++) {
-    blks[i] = 0
+  for (var ir = 0; ir < nblk * 16; ir++) blks[ir] = 0
+  for (var i = 0; i < buffer.length; i++) {
+    blks[i >> 2] |= (buffer[i] & 0xff) << ((i % 4) * 8)
   }
-  for (var ix = 0; ix < buffer.length; ix++) {
-    blks[ix >> 2] |= (buffer[ix] & 0xff) << ((ix % 4) * 8)
-    blks[ix >> 2] |= 0x80 << ((ix % 4) * 8)
-    blks[nblk * 16 - 2] = buffer.length * 8
-  }
+  blks[i >> 2] |= 0x80 << ((i % 4) * 8)
+  blks[nblk * 16 - 2] = buffer.length * 8
   return blks
 }
 
