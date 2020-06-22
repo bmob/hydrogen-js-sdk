@@ -1,7 +1,7 @@
 /*
  * @Author: magic
  * @Date: 2018-12-11 16:07:08
- * @LastEditTime: 2020-03-13 14:50:58
+ * @LastEditTime: 2020-06-22 14:14:57
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /bmob-js-sdk-es6/src/lib/axiosRequest.js
@@ -14,7 +14,7 @@ let md5 = require('./utf8md5')
 const setHeader = (config, route, method, parma) => {
   let type = 'wechatApp'
   if (Bmob.type === 'nodejs') {
-    type = 'cloudcode'
+    type = 'nodejs'
   }
   const t = Math.round(new Date().getTime() / 1000);
 
