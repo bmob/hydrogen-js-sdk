@@ -202,7 +202,7 @@ module.exports = class socket {
       objectId: '',
       action: 'unsub_updateTable'
     }
-    data = this.emitData('client_sub', data)
+    data = this.emitData('client_unsub', data)
     this.emit(data)
   }
 
