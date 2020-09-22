@@ -226,7 +226,7 @@ module.exports = class socket {
       objectId: objectId,
       action: 'unsub_updateRow'
     }
-    data = this.emitData('client_sub', data)
+    data = this.emitData('client_unsub', data)
     this.emit(data)
   }
 
@@ -250,7 +250,7 @@ module.exports = class socket {
       objectId: '',
       action: 'unsub_deleteTable'
     }
-    data = this.emitData('client_sub', data)
+    data = this.emitData('client_unsub', data)
     this.emit(data)
   }
 
@@ -274,7 +274,7 @@ module.exports = class socket {
       objectId: objectId,
       action: 'unsub_deleteRow'
     }
-    data = this.emitData('client_sub', data)
+    data = this.emitData('client_unsub', data)
     this.emit(data)
   }
 
