@@ -1,23 +1,28 @@
 {
-    "compilerOptions": {
-      "declaration": true, //生成声明文件
-        "target": "es6",//将编译的.ts文件编译为指定标准js
-        "module": "es2015",//模块规范
-        "sourceMap": false, //生成资源映射，以便于调试
-        "noEmitHelpers": true,//不生成辅助方法，对应importHelpers
-        "importHelpers": true,//引用外部的辅助方法 
-        "allowUnreachableCode": true,//允许代码中途return产生无法执行代码
-        "lib": ["es6"],//定义编译时依赖 
-        "typeRoots": ["node_modules/@types"],//定义类型定义文件的根目录
-        "types": [ 
-         //添加新的类型定义库如 @types/lodash 需要在此处定义
-        // "lodash"
-        ],
-        "outDir": "./build",//编译输出文件目录，默认等于rootDir
-        "rootDir": "./src" //源代码目录在这个目录里编写你的ts文件
-    },
-    "exclude": [
-        "node_modules", //忽略目录
-        "**/*.test.ts" //忽略指定类型文件
-    ] 
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "./lib", // 输出目录
+    "sourceMap": false, // 是否生成sourceMap
+    "target": "esnext", // 编译目标
+    "module": "esnext", // 模块类型
+    "moduleResolution": "node",
+    "allowJs": false, // 是否编辑js文件
+    "strict": true, // 严格模式
+    "noUnusedLocals": true, // 未使用变量报错
+    "experimentalDecorators": true, // 启动装饰器
+    "resolveJsonModule": true, // 加载json
+    "esModuleInterop": true,
+    "removeComments": true, // 删除注释
+
+    "declaration": true, // 生成定义文件
+    "declarationMap": false, // 生成定义sourceMap
+    "declarationDir": "./lib/types", // 定义文件输出目录
+
+    "lib": ["esnext", "dom"], // 导入库类型定义
+    "types": ["node", "@types/jest"] // 导入指定类型包
+  },
+  "include": [
+    "src/*" // 导入目录
+  ],
+  "exclude": ["**/tests/*.test.ts"]
 }
