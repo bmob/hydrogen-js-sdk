@@ -1,5 +1,6 @@
-import md5 from './utils/md5.js';
+import md5 from './utils/md5';
 import { randomString } from './utils/index';
+import Web from './adapter/web';
 
 const secretKey = 'c8bed465c9e6a524';
 const securityCode = '999999';
@@ -22,26 +23,10 @@ function setHeader(route: string, method: string, parma: object) {
 }
 
 const route = `/1/classes/_User`;
-const ajax = new XMLHttpRequest();
-ajax.open('GET', 'https://api2.bmob.cn/1/classes/_User', true);
-
-const header = setHeader(route, 'get', {});
-
-function isValidKey(
-  key: string | number | symbol,
-  object: object
-): key is keyof typeof object {
-  return key in object;
-}
-Object.keys(header).forEach((key) => {
-  if (isValidKey(key, header)) {
-    const value = header[key];
-    ajax.setRequestHeader(key, value + '');
-  }
+const mehods = 'GET';
+const Serve = new Web({
+  baseURL: 'https://api2.bmob.cn',
+  headers: setHeader(route, 'get', {}),
 });
-ajax.send();
-ajax.onreadystatechange = function () {
-  if (ajax.readyState == 4 && ajax.status == 200) {
-    console.log(ajax.responseText);
-  }
-};
+
+Serve.request(mehods, route);

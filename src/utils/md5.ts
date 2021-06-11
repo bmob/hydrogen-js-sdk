@@ -1,3 +1,4 @@
+// @ts-nocheck
 function safeAdd(x, y) {
   var lsw = (x & 0xffff) + (y & 0xffff);
   var msw = (x >> 16) + (y >> 16) + (lsw >> 16);
@@ -199,7 +200,7 @@ function hexMD5(str) {
   return binl2hex(coreMD5(str2binl(str)));
 }
 
-module.exports = {
+export default {
   hexMD5: hexMD5,
   utf8MD5: utf8MD5,
 };

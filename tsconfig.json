@@ -14,7 +14,7 @@
     "esModuleInterop": true,
     "removeComments": true, // 删除注释
 
-    "declaration": true, // 生成定义文件
+    "declaration": false, // 生成定义文件
     "declarationMap": false, // 生成定义sourceMap
     "declarationDir": "./lib/types", // 定义文件输出目录
 
