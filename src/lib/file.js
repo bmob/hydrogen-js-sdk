@@ -4,20 +4,27 @@ const Error = require('./error')
 const utils = require('./utils')
 let md5 = require('./utf8md5')
 const requestHap = "xxrequire('@system.request')xx"
-const { isString, isArray } = require('./dataType')
+const {
+  isString,
+  isArray
+} = require('./dataType')
 let list = []
 
 class file {
-  constructor (name, parma) {
+  constructor(name, parma) {
     if (name && parma) {
       if (!isString(name)) {
         throw new Error(415)
       }
       let ext = name.substring(name.lastIndexOf('.') + 1)
-      list.push({ name: name, route: `${Bmob._config.parameters.FILES}/${Bmob._config.secretKey}.${ext}`, data: parma })
+      list.push({
+        name: name,
+        route: `${Bmob._config.parameters.FILES}/${Bmob._config.secretKey}.${ext}`,
+        data: parma
+      })
     }
   }
-  fileUpload (p = '') {
+  fileUpload(p = '') {
     let that = this
     return new Promise((resolve, reject) => {
       if (undefined === Bmob.User) {
@@ -48,7 +55,13 @@ class file {
         'X-Bmob-Session-Token': sessionToken,
         'X-Bmob-Secret-Key': Bmob._config.secretKey
       }
-      const formData = Object.assign({ '_ContentType': 'text/plain', 'mime_type': 'text/plain', 'category': 'wechatApp', '_ClientVersion': 'js3.6.1', '_InstallationId': 'bmob' }, key)
+      const formData = Object.assign({
+        '_ContentType': 'text/plain',
+        'mime_type': 'text/plain',
+        'category': 'wechatApp',
+        '_ClientVersion': 'js3.6.1',
+        '_InstallationId': 'bmob'
+      }, key)
       for (let item of list) {
         let ro = item.route
         if (p === 'wxc') {
@@ -86,14 +99,14 @@ class file {
       }
     })
   }
-  imgSecCheck () {
+  imgSecCheck() {
     if (!list.length) {
       throw new Error(417)
     }
 
     return this.fileUpload('wxc')
   }
-  save () {
+  save() {
     if (!list.length) {
       throw new Error(417)
     }
@@ -152,17 +165,21 @@ class file {
           'X-Bmob-Session-Token': sessionToken,
           'X-Bmob-Secret-Key': Bmob._config.secretKey
         }
-        const formData = Object.assign({ '_ContentType': 'text/plain', 'mime_type': 'text/plain', 'category': 'wechatApp', '_ClientVersion': 'js3.6.1', '_InstallationId': 'bmob' }, key)
+        const formData = Object.assign({
+          '_ContentType': 'text/plain',
+          'mime_type': 'text/plain',
+          'category': 'wechatApp',
+          '_ClientVersion': 'js3.6.1',
+          '_InstallationId': 'bmob'
+        }, key)
         for (let item of list) {
           requestHap.upload({
             url: Bmob._config.host + item.route,
-            files: [
-              {
-                uri: item.data,
-                name: 'file',
-                filename: item.name
-              }
-            ],
+            files: [{
+              uri: item.data,
+              name: 'file',
+              filename: item.name
+            }],
             header: {
               'X-Bmob-SDK-Type': 'wechatApp'
             },
@@ -186,15 +203,29 @@ class file {
     }
     return fileObj
   }
-  destroy (parma) {
+  GetUrlRelativePath(url) {
+    var arrUrl = url.split("//");
+    var start = arrUrl[1].indexOf("/");
+    var relUrl = arrUrl[1].substring(start);
+    if (relUrl.indexOf("?") != -1) {
+      relUrl = relUrl.split("?")[0];
+    }
+    return relUrl;
+  }
+  destroy(parma) {
+    let par = ""
     if (isString(parma)) {
-      return request(`${Bmob._config.parameters.FILES}/upyun/${parma.split('.com/')[1]}`, 'delete')
+       par = this.GetUrlRelativePath(parma)
+      return request(`${Bmob._config.parameters.FILES}/upyun/${par}`, 'delete')
     } else if (isArray(parma)) {
       const data = []
       parma.map(item => {
-        data.push(item.split('.com/')[1])
+         par = this.GetUrlRelativePath(item)
+        data.push(par)
       })
-      return request(Bmob._config.parameters.DELFILES, 'post', { 'upyun': data })
+      return request(Bmob._config.parameters.DELFILES, 'post', {
+        'upyun': data
+      })
     } else {
       throw new Error(415)
     }

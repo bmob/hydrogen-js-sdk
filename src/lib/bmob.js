@@ -12,7 +12,9 @@ Bmob.initialize = (secretKey, securityCode, masterKey) => {
   Bmob._config.securityCode = securityCode
   Bmob._config.applicationMasterKey = masterKey
 }
-
+Bmob.domain= (url) => {
+  Bmob._config.host=url
+}
 // 开启调试
 Bmob.debug = (d) => {
   Bmob._config.deBug = d

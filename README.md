@@ -107,6 +107,10 @@ Bmob.initialize("你的Application ID", "你的REST API Key");
 ### 开发文档
 
 https://bmob.github.io/hydrogen-js-sdk/#/?id=登陆
+#### 版本 v2.2.51
+
+> - 增加Bmob.domain() 自定义域名
+> - 修复不是.com域名删除文件失败
 
 #### 版本 v2.2.5
 
