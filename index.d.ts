@@ -49,7 +49,7 @@ export class User extends Query {
   requestOpenId: (code: any, params?: string) => BmobPromise
   requestEmailVerify: (email: string) => BmobPromise
   linkWith: (params: any) => BmobPromise
-  loginWithWeapp: (code: any, params?: string, str: string) => BmobPromise
+  loginWithWeapp: (code: any, str: string, params?: string) => BmobPromise
   upInfo: (params: object) => BmobPromise
   openId: () => void;
   auth: (params?: string) => BmobPromise
@@ -81,16 +81,14 @@ export class Socket {
   new(id: string): void;
   updateTable: (tableName: string) => void
   unsubUpdateTable: (tableName: string) => void
-  updateRow: (tableName: string, objectId: string) => boid
-  unsubUpdateRow: (tableName: string, objectId: string) => boid
+  updateRow: (tableName: string, objectId: string) => void
+  unsubUpdateRow: (tableName: string, objectId: string) => void
   deleteTable: (tableName: string) => void
   unsubDeleteTable: (tableName: string) => void
-  deleteRow: (tableName: string, objectId: string) => boid
-  unsubDeleteRow: (tableName: string, objectId: string) => boid
+  deleteRow: (tableName: string, objectId: string) => void
+  unsubDeleteRow: (tableName: string, objectId: string) => void
   onUpdateTable: (tableName: string, data: any) => any
   onUpdateRow: (tableName: string, objectId: string, data: any) => any
-  onUpdateTable: (tableName: string, data: any) => any
-  onUpdateTable: (tableName: string, objectId: string, data: any) => any
 }
 
 export class File {
@@ -116,7 +114,6 @@ export interface Bmob {
   sendWeAppMessage: (parmas: object) => BmobPromise;
   refund: (parmas: object) => BmobPromise;
   notifyMsg: (parmas: object) => BmobPromise;
-  requestPasswordReset: (parmas: object) => BmobPromise;
   checkMsg: (parmas: string) => BmobPromise;
   functions: functions;
   run: functions;
