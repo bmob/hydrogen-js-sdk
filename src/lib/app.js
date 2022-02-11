@@ -1,14 +1,23 @@
-const Bmob = require('./bmob')
-const Pointer = require('./pointer')
-const Relation = require('./relation')
-const Query = require('./query')
-const User = require('./user')
-const File = require('./file')
-const Pay = require('./pay')
-const Socket = require('./socket')
+/*
+ * @Author: magic
+ * @Date: 2021-07-06 15:24:37
+ * @LastEditors: magic
+ * @LastEditTime: 2022-02-11 14:44:06
+ * @Description: Do not edit
+ * @FilePath: /hydrogen-js-sdk/src/lib/app.js
+ */
+const Bmob = require("./bmob");
+const Pointer = require("./pointer");
+const Relation = require("./relation");
+const Query = require("./query");
+const User = require("./user");
+const File = require("./file");
+const Pay = require("./pay");
+const Socket = require("./socket");
 
 const {
   generateCode,
+  mediaCheckAsync,
   getAccessToken,
   sendWeAppMessage,
   refund,
@@ -20,73 +29,75 @@ const {
   updateUserPassword,
   geoPoint,
   checkMsg,
-  push
-} = require('./common')
-const {requestSmsCode, verifySmsCode} = require('./sms')
+  push,
+} = require("./common");
+const { requestSmsCode, verifySmsCode } = require("./sms");
 
 // 生成二维码
-Bmob.GeoPoint = geoPoint
+Bmob.GeoPoint = geoPoint;
 // 生成二维码
-Bmob.generateCode = generateCode
+Bmob.generateCode = generateCode;
+// 生成二维码
+Bmob.mediaCheckAsync = mediaCheckAsync;
 // 获取微信token
-Bmob.getAccessToken = getAccessToken
+Bmob.getAccessToken = getAccessToken;
 // 小程序模版信息
-Bmob.sendWeAppMessage = sendWeAppMessage
+Bmob.sendWeAppMessage = sendWeAppMessage;
 // 微信退款
-Bmob.refund = refund
+Bmob.refund = refund;
 // 检测文本
-Bmob.checkMsg = checkMsg
+Bmob.checkMsg = checkMsg;
 // 微信主人通知
-Bmob.notifyMsg = notifyMsg
+Bmob.notifyMsg = notifyMsg;
 // 请求短信验证码
-Bmob.requestSmsCode = requestSmsCode
+Bmob.requestSmsCode = requestSmsCode;
 // 验证短信验证码
-Bmob.verifySmsCode = verifySmsCode
+Bmob.verifySmsCode = verifySmsCode;
 // 云函数
-Bmob.run = Bmob.functions = functions
+Bmob.run = Bmob.functions = functions;
 // 获取服务器时间
-Bmob.timestamp = timestamp
+Bmob.timestamp = timestamp;
 // 密码重置(Email)
-Bmob.requestPasswordReset = requestPasswordReset
+Bmob.requestPasswordReset = requestPasswordReset;
 // 密码重置(短信)
-Bmob.resetPasswordBySmsCode = resetPasswordBySmsCode
+Bmob.resetPasswordBySmsCode = resetPasswordBySmsCode;
 // 密码重置(登录状态下更改密码)
-Bmob.updateUserPassword = updateUserPassword
+Bmob.updateUserPassword = updateUserPassword;
 // APP推送
-Bmob.push = push
+Bmob.push = push;
 // 小程序支付
-Bmob.Pay = new Pay()
+Bmob.Pay = new Pay();
 // 用户对象
-Bmob.User = new User()
+Bmob.User = new User();
 // 通讯
-Bmob.Socket = (id) => new Socket(id)
+Bmob.Socket = (id) => new Socket(id);
 // 数据操作
-Bmob.Query = parmas => new Query(parmas)
+Bmob.Query = (parmas) => new Query(parmas);
 // 文件操作
-Bmob.File = (name, object) => new File(name, object)
+Bmob.File = (name, object) => new File(name, object);
 // 网络请求
-Bmob.request = require('./request')
+Bmob.request = require("./request");
 // 平台判断
-Bmob.type = Bmob.utils.getAppType()
+Bmob.type = Bmob.utils.getAppType();
 // 数据关联(一对一)
-Bmob.Pointer = parmas => new Pointer(parmas)
+Bmob.Pointer = (parmas) => new Pointer(parmas);
 // 数据关联(一对多，多对多)
-Bmob.Relation = parmas => new Relation(parmas)
+Bmob.Relation = (parmas) => new Relation(parmas);
 
-if (Bmob.type === 'wx') {
-  if (typeof (tt) !== 'undefined') {
-    tt.Bmob = Bmob
+if (Bmob.type === "wx") {
+  if (typeof tt !== "undefined") {
+    tt.Bmob = Bmob;
   } else {
-    wx.Bmob = Bmob
+    wx.Bmob = Bmob;
   }
-} else if (Bmob.type === 'h5') {
-  window.Bmob = Bmob
-} else if (Bmob.type === 'hap') {
+} else if (Bmob.type === "h5") {
+  window.Bmob = Bmob;
+} else if (Bmob.type === "hap") {
   // 快应用功能
-  global.Bmob = Bmob
-} else if (Bmob.type === 'nodejs') {
+  global.Bmob = Bmob;
+} else if (Bmob.type === "nodejs") {
   // nodejs
-  global.Bmob = Bmob
+  global.Bmob = Bmob;
 }
 
-module.exports = Bmob
+module.exports = Bmob;
