@@ -107,6 +107,12 @@ Bmob.initialize("你的Application ID", "你的REST API Key");
 ### 开发文档
 
 https://bmob.github.io/hydrogen-js-sdk/#/?id=登陆
+
+#### 版本 v2.3.0
+> - 增加mediaCheckAsync媒体检查方法
+> - 支持文件上传名称用户自定义
+
+
 #### 版本 v2.2.51
 
 > - 增加Bmob.domain() 自定义域名
