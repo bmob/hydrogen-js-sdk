@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2019-03-27 10:02:03
- * @LastEditTime: 2022-02-11 14:57:17
+ * @LastEditTime: 2022-06-24 15:08:38
  * @LastEditors: magic
  * @Description: In User Settings Edit
  * @FilePath: /hydrogen-js-sdk/src/lib/config.dev.js
@@ -40,11 +40,12 @@ const PARAMETERS = {
   REGISTER: "/1/users", // 注册
   REQUEST_EMAIL_VERIFY: "/1/requestEmailVerify", // 注册
   USERS: "/1/users", // 查询用户
+  USERSV1: "/1/usersv1", // 查询用户
   PAY: "/1/pay", // 支付
-  WECHAT_APP: "/1/wechatApp/", // 获取openid
+  WECHAT_APP: "/1/wechatAppv1/", // 获取openid
   BATCH: "/1/batch", // 获取openid
   CHECK_MSG: "/1/wechatApp/checkMsg", // 检测文本内容
-  DECRYPTION: "/1/wechatApp/decryption", // 检测文本内容
+  DECRYPTION: "/1/wechatApp/decryptionv1", // 检测文本内容
   MEDIACHECKASYNC: "/1/wechatApp/asyncCheckWechatMedia", // 检测文本内容
   QUERY: "/1/classes", // 查询数据
 };

@@ -15,14 +15,14 @@
 const Bmob = require('../dist/Bmob-1.0.1.min.js');
 ```
 
-### **在WEB端和Node中使用** 
+### **在WEB端和Node中使用**
 npm包管理下载
 ```
-npm install hydrogen-js-sdk 
+npm install hydrogen-js-sdk
 ```
 或
 ```
-yarn add hydrogen-js-sdk 
+yarn add hydrogen-js-sdk
 ```
 推荐使用 yarn 下载速度快
 
@@ -108,6 +108,10 @@ Bmob.initialize("你的Application ID", "你的REST API Key");
 
 https://bmob.github.io/hydrogen-js-sdk/#/?id=登陆
 
+#### 版本 v2.3.1
+> - 更新微信官方客户端不保存sessionKey
+> - 更新解密手机号sessionKey传入加密值
+
 #### 版本 v2.3.0
 > - 增加mediaCheckAsync媒体检查方法
 > - 支持文件上传名称用户自定义
@@ -163,7 +167,7 @@ https://bmob.github.io/hydrogen-js-sdk/#/?id=登陆
 **Note:**
 
 > - 修复初始变动导致SDK文件上传失败
-> - 增加获取openid新方法 `Bmob.User.openId()` 
+> - 增加获取openid新方法 `Bmob.User.openId()`
 > - webSocket 请求改为 `let BmobSocketIo =new Bmob.Socket('appkey')` 初始化
 
 #### 版本 v2.0.0
@@ -261,7 +265,7 @@ https://bmob.github.io/hydrogen-js-sdk/#/?id=登陆
 **Note:**
 
 > - 修复`or`查询失败的问题
->   
+>
 
 #### 版本 v1.5.0
 
@@ -485,7 +489,7 @@ npm run dev
 
 增强功能
 
-- [x] Relation  
+- [x] Relation
 - [ ] ACL
 
 
