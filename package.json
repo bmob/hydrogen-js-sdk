@@ -1,6 +1,6 @@
 {
   "name": "hydrogen-js-sdk",
-  "version": "2.3.11",
+  "version": "2.4.0",
   "description": "本SDK基于es6开发，致力打造基于前端混合开发需求，支持微信小程序、H5、快应用、游戏Cocos、混合App等平台, 整个SDK，就dist目录下Bmob.*.js 这个文件即可使用全部功能，请使用最新版本。",
   "main": "./index.js",
   "typings": "./index.d.ts",

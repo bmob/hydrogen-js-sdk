@@ -78,7 +78,7 @@ const user = class user extends query {
         s = current.authData.weapp.sk;
       }
       const data = {
-        sessionKey: s,
+        sk: s,
         encryptedData: d,
         iv: i,
       };
