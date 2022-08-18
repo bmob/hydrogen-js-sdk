@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2018-07-17 10:37:55
- * @LastEditTime: 2022-06-24 15:01:23
+ * @LastEditTime: 2022-08-18 10:49:04
  * @LastEditors: magic
  * @Description: In User Settings Edit
  * @FilePath: /hydrogen-js-sdk/src/lib/config.js
@@ -52,7 +52,7 @@ const PARAMETERS = {
   WECHAT_APP: "/1/wechatAppv1/", // 获取openid
   BATCH: "/1/batch",
   CHECK_MSG: "/1/wechatApp/checkMsg", // 检测文本内容
-  DECRYPTION: "/1/wechatApp/decryption", // 检测文本内容
+  DECRYPTION: "/1/wechatApp/decryptionv1", // 检测文本内容
   MEDIACHECKASYNC: "/1/wechatApp/asyncCheckWechatMedia", // 检测文本内容
   QUERY: "/1/classes", // 查询数据
 };
