@@ -75,7 +75,7 @@ const user = class user extends query {
       } else if (typeof qq !== "undefined") {
         s = current.authData.qqapp.session_key;
       } else {
-        s = current.authData.weapp.session_key;
+        s = current.authData.weapp.sk;
       }
       const data = {
         sessionKey: s,
