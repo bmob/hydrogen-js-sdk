@@ -511,7 +511,7 @@ npm run dev
 ---
 
 1. 【链接】多对多关系BmobRelation学习笔记（js，微信小程https://www.zybuluo.com/z77/note/1114404
-2. API 接口文档 http://doc.bmob.cn/data/restful/index.html
+2. API 接口文档 http://doc.bmobapp.com/data/restful/index.html
 
 
 
