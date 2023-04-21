@@ -193,7 +193,7 @@ const user = class user extends query {
                 }
                 let openid;
                 if (typeof tt !== "undefined") {
-                  openid = user.authData.toutiao.openid;
+                  openid = user.openid!=undefined?user.openid:user.authData.toutiao.openid;
                 } else if (typeof qq !== "undefined") {
                   openid = user.authData.qqapp.openid;
                 } else {
@@ -212,20 +212,12 @@ const user = class user extends query {
         });
       };
 
-      wx.checkSession({
-        success: function () {
-          let c = that.current();
-          if (c === null) {
-            const e = "登陆错误，请在Bmob后台填写小程序AppSecret。";
-            reject(e);
-          }
-          resolve(c);
-          login();
-        },
-        fail: () => {
-          login();
-        },
-      });
+      let c = that.current();
+        if (c === null) {
+          login()
+        }else{
+        resolve(c);
+      }
     });
   }
 };

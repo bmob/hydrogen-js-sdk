@@ -1,7 +1,7 @@
 const utils = require('./utils')
 
-if (typeof window.global==='undefined'){
-  window.global=window
+if (typeof global==='undefined'){
+  global=window
 }
 const Bmob = global.Bmob || {}
 Bmob.utils = utils

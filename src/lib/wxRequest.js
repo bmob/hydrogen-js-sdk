@@ -52,8 +52,20 @@ const request = (route, method = 'get', parma = {}) => {
       console.log('host:', Bmob._config.host)
       console.log('parma:', parma)
     }
+
+
+
+    var wxurl = Bmob._config.host + route
+    if (method == 'get') {
+      parma.where =
+        JSON.stringify(parma.where)
+      const queryParams = new URLSearchParams(parma);
+      wxurl += "?" + queryParams.toString()
+      parma = {}
+    }
+
     wx.request({
-      url: Bmob._config.host + route,
+      url: wxurl,
       method: method,
       data: parma,
       header: header,
