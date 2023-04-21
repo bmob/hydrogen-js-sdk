@@ -108,6 +108,10 @@ Bmob.initialize("你的Application ID", "你的REST API Key");
 
 https://bmob.github.io/hydrogen-js-sdk/#/?id=登陆
 
+#### 版本 v2.4.1
+> - 更新支持Vue3
+> - 优化如果使用错误key初始化，增加提示语句
+
 #### 版本 v2.3.1
 > - 更新微信官方客户端不保存sessionKey
 > - 更新解密手机号sessionKey传入加密值
