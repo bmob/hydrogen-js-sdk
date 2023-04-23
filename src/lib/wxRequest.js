@@ -56,12 +56,14 @@ const request = (route, method = 'get', parma = {}) => {
 
 
     var wxurl = Bmob._config.host + route
-    if (method == 'get' && sdkType == 'toutiao') {
-      parma.where =
-        JSON.stringify(parma.where)
-      const queryParams = new URLSearchParams(parma);
-      wxurl += "?" + queryParams.toString()
-      parma = {}
+    if (undefined!=parma.where){
+      if (method == 'get' && sdkType == 'toutiao') {
+        parma.where =
+          JSON.stringify(parma.where)
+        const queryParams = new URLSearchParams(parma);
+        wxurl += "?" + queryParams.toString()
+        parma = {}
+      }
     }
 
     wx.request({
