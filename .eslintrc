@@ -1,7 +1,18 @@
 {
-  "extends":"standard",
+  "extends":"eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion":6
+  },
+  "env": {
+      "es6": true
+  },
+  // "parser": "espree", // 使用默认 espree 解析器
+
   "rules": {
-    "no-undef": 0,
-    "space-before-function-paren": 0
+    "space-before-function-paren": 0,
+    "no-unused-vars": "off",
+    "semi": "off",
+    "no-undef": "off",
+    "no-console": "off"
   }
 }

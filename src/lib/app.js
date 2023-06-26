@@ -14,6 +14,7 @@ const User = require("./user");
 const File = require("./file");
 const Pay = require("./pay");
 const Socket = require("./socket");
+const webSocketAiClient = require("./webSocketAiClient");
 
 const {
   generateCode,
@@ -32,7 +33,8 @@ const {
   push,
 } = require("./common");
 const { requestSmsCode, verifySmsCode } = require("./sms");
-
+// 平台判断
+Bmob.type = Bmob.utils.getAppType();
 // 生成二维码
 Bmob.GeoPoint = geoPoint;
 // 生成二维码
@@ -71,14 +73,15 @@ Bmob.Pay = new Pay();
 Bmob.User = new User();
 // 通讯
 Bmob.Socket = (id) => new Socket(id);
+// AI
+Bmob.ChatAI = (id) => new webSocketAiClient();
 // 数据操作
 Bmob.Query = (parmas) => new Query(parmas);
 // 文件操作
 Bmob.File = (name, object) => new File(name, object);
 // 网络请求
 Bmob.request = require("./request");
-// 平台判断
-Bmob.type = Bmob.utils.getAppType();
+
 // 数据关联(一对一)
 Bmob.Pointer = (parmas) => new Pointer(parmas);
 // 数据关联(一对多，多对多)

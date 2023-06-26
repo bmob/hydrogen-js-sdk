@@ -34,6 +34,7 @@ const PARAMETERS = {
   REFUND: "/1/pay/refund", // 微信退款
   REQUESTSMSCODE: "/1/requestSmsCode", // 请求短信验证码
   VERIFYSMSCODE: "/1/verifySmsCode", // 验证短信验证码
+  Ai: "/1/ai/", // 验证短信验证码
   FUNCTIONS: "/1/functions", // 云函数
   REQUESTPASSWORDRESET: "/1/requestPasswordReset", // 重置密码(email)
   RESETPASSWORDBYSMSCODE: "/1/resetPasswordBySmsCode", // 重置密码(短信)

@@ -108,6 +108,10 @@ Bmob.initialize("你的Application ID", "你的REST API Key");
 
 https://bmob.github.io/hydrogen-js-sdk/#/?id=登陆
 
+#### 版本 v2.500
+> - 支持H5 AI流模式
+> - 支持微信小程序 AI流模式
+
 #### 版本 v2.4.12
 > - 支持抖音小程序
 > - 优化所有小程序登录流程

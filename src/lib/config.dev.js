@@ -10,7 +10,7 @@
 const HOST = "https://api.bmobcloud.com";
 // const HOST = 'http://127.0.0.1:8080'
 // const HOST = "https://apitest.bmob.cn";
-// const HOST = 'http://apis.feipin-ge.com'
+// const HOST = 'http://website-restful.bmobapp.com'
 const APPLICATION_ID = "";
 const APPLICATION_KEY = "";
 // const VERSION = `v${ROOT.version}`
@@ -27,6 +27,7 @@ const PARAMETERS = {
   REFUND: "/1/pay/refund", // 微信退款
   REQUESTSMSCODE: "/1/requestSmsCode", // 请求短信验证码
   VERIFYSMSCODE: "/1/verifySmsCode", // 验证短信验证码
+  Ai: "/1/ai/", // 验证短信验证码
   FUNCTIONS: "/1/functions", // 云函数
   REQUESTPASSWORDRESET: "/1/requestPasswordReset", // 重置密码(email)
   RESETPASSWORDBYSMSCODE: "/1/resetPasswordBySmsCode", // 重置密码(短信)
