@@ -33,6 +33,7 @@ setTimeout(()=>{
   // {"model":"gpt-3.5-turbo","messages":[{"content":"你好","role":"user"},{"content":"你好，有什么我可以为你提供的帮助吗？","role":"assistant"},{"content":"请问Bmob是什么产品","role":"user"}],"stream":true}
   let datas = {"messages":[{"content":"你好","role":"user"}],"session":"b1"}
 ChatAi.send(JSON.stringify(datas))
+
 },3000)
 
 // 返回消息处理
@@ -44,6 +45,7 @@ ChatAi.onMessage((res)=>{
     msg = msg+res
   }
 })
+
 
 // const query = Bmob.Query('_User')
 // // query.equalTo('username','!=','ff')
