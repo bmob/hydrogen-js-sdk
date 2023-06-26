@@ -16,7 +16,7 @@ var Bmob = require('./lib/app')
 // Bmob.initialize('ad1ef6c1eac9b6e7', '123456'); //内网
 
 Bmob.initialize('9731770784b8c006', '111111')
-
+Bmob.domain('http://website-restful.bmobapp.com')
 Bmob.debug(true);
 
 
