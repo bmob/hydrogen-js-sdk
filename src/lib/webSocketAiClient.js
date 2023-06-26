@@ -5,38 +5,6 @@ const md5 = require("./utf8md5");
  
 
 
-const setHeader = (config, route, method, parma) => {
-
-  let sdkType = 'h5'
-  if (typeof (tt) !== 'undefined') {
-    sdkType = 'toutiao'
-  } else if (typeof (qq) !== 'undefined') {
-    sdkType = 'qqApp'
-  } else if (this.type === "wx") {
-    sdkType = 'wechatApp'
-  } else {
-    sdkType = 'h5'
-  }
-  const t = Math.round(new Date().getTime() / 1000)
-  const rand = Bmob.utils.randomString()
-  let body = (method === 'get' || method === 'delete') ? '' : JSON.stringify(parma)
-
-  const sign = md5.utf8MD5(route + t + config.securityCode + rand + body + config.serverVersion)
-
-  let header = {
-    'content-type': 'application/json',
-    'X-Bmob-SDK-Type': sdkType,
-    'X-Bmob-Safe-Sign': sign,
-    'X-Bmob-Safe-Timestamp': t,
-    'X-Bmob-Noncestr-Key': rand,
-    'X-Bmob-SDK-Version': config.serverVersion,
-    'X-Bmob-Secret-Key': config.secretKey
-  }
-  if (config.applicationMasterKey) {
-    header['X-Bmob-Master-Key'] = config.applicationMasterKey
-  }
-  return header
-}
 
 // AI 请求封装
 class webSocketAiClient {
@@ -67,9 +35,7 @@ class webSocketAiClient {
   connect() {
     console.log("connect", this.url);
     const config = Bmob._config
-    const header = setHeader(config, config.parameters.Ai, "get", {})
-    this.header = header
-    // console.log(this.header, 'this.header');
+  
     // 默认h5
     var wsUrl = this.url.replace("http", "ws");
     switch (this.type) {
@@ -78,7 +44,7 @@ class webSocketAiClient {
         this.socket = wx.connectSocket({
           // url: this.url,
           url: wsUrl + config.secretKey,
-          header: header
+          header: this.header
         });
         this.socket.onOpen(() => {
           this.onOpenCallback();
