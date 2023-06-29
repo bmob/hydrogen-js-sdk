@@ -2695,6 +2695,95 @@ tablename为更新的表，objectId为更新行的objectId，data为服务端返
 
 
 
+
+
+## 接入AI能力
+为方便开发者快速开发AI产品，我们接入了ChatGPT能力，让你可以不用考虑配额、网络、上下文均衡等问题，简单灵活地使用这些能力。
+
+- 初始化BmobAI
+
+```java
+let ChatAi = Bmob.ChatAI()
+```
+
+ 
+
+
+- 调用对话能力
+
+```java
+  // session 会话id，可以传用户objectId，或者随机数
+  // content 内容，提问的内容，如果希望上下文，可以这样传入
+  // {"model":"gpt-3.5-turbo","messages":[{"content":"你好","role":"user"},{"content":"你好，有什么我可以为你提供的帮助吗？","role":"assistant"},{"content":"请问Bmob是什么产品","role":"user"}],"stream":true}
+
+let data = {"messages":[{"content":"你好","role":"user"}],"session":"b1"}
+ChatAi.send(JSON.stringify(data))
+```
+
+其中，`session_id`是会话Id信息，你可以传入用户的`objectId`，也可以是其他固定的信息，如用户的`手机号码`、`注册账号`等等。后端根据会话Id信息，自动拼接相应的上下文信息，发送给GPT进行处理。
+
+
+
+```
+// 返回消息处理
+let msg = ''
+ChatAi.onMessage((res)=>{
+  if(res=="done"){
+    console.log(msg);
+  }else{
+    msg = msg+res
+  }
+})
+```
+
+`onMessage`方法是以流的形式，不断回传`message`信息给你，呈现在UI界面上。通过这种方法，你可以实现更好的用户体验。
+res=="done 是等待GPT完全请求完毕，才回传最终内容`message`给你。
+
+`onError`和`onClose`方法是请求连接发生错误时调用，如网络关闭等。
+
+例如断开了重新链接
+
+```
+ChatAi.onClose((c) => {
+    console.log("连接被关闭");
+    //重新连接
+    ChatAi.connect()
+})
+```
+
+
+
+
+- BmobAI的其他方法
+  
+
+`BmobAI`类还有断开websocke重连`ChatAi.connect`方法。
+
+`ChatAi.connected `属性返回布尔值，表示是否和服务器保持着连接状态。
+
+`ChatAi.connect()`属性是主动和服务器连接的方法，主要是当你的网络发生异常时，主动重新和服务器进行连接。
+
+
+- 其他重要问题
+  
+
+如果你没有OpenAI的密钥，你可以联系我们购买。
+如果你有OpenAI的密钥，可以进入到应用之后，依次点击 `设置` -> `AI设置` -> `添加配置`，将你的密钥信息填上去即可。
+
+
+
+小程序接入demo 
+
+项目地址：
+
+https://github.com/bmob/wechatapp-demo
+
+页面
+
+pages/interface/chatai/index
+
+
+
 ## 短信服务操作 ##
 
 ### 请求短信验证码 ###

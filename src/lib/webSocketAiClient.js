@@ -18,6 +18,9 @@ class webSocketAiClient {
 
     this.socket = null;
 
+    // prompt 设置
+    this.prompt = {}
+
 
     this.header = {}
 
@@ -95,7 +98,19 @@ class webSocketAiClient {
 
   }
 
+  setPrompt(content){
+    if(content===""){
+      console.log("content不能为空");
+      throw new Error(415);
+    }
+    this.prompt = {
+      "content":content,"role":"system"
+    }
+
+  }
+
   send(data) {
+  
     console.log(this.connected, 'this.connect');
     if (this.connected === false) {
       console.log("不能发送数据,请重连socket");
@@ -103,6 +118,13 @@ class webSocketAiClient {
 
     } else {
       console.log("发送", data);
+
+      // 发送的内容插入prompt
+      if(JSON.stringify(this.prompt) !== '{}'){
+        data = JSON.parse(data)
+        data.messages.unshift(this.prompt);
+        data = JSON.stringify(data)
+      }
 
       if (this.type === "wx") {
         this.socket.send({
