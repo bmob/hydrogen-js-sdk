@@ -114,6 +114,10 @@ class file {
 
     return this.fileUpload("wxc");
   }
+  // 清空list
+  clear(){
+    list = []
+  }
   save() {
     if (!list.length) {
       throw new Error(417);
