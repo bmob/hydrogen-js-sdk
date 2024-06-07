@@ -115,6 +115,7 @@ export interface Bmob {
   refund: (parmas: object) => BmobPromise;
   notifyMsg: (parmas: object) => BmobPromise;
   checkMsg: (parmas: string) => BmobPromise;
+  checkMsg2: (parmas: object) => BmobPromise;
   functions: functions;
   run: functions;
   pay: Pay;

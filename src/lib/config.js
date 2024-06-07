@@ -18,6 +18,7 @@ try {
 }
 
 const HOST = "https://api.bmobcloud.com";
+// const HOST = 'http://website-restful.bmobapp.com'
 
 const SECRET_KEY = "";
 const SECURITY_CODE = "";

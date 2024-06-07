@@ -132,6 +132,17 @@ const checkMsg = (content) => {
   return request(route, "post", data);
 };
 
+// 检测小程序文本是否违法
+const checkMsg2 = (data) => {
+  if (!isObject(data)) {
+    // 参数异常
+    throw new Error(415);
+  }
+  let route = `${Bmob._config.parameters.CHECK_MSG}`;
+   
+  return request(route, "post", data);
+};
+
 /**
  * 获取服务器时间
  * @return {Object}
@@ -222,6 +233,7 @@ module.exports = {
   updateUserPassword,
   geoPoint,
   checkMsg,
+  checkMsg2,
   mediaCheckAsync,
   push,
 };

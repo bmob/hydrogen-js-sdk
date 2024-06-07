@@ -12,7 +12,7 @@ const setHeader = (config, route, method, parma) => {
     sdkType = 'toutiao'
   } else if (typeof (qq) !== 'undefined') {
     sdkType = 'qqApp'
-  } else if (this.type === "wx") {
+  } else if (Bmob.type === "wx") {
     sdkType = 'wechatApp'
   } else {
     sdkType = 'h5'
@@ -37,7 +37,7 @@ const setHeader = (config, route, method, parma) => {
   }
   return header
 }
-
+ 
 // AI 请求封装
 class webSocketAiClient {
   constructor() {
@@ -68,7 +68,7 @@ class webSocketAiClient {
     console.log("connect", this.url);
     const config = Bmob._config
     const header = setHeader(config, config.parameters.Ai, "get", {})
-    this.header = header
+    // const header = {}
     // console.log(this.header, 'this.header');
     // 默认h5
     var wsUrl = this.url.replace("http", "ws");

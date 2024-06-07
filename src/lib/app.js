@@ -30,6 +30,7 @@ const {
   updateUserPassword,
   geoPoint,
   checkMsg,
+  checkMsg2,
   push,
 } = require("./common");
 const { requestSmsCode, verifySmsCode } = require("./sms");
@@ -49,6 +50,7 @@ Bmob.sendWeAppMessage = sendWeAppMessage;
 Bmob.refund = refund;
 // 检测文本
 Bmob.checkMsg = checkMsg;
+Bmob.checkMsg2 = checkMsg2;
 // 微信主人通知
 Bmob.notifyMsg = notifyMsg;
 // 请求短信验证码

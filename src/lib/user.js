@@ -127,6 +127,7 @@ const user = class user extends query {
             w = { qqapp: res };
           }
           if (str === "openid") {
+            console.log("openid", res);
             resolve(res);
           } else {
             const result = this.linkWith(w);
@@ -216,6 +217,9 @@ const user = class user extends query {
         if (c === null) {
           login()
         }else{
+          if(str=="openid"){
+            resolve(c.openid);
+          }
         resolve(c);
       }
     });
