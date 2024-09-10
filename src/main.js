@@ -66,19 +66,36 @@ console.log("aaa");
 
 // let BmobSocketIo = Bmob.Socket(33)
 
-// const fileUploadControl = document.getElementById('profilePhotoFileUpload');
-// fileUploadControl.onchange = () => {
-//   const pic = fileUploadControl.files
-//   let file
-//   for(let item of pic){
-//      file = Bmob.File(item.name, item);
-//   }
-//   file.save().then(res => {
-//     const file = res[0]
-//     console.log(res.length);
-//     console.log(res,file);
-  
+// 获取文件上传控件元素
+const fileUploadControl = document.getElementById('profilePhotoFileUpload');
 
-//   })
-// }
+// 当文件选择发生变化时触发该事件处理函数
+fileUploadControl.onchange = () => {
+  // 获取选择的文件列表
+  const pic = fileUploadControl.files;
+  
+  // 遍历选择的文件并创建Bmob.File对象
+  for(let item of pic){
+     // 初始化Bmob.File，命名文件并关联文件对象
+     file = Bmob.File(item.name, item);
+  }
+  
+  // 保存文件到云端存储服务
+  file.save().then(res => {
+    // 保存成功后，获取保存结果
+    const file = res[0];
+    
+    // 打印保存文件的数量和文件信息
+    console.log(res.length);
+    console.log(res,file,file.url);
+
+    // file.url 插入到id为img的层下面最后一个元素图片展示
+    document.getElementById('img').appendChild(document.createElement('img')).src = file.url;
+
+    // 把文件url 文本插入到上一个图片后面
+    document.getElementById('img').appendChild(document.createTextNode(file.url));
+
+
+  });
+}
 

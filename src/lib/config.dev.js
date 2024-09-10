@@ -7,7 +7,7 @@
  * @FilePath: /hydrogen-js-sdk/src/lib/config.dev.js
  */
 // const ROOT = require('../../package.json')
-// const HOST = "https://api.bmobcloud.com";
+const HOST = "https://api.bmobcloud.com";
 // const HOST = 'http://127.0.0.1:8080'
 // const HOST = "https://apitest.bmob.cn";
 // const HOST = 'http://website-restful.bmobapp.com'
