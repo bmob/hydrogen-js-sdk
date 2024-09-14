@@ -1,9 +1,13 @@
 const utils = require('./utils')
 
-if (typeof global==='undefined'){
-  global=window
+let env 
+if (utils.getAppType() === 'h5') {
+  env = window
 }
-const Bmob = global.Bmob || {}
+if (utils.getAppType() === 'nodejs') {
+  env = global
+}
+const Bmob = env.Bmob || {}
 Bmob.utils = utils
 Bmob._config = utils.getConfig()
 
