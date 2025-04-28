@@ -108,6 +108,9 @@ Bmob.initialize("你的Application ID", "你的REST API Key");
 
 https://bmob.github.io/hydrogen-js-sdk/#/?id=登陆
 
+#### 版本 v2.6.1 2025-04-28 17:00:35
+> - Bmob 对象注册全局 wx 对象下面
+> - 更新微信手机号获取接口
 
 #### 版本 v2.6.0 2024年09月14日10:42:04
 > - 修复vue3的兼容问题
