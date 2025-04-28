@@ -1,11 +1,16 @@
 const utils = require('./utils')
 
 let env 
-if (utils.getAppType() === 'h5') {
+let appType = utils.getAppType()
+console.log('appType', appType)
+if (appType === 'h5') {
   env = window
 }
-if (utils.getAppType() === 'nodejs') {
+if (appType === 'nodejs') {
   env = global
+}
+if (appType === 'wx') {
+  env = wx
 }
 const Bmob = env.Bmob || {}
 Bmob.utils = utils

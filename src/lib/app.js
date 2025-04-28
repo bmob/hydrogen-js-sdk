@@ -32,6 +32,7 @@ const {
   checkMsg,
   checkMsg2,
   push,
+  getPhoneNumber,
 } = require("./common");
 const { requestSmsCode, verifySmsCode } = require("./sms");
 // 平台判断
@@ -44,6 +45,8 @@ Bmob.generateCode = generateCode;
 Bmob.mediaCheckAsync = mediaCheckAsync;
 // 获取微信token
 Bmob.getAccessToken = getAccessToken;
+// 获取微信手机号
+Bmob.getPhoneNumber = getPhoneNumber;
 // 小程序模版信息
 Bmob.sendWeAppMessage = sendWeAppMessage;
 // 微信退款

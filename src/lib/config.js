@@ -17,7 +17,8 @@ try {
   VERSION = `v1.0.0`;
 }
 
-const HOST = "https://api.bmobcloud.com";
+// const HOST = "https://api.bmobcloud.com";
+const HOST = "http://apitest.codenow.cn";
 // const HOST = 'http://website-restful.bmobapp.com'
 
 const SECRET_KEY = "";
@@ -56,6 +57,7 @@ const PARAMETERS = {
   CHECK_MSG: "/1/wechatApp/checkMsg", // 检测文本内容
   DECRYPTION: "/1/wechatApp/decryptionv1", // 检测文本内容
   MEDIACHECKASYNC: "/1/wechatApp/asyncCheckWechatMedia", // 检测文本内容
+  GETPHONENUMBER: "/1/wechatApp/getPhoneNumber", // 获取微信手机号
   QUERY: "/1/classes", // 查询数据
 };
 module.exports = {

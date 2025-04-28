@@ -41,6 +41,20 @@ const getAccessToken = () => {
 };
 
 /**
+ * 获取微信小程序手机号
+ * @param {Object} data 包含code参数的对象
+ * @return {Object}
+ */
+const getPhoneNumber = (data) => {
+  if (!isObject(data) || !data.code) {
+    // 参数异常
+    throw new Error(415);
+  }
+  let route = Bmob._config.parameters.GETPHONENUMBER;
+  return request(route, "post", data);
+};
+
+/**
  * 小程序模版信息
  * @return {Object}
  */
@@ -236,4 +250,5 @@ module.exports = {
   checkMsg2,
   mediaCheckAsync,
   push,
+  getPhoneNumber,
 };
