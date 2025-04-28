@@ -8,7 +8,7 @@ export interface queryData {
 export class Query {
   new(params: string): void;
   get: (objectId: string) => BmobPromise;
-  set: (filedName: string, filedValue: string) => BmobPromise;
+  set: (filedName: string, filedValue: any) => BmobPromise;
   destroy: (objectId: string) => BmobPromise;
   save: (parmas?: object) => BmobPromise;
   find: () => BmobPromise;
