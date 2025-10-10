@@ -12,7 +12,7 @@ if (appType === 'nodejs') {
 if (appType === 'wx') {
   env = wx
 }
-const Bmob = env.Bmob || {}
+const Bmob = {}
 Bmob.utils = utils
 Bmob._config = utils.getConfig()
 
