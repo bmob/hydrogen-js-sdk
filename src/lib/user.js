@@ -94,13 +94,14 @@ const user = class user extends query {
   }
   signOrLoginByMobilePhone(mobilePhoneNumber, smsCode) {
     // 手机号登陆
-    if (!isNumber(mobilePhoneNumber) || !isNumber(smsCode)) {
+    if (!isString(mobilePhoneNumber) || !isString(smsCode)) {
       // 异常
       throw new Error(415);
     }
+    
     this.setData = Object.assign({}, { mobilePhoneNumber, smsCode });
-    const route = Bmob._config.parameters.LOGIN;
-    return request(route, "get", this.setData);
+    const route = Bmob._config.parameters.USERSV1;
+    return request(route, "post", this.setData);
   }
   requestOpenId(code, a = "") {
     const route = Bmob._config.parameters.WECHAT_APP;
