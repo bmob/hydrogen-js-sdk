@@ -107,6 +107,45 @@ const user = class user extends query {
     const route = Bmob._config.parameters.WECHAT_APP;
     return request(route + code, "POST", { anonymous_code: a });
   }
+  // 从当前用户对象中提取 openid 与 sk/session_key，兼容 weapp / toutiao / qq
+  getOpenIdAndSk(currentUser) {
+    let openid;
+    let sk;
+
+    if (typeof tt !== "undefined") {
+      openid =
+        currentUser.openid != undefined
+          ? currentUser.openid
+          : currentUser.authData.toutiao &&
+            currentUser.authData.toutiao.openid;
+      sk =
+        currentUser.authData.toutiao &&
+        currentUser.authData.toutiao.session_key;
+    } else if (typeof qq !== "undefined") {
+      openid =
+        currentUser.openid != undefined
+          ? currentUser.openid
+          : currentUser.authData.qqapp &&
+            currentUser.authData.qqapp.openid;
+      sk =
+        currentUser.authData.qqapp &&
+        currentUser.authData.qqapp.session_key;
+    } else {
+      openid =
+        currentUser.openid != undefined
+          ? currentUser.openid
+          : currentUser.authData.weapp &&
+            currentUser.authData.weapp.openid;
+      sk =
+        currentUser.authData.weapp && currentUser.authData.weapp.sk;
+    }
+
+    return { openid, sk };
+  }
+  checkSessionKey(openid, sk) {
+    const route = Bmob._config.parameters.CHECK_SESSION_KEY;
+    return request(route, "POST", { openid, sk });
+  }
   linkWith(data) {
     // 第三方登陆
     let authData = { authData: data };
@@ -193,14 +232,8 @@ const user = class user extends query {
                 if (user.error) {
                   throw new Error(415);
                 }
-                let openid;
-                if (typeof tt !== "undefined") {
-                  openid = user.openid!=undefined?user.openid:user.authData.toutiao.openid;
-                } else if (typeof qq !== "undefined") {
-                  openid = user.authData.qqapp.openid;
-                } else {
-                  openid = user.authData.weapp.openid;
-                }
+                // 统一通过工具方法从 user 中获取 openid
+                const { openid } = that.getOpenIdAndSk(user);
                 storage.save("openid", openid);
                 storage.save("bmob", user);
                 // 保存用户其他信息到用户表
@@ -215,13 +248,39 @@ const user = class user extends query {
       };
 
       let c = that.current();
-        if (c === null) {
-          login()
-        }else{
-          if(str=="openid"){
-            resolve(c.openid);
-          }
-        resolve(c);
+      if (c === null) {
+        login();
+      } else {
+        // 有缓存时，先检查 sessionKey 是否仍然有效
+        const { openid, sk } = that.getOpenIdAndSk(c);
+
+        // 如果缺少必要信息，直接重新登录
+        if (!openid || !sk) {
+          login();
+          return;
+        }
+
+        that
+          .checkSessionKey(openid, sk)
+          .then((res) => {
+            // 只有接口返回 ok 才沿用原来的缓存逻辑
+            if (res && res.errcode === 0 && res.errmsg === "ok") {
+              if (str == "openid") {
+                resolve(c.openid);
+              } else {
+                resolve(c);
+              }
+            } else {
+              console.log('checkSessionKey 失败', res);
+              console.log('重新登录');
+              
+              login();
+            }
+          })
+          .catch(() => {
+            // 接口异常，保守起见重新登录
+            login();
+          });
       }
     });
   }

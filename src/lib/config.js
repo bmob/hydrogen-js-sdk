@@ -17,8 +17,8 @@ try {
   VERSION = `v1.0.0`;
 }
 
-const HOST = "https://api.bmobcloud.com";
-// const HOST = "http://apitest.codenow.cn";
+// const HOST = "https://api.bmobcloud.com";
+const HOST = "http://apitest.codenow.cn";
 // const HOST = 'http://website-restful.bmobapp.com'
 
 const SECRET_KEY = "";
@@ -33,6 +33,7 @@ const PARAMETERS = {
   GETACCESSTOKEN: "/1/wechatApp/getAccessToken", // 获取access_token
   SENDWEAPPMESSAGE: "/1/wechatApp/SendWeAppMessage", // 小程序模版消息
   NOTIFYMSG: "/1/wechatApp/notifyMsg", // 微信主人通知
+  CHECK_SESSION_KEY: "/1/wechatApp/checkSessionKey", // 校验 sessionKey 是否有效
   REFUND: "/1/pay/refund", // 微信退款
   REQUESTSMSCODE: "/1/requestSmsCode", // 请求短信验证码
   VERIFYSMSCODE: "/1/verifySmsCode", // 验证短信验证码
@@ -59,6 +60,10 @@ const PARAMETERS = {
   MEDIACHECKASYNC: "/1/wechatApp/asyncCheckWechatMedia", // 检测文本内容
   GETPHONENUMBER: "/1/wechatApp/getPhoneNumber", // 获取微信手机号
   QUERY: "/1/classes", // 查询数据
+  WXVP_CREATE_ORDER: "/1/wxvp/createOrder", // 微信虚拟支付创建订单
+  WXVP_QUERY_USER_BALANCE: "/1/wxvp/queryUserBalance", // 微信虚拟支付查询用户代币余额
+  WXVP_QUERY_ORDER: "/1/wxvp/queryOrder", // 微信虚拟支付查询现金订单状态
+  WXVP_CURRENCY_PAY: "/1/wxvp/currencyPay", // 微信虚拟支付 - 代币扣减支付
 };
 module.exports = {
   host: HOST,
