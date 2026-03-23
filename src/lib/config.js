@@ -17,8 +17,8 @@ try {
   VERSION = `v1.0.0`;
 }
 
-// const HOST = "https://api.bmobcloud.com";
-const HOST = "http://apitest.codenow.cn";
+const HOST = "https://api.bmobcloud.com";
+// const HOST = "http://apitest.codenow.cn";
 // const HOST = 'http://website-restful.bmobapp.com'
 
 const SECRET_KEY = "";
