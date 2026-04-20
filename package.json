@@ -1,12 +1,16 @@
 {
   "name": "hydrogen-js-sdk",
-  "version": "2.6.3",
+  "version": "2.7.1",
   "description": "本SDK基于es6开发，致力打造基于前端混合开发需求，支持微信小程序、H5、快应用、游戏Cocos、混合App等平台, 整个SDK，就dist目录下Bmob.*.js 这个文件即可使用全部功能，请使用最新版本。",
   "main": "./index.js",
   "typings": "./index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config config/prod.env.js",
+    "pack": "npm pack",
+    "publish:dry-run": "npm publish --dry-run",
+    "publish": "npm run build && npm publish",
+    "release": "node scripts/release.js",
     "watch": "webpack --watch --config config/prod.env.js",
     "dev": "webpack-dev-server --config config/dev.env.js"
   },
