@@ -11,19 +11,31 @@ const axios = require('./axios/lib/axios')
 let Bmob = require('./bmob')
 let md5 = require('./utf8md5')
 
-const setHeader = (config, route, method, parma) => {
+const setHeader = (config, route, method, parma, requestOptions = {}) => {
   let type = 'wechatApp'
   if (Bmob.type === 'nodejs') {
     type = 'nodejs'
   }
   const t = Math.round(new Date().getTime() / 1000);
 
-  let body = (method === 'get' || method === 'delete') ? '' : JSON.stringify(parma)
+  const isReadMethod = method === 'get' || method === 'delete'
+  let body = ''
+  if (!isReadMethod) {
+    if (typeof requestOptions.signBody !== 'undefined') {
+      body = requestOptions.signBody
+    } else {
+      body = JSON.stringify(parma)
+    }
+  }
+  if (typeof body !== 'string') {
+    body = JSON.stringify(body)
+  }
 
   const rand = Bmob.utils.randomString()
   const sign = md5.utf8MD5(route + t + config.securityCode + rand + body + config.serverVersion)
+  const contentType = requestOptions.contentType || 'application/json'
   let header = {
-    'content-type': 'application/json',
+    'content-type': contentType,
     'X-Bmob-SDK-Type': type,
     'X-Bmob-Safe-Sign': sign,
     'X-Bmob-Safe-Timestamp': t,
@@ -38,13 +50,13 @@ const setHeader = (config, route, method, parma) => {
   return header
 }
 
-const request = (route, method = 'get', parma = {}) => {
+const request = (route, method = 'get', parma = {}, requestOptions = {}) => {
   return new Promise((resolve, reject) => {
     if (undefined === Bmob.User) {
       Bmob = require('./bmob')
     }
 
-    const header = setHeader(Bmob._config, route, method, parma)
+    const header = setHeader(Bmob._config, route, method, parma, requestOptions)
 
     var current = Bmob.User.current()
     if (current) {

@@ -1706,6 +1706,25 @@ fileUploadControl.onchange = () => {
 }
 ```
 
+直接上传文本内容（`text/plain`）：
+```
+const file = Bmob.TextFile('hello.txt', 'Hello, World!');
+file.save().then(res => {
+  console.log(res[0]);
+});
+```
+
+也可以继续使用 `Bmob.File`，并通过第三个参数显式指定文本上传：
+```
+const file = Bmob.File('hello.txt', 'Hello, World!', {
+  isText: true,
+  contentType: 'text/plain'
+});
+file.save().then(res => {
+  console.log(res[0]);
+});
+```
+
 **返回示例:**
 ```
 ["{"cdn":"upyun","filename":"abc.jpg","url":"http://…2018/05/07/e65172f540195fe880043cc74236e397.jpg"}", "{"cdn":"upyun","filename":"abc.jpg","url":"http://…2018/05/07/5670bf6740385bca802f9c33beb69ab9.jpg"}"]

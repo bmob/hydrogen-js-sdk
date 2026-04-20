@@ -8,18 +8,21 @@ const { isString, isArray } = require("./dataType");
 let list = [];
 
 class file {
-  constructor(name, parma) {
+  constructor(name, parma, options = {}) {
     if (name && parma) {
       if (!isString(name)) {
         throw new Error(415);
       }
-      // let ext = name.substring(name.lastIndexOf(".") + 1);
-      // console.log("name", name, name.substring(0, name.lastIndexOf(".")));
-      // let nams = name.substring(0, name.lastIndexOf("."));
+      const appType = utils.getAppType();
+      const isTextUpload =
+        options.isText === true ||
+        ((appType === "h5" || appType === "nodejs") && isString(parma));
       list.push({
         name: name,
         route: `${Bmob._config.parameters.FILES}/${name}`,
         data: parma,
+        isTextUpload: isTextUpload,
+        contentType: options.contentType || "text/plain",
       });
     }
   }
@@ -131,7 +134,13 @@ class file {
       fileObj = new Promise((resolve, reject) => {
         const data = [];
         for (let item of list) {
-          request(item.route, "post", item.data)
+          const requestOptions = item.isTextUpload
+            ? {
+                contentType: item.contentType,
+                signBody: item.data,
+              }
+            : {};
+          request(item.route, "post", item.data, requestOptions)
             .then((url) => {
               data.push(url);
               if (data.length === list.length) {

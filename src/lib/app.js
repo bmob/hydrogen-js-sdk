@@ -83,7 +83,9 @@ Bmob.ChatAI = (id) => new webSocketAiClient();
 // 数据操作
 Bmob.Query = (parmas) => new Query(parmas);
 // 文件操作
-Bmob.File = (name, object) => new File(name, object);
+Bmob.File = (name, object, options) => new File(name, object, options);
+Bmob.TextFile = (name, text, contentType = "text/plain") =>
+  new File(name, text, { isText: true, contentType });
 // 网络请求
 Bmob.request = require("./request");
 

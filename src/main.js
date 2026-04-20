@@ -99,3 +99,11 @@ fileUploadControl.onchange = () => {
   });
 }
 
+// 文本上传示例：等价于 curl -H "Content-Type: text/plain" -d 'Hello, World!'
+const textFile = Bmob.TextFile('hello.txt', 'Hello, World!');
+textFile.save().then(res => {
+  console.log('text file uploaded:', res[0]);
+}).catch(err => {
+  console.log('text file upload error:', err);
+});
+
